@@ -1,0 +1,155 @@
+/* ===== THEME TOKENS ===== */
+/* All themes define these variables. Components use var(--token-name) only. */
+
+/* --- Dark (default) --- */
+:root,
+.theme-dark {
+  --background: oklch(0.198 0.026 283.78);
+  --foreground: oklch(0.974 0.015 306.42);
+  --accent: oklch(0.936 0.225 121.24);
+  --accent-foreground: oklch(0.198 0.026 283.78);
+  --primary: oklch(0.55 0.249 285.60);
+  --primary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.3 0.03 284);
+  --muted-foreground: oklch(0.65 0.02 285);
+  --card: oklch(0.25 0.03 284);
+  --card-foreground: oklch(0.974 0.015 306.42);
+  --border: oklch(1 0 0 / 8%);
+  --border-hover: oklch(0.936 0.225 121.24 / 30%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.55 0.249 285.60);
+  --success: oklch(0.72 0.19 145);
+  --warning: oklch(0.78 0.16 75);
+  --error: oklch(0.6 0.22 15);
+
+  /* Glow intensities (theme-tunable) */
+  --glow-opacity: 15%;
+  --glow-intense-opacity: 30%;
+  --glow-inset-opacity: 5%;
+  --scanline-opacity: 2%;
+  --grid-dot-opacity: 7%;
+
+  /* Gradients */
+  --gradient-main: linear-gradient(90deg, oklch(0.198 0.026 283.78), oklch(0.55 0.249 285.60));
+  --gradient-accent: linear-gradient(90deg, oklch(0.936 0.225 121.24), oklch(0.72 0.19 145));
+}
+
+/* --- Light --- */
+.theme-light {
+  --background: oklch(0.974 0.015 306.42);
+  --foreground: oklch(0.198 0.026 283.78);
+  --accent: oklch(0.55 0.2 145);
+  --accent-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.428 0.249 285.60);
+  --primary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.95 0.01 306);
+  --muted-foreground: oklch(0.5 0.02 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.198 0.026 283.78);
+  --border: oklch(0 0 0 / 10%);
+  --border-hover: oklch(0.55 0.2 145 / 40%);
+  --input: oklch(0 0 0 / 10%);
+  --ring: oklch(0.428 0.249 285.60);
+  --success: oklch(0.55 0.19 145);
+  --warning: oklch(0.6 0.16 75);
+  --error: oklch(0.5 0.22 15);
+
+  --glow-opacity: 10%;
+  --glow-intense-opacity: 20%;
+  --glow-inset-opacity: 3%;
+  --scanline-opacity: 4%;
+  --grid-dot-opacity: 10%;
+
+  --gradient-main: linear-gradient(90deg, oklch(0.974 0.015 306.42), oklch(0.428 0.249 285.60));
+  --gradient-accent: linear-gradient(90deg, oklch(0.55 0.2 145), oklch(0.72 0.19 145));
+}
+
+/* --- Contrast (WCAG AAA) --- */
+.theme-contrast {
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+  --accent: oklch(0.936 0.225 121.24);
+  --accent-foreground: oklch(0 0 0);
+  --primary: oklch(0.7 0.2 285.60);
+  --primary-foreground: oklch(0 0 0);
+  --muted: oklch(0.15 0 0);
+  --muted-foreground: oklch(0.8 0 0);
+  --card: oklch(0.1 0 0);
+  --card-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / 20%);
+  --border-hover: oklch(0.936 0.225 121.24 / 50%);
+  --input: oklch(1 0 0 / 20%);
+  --ring: oklch(0.936 0.225 121.24);
+  --success: oklch(0.8 0.2 145);
+  --warning: oklch(0.85 0.18 75);
+  --error: oklch(0.7 0.25 15);
+
+  --glow-opacity: 25%;
+  --glow-intense-opacity: 40%;
+  --glow-inset-opacity: 8%;
+  --scanline-opacity: 3%;
+  --grid-dot-opacity: 12%;
+
+  --gradient-main: linear-gradient(90deg, oklch(0 0 0), oklch(0.7 0.2 285.60));
+  --gradient-accent: linear-gradient(90deg, oklch(0.936 0.225 121.24), oklch(0.8 0.2 145));
+}
+
+/* --- Warm (amber CRT) --- */
+.theme-warm {
+  --background: oklch(0.2 0.03 60);
+  --foreground: oklch(0.92 0.04 80);
+  --accent: oklch(0.82 0.18 75);
+  --accent-foreground: oklch(0.15 0.03 60);
+  --primary: oklch(0.55 0.15 40);
+  --primary-foreground: oklch(0.92 0.04 80);
+  --muted: oklch(0.28 0.03 60);
+  --muted-foreground: oklch(0.6 0.04 70);
+  --card: oklch(0.24 0.03 60);
+  --card-foreground: oklch(0.92 0.04 80);
+  --border: oklch(0.92 0.04 80 / 8%);
+  --border-hover: oklch(0.82 0.18 75 / 30%);
+  --input: oklch(0.92 0.04 80 / 15%);
+  --ring: oklch(0.82 0.18 75);
+  --success: oklch(0.72 0.15 145);
+  --warning: oklch(0.82 0.18 75);
+  --error: oklch(0.6 0.22 15);
+
+  --glow-opacity: 15%;
+  --glow-intense-opacity: 30%;
+  --glow-inset-opacity: 5%;
+  --scanline-opacity: 3%;
+  --grid-dot-opacity: 8%;
+
+  --gradient-main: linear-gradient(90deg, oklch(0.2 0.03 60), oklch(0.55 0.15 40));
+  --gradient-accent: linear-gradient(90deg, oklch(0.82 0.18 75), oklch(0.72 0.15 145));
+}
+
+/* --- Cool (sci-fi cyan) --- */
+.theme-cool {
+  --background: oklch(0.18 0.03 250);
+  --foreground: oklch(0.92 0.03 220);
+  --accent: oklch(0.82 0.15 200);
+  --accent-foreground: oklch(0.15 0.03 250);
+  --primary: oklch(0.5 0.2 260);
+  --primary-foreground: oklch(0.92 0.03 220);
+  --muted: oklch(0.25 0.03 250);
+  --muted-foreground: oklch(0.6 0.03 230);
+  --card: oklch(0.22 0.03 250);
+  --card-foreground: oklch(0.92 0.03 220);
+  --border: oklch(0.92 0.03 220 / 8%);
+  --border-hover: oklch(0.82 0.15 200 / 30%);
+  --input: oklch(0.92 0.03 220 / 15%);
+  --ring: oklch(0.82 0.15 200);
+  --success: oklch(0.72 0.19 145);
+  --warning: oklch(0.78 0.16 75);
+  --error: oklch(0.6 0.22 15);
+
+  --glow-opacity: 18%;
+  --glow-intense-opacity: 35%;
+  --glow-inset-opacity: 6%;
+  --scanline-opacity: 2%;
+  --grid-dot-opacity: 7%;
+
+  --gradient-main: linear-gradient(90deg, oklch(0.18 0.03 250), oklch(0.5 0.2 260));
+  --gradient-accent: linear-gradient(90deg, oklch(0.82 0.15 200), oklch(0.72 0.19 145));
+}
