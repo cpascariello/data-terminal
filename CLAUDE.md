@@ -143,7 +143,7 @@ A cyberpunk terminal aesthetic design system extracted into standalone React + T
 ```bash
 pnpm dev        # Dev server (Turbopack)
 pnpm build      # Production build
-pnpm lint       # Lint
+pnpm typecheck  # Type check
 ```
 
 ### Key Directories
@@ -173,13 +173,30 @@ src/
 > Update this list when adding, removing, or renaming components.
 
 #### Atoms (`src/atoms/`)
-(populated as components are created)
+- `BlinkingCursor` — animated cursor with block, line, underscore variants
+- `CornerNotch` — container with clipped top-right corner
+- `DotGrid` — decorative dot grid background overlay
+- `GlowBorder` — container with glowing border (normal/intense)
+- `GlowLine` — horizontal divider with glow effect
+- `HudLabel` — small uppercase tracking label
+- `ScanlineOverlay` — CRT scanline effect overlay
+- `ServiceTag` — bracketed service identifier `[TAG]`
+- `StatusDot` — pulsing status indicator dot
+- `TextGradient` — gradient text with main/accent variants
 
 #### Molecules (`src/molecules/`)
-(populated as components are created)
+- `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
+- `Section` — layout section wrapper with spacing, dot grid, scanlines, glow border
+- `SectionHeading` — heading with optional blinking cursor and subtitle
+- `StatCard` — animated count-up statistic with label (uses useInView + useCountUp)
+- `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
+- `TerminalPrompt` — CTA terminal prompt with blinking cursor
+- `TerminalWindow` — terminal window with command and output lines
 
 #### Hooks (`src/hooks/`)
-(populated as hooks are created)
+- `useCountUp` — rAF-based number animation with easing and reduced-motion support
+- `useInView` — IntersectionObserver hook for scroll-triggered effects
+- `useTheme` — ThemeContext consumer hook
 
 #### Providers (`src/providers/`)
-(populated as providers are created)
+- `ThemeProvider` — theme context with localStorage persistence and class toggling
