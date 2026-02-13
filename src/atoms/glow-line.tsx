@@ -9,7 +9,7 @@ export function GlowLine({ className }: GlowLineProps) {
     <div
       className={cn("h-px w-full bg-accent/20", className)}
       style={{
-        boxShadow: "0 0 8px oklch(from var(--accent) l c h / 30%)",
+        boxShadow: "0 0 8px var(--accent-glow-line)",
       }}
     />
   );

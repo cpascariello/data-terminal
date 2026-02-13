@@ -16,6 +16,7 @@ import {
   ScanlineOverlay,
   ServiceTag,
   StatusDot,
+  TerminalTopBar,
   TextGradient,
 } from "@/atoms";
 import {
@@ -128,6 +129,19 @@ export default function Home() {
                   Larger notch (32px)
                 </div>
               </CornerNotch>
+            </div>
+          </div>
+        </div>
+
+        {/* TerminalTopBar */}
+        <div className="mt-12">
+          <HudLabel>TERMINAL_TOP_BAR</HudLabel>
+          <div className="mt-3 grid gap-4 sm:grid-cols-2">
+            <div className="border border-border">
+              <TerminalTopBar tag="SVC:COMPUTE" label="node_01" dotsPosition="right" />
+            </div>
+            <div className="border border-border">
+              <TerminalTopBar label="terminal" dotsPosition="left" />
             </div>
           </div>
         </div>

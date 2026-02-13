@@ -182,12 +182,13 @@ src/
 - `ScanlineOverlay` — CRT scanline effect overlay
 - `ServiceTag` — bracketed service identifier `[TAG]`
 - `StatusDot` — pulsing status indicator dot
+- `TerminalTopBar` — window chrome bar with dots, optional tag/label, configurable dot position
 - `TextGradient` — gradient text with main/accent variants
 
 #### Molecules (`src/molecules/`)
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
 - `Section` — layout section wrapper with spacing, dot grid, scanlines, glow border
-- `SectionHeading` — heading with optional blinking cursor and subtitle
+- `SectionHeading` — heading with optional blinking cursor, subtitle, and configurable heading level (h1-h4)
 - `StatCard` — animated count-up statistic with label (uses useInView + useCountUp)
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor

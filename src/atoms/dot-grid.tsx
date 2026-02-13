@@ -8,7 +8,7 @@ export function DotGrid({ className }: DotGridProps) {
   return (
     <div
       className={cn("pointer-events-none absolute inset-0 terminal-grid", className)}
-      aria-hidden
+      aria-hidden="true"
     />
   );
 }

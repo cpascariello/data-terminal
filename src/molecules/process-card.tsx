@@ -44,10 +44,10 @@ export function ProcessCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
         style={{
           background:
-            "linear-gradient(180deg, transparent 0%, oklch(from var(--accent) l c h / 3%) 50%, transparent 100%)",
+            "linear-gradient(180deg, transparent 0%, var(--accent-scan-subtle) 50%, transparent 100%)",
           animation: "terminal-scan 2s ease-in-out infinite",
         }}
-        aria-hidden
+        aria-hidden="true"
       />
     </div>
   );

@@ -11,7 +11,7 @@ export function ScanlineOverlay({ className }: ScanlineOverlayProps) {
         "pointer-events-none absolute inset-0 terminal-scanlines",
         className,
       )}
-      aria-hidden
+      aria-hidden="true"
     />
   );
 }

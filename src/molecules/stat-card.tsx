@@ -29,7 +29,7 @@ export function StatCard({
       <span
         className="font-display text-4xl font-bold text-accent md:text-5xl"
         style={{
-          textShadow: "0 0 30px oklch(from var(--accent) l c h / 30%)",
+          textShadow: "0 0 30px var(--accent-glow-line)",
         }}
       >
         {prefix}{value}{suffix}

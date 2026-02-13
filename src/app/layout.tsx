@@ -48,6 +48,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("data-terminal-theme");if(t&&["dark","light","contrast","warm","cool"].includes(t)){document.documentElement.classList.add("theme-"+t)}else{document.documentElement.classList.add("theme-dark")}}catch(e){document.documentElement.classList.add("theme-dark")}})()`,
+          }}
+        />
+      </head>
       <body
         className={`${titilliumWeb.variable} ${sourceCodePro.variable} ${headingFont.variable} ${jetbrainsMono.variable}`}
       >

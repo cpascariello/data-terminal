@@ -1,6 +1,6 @@
 @layer utilities {
   .terminal-grid {
-    background-image: radial-gradient(circle, oklch(from var(--foreground) l c h / var(--grid-dot-opacity)) 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--foreground-dot) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
@@ -9,21 +9,21 @@
       0deg,
       transparent,
       transparent 3px,
-      oklch(from var(--foreground) l c h / var(--scanline-opacity)) 3px,
-      oklch(from var(--foreground) l c h / var(--scanline-opacity)) 4px
+      var(--foreground-scanline) 3px,
+      var(--foreground-scanline) 4px
     );
   }
 
   .terminal-glow-border {
     box-shadow:
-      0 -1px 0 0 oklch(from var(--accent) l c h / var(--glow-opacity)),
-      0 1px 0 0 oklch(from var(--accent) l c h / var(--glow-opacity));
+      0 -1px 0 0 var(--accent-glow),
+      0 1px 0 0 var(--accent-glow);
   }
 
   .terminal-glow-border-intense {
     box-shadow:
-      0 -1px 0 0 oklch(from var(--accent) l c h / var(--glow-intense-opacity)),
-      0 1px 0 0 oklch(from var(--accent) l c h / var(--glow-intense-opacity)),
-      inset 0 1px 20px oklch(from var(--accent) l c h / var(--glow-inset-opacity));
+      0 -1px 0 0 var(--accent-glow-intense),
+      0 1px 0 0 var(--accent-glow-intense),
+      inset 0 1px 20px var(--accent-glow-inset);
   }
 }

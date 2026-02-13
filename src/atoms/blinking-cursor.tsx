@@ -1,15 +1,17 @@
 import { cn } from "@/lib/cn";
 
+type CursorVariant = "block" | "line" | "underscore";
+
 interface BlinkingCursorProps {
   className?: string;
-  variant?: "block" | "line" | "underscore";
+  variant?: CursorVariant;
 }
 
 export function BlinkingCursor({
   className,
   variant = "block",
 }: BlinkingCursorProps) {
-  const chars = { block: "▋", line: "|", underscore: "_" };
+  const chars = { block: "▋", underscore: "_" } as const;
 
   if (variant === "line") {
     return (

@@ -7,4 +7,5 @@ export { HudLabel } from "./hud-label";
 export { ScanlineOverlay } from "./scanline-overlay";
 export { ServiceTag } from "./service-tag";
 export { StatusDot } from "./status-dot";
+export { TerminalTopBar } from "./terminal-top-bar";
 export { TextGradient } from "./text-gradient";

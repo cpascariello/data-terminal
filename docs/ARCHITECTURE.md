@@ -34,6 +34,7 @@ src/
 │   ├── scanline-overlay.tsx
 │   ├── service-tag.tsx
 │   ├── status-dot.tsx
+│   ├── terminal-top-bar.tsx
 │   ├── text-gradient.tsx
 │   └── index.ts       # Barrel export
 ├── molecules/    # Composed components
@@ -58,7 +59,7 @@ src/
 │   ├── animations.css # @keyframes definitions
 │   ├── utilities.css  # @layer utilities (terminal-grid, scanlines, glow)
 │   └── fonts.css      # @theme inline font mapping
-└── fonts/        # Local .woff2 font files
+└── fonts/        # Local font files (placeholder for Rigid Square .woff2)
 ```
 
 ---
@@ -79,9 +80,9 @@ src/
 
 ### CSS Compatibility
 **Context:** Glow effects and overlays need accent/foreground colors at varying opacities per theme.
-**Approach:** Uses `oklch(from var(--accent) l c h / ...)` relative color syntax to derive opacity variants from theme tokens at render time.
-**Browser support:** Chrome 111+, Safari 16.4+, Firefox 128+. All released before 2025.
-**Fallback path:** If older browser support is needed, add explicit `--accent-glow`, `--accent-glow-intense`, `--accent-glow-inset`, `--accent-scan` tokens to each theme in `tokens.css` and replace relative color syntax in `utilities.css` and component inline styles with `var(--accent-glow)` etc.
+**Approach:** Explicit pre-resolved color tokens per theme (`--accent-glow`, `--accent-scan`, `--foreground-dot`, etc.) in `tokens.css`. Components use `var(--accent-glow)` instead of relative color syntax like `oklch(from var(--accent) l c h / ...)`. This ensures compatibility with all browsers that support `oklch()` (Chrome 111+, Safari 15.4+, Firefox 113+) without requiring relative color syntax support.
+**Key files:** `src/theme/tokens.css` (derived tokens section in each theme block)
+**Notes:** When adding a new theme, remember to define all derived tokens (`--accent-glow`, `--accent-glow-intense`, `--accent-glow-inset`, `--accent-glow-line`, `--accent-hover-shadow`, `--accent-scan`, `--accent-scan-subtle`, `--foreground-dot`, `--foreground-scanline`).
 
 ### Animation Strategy
 **Context:** Terminal aesthetic requires animations (blink, scan, glitch) without heavy animation libraries.
