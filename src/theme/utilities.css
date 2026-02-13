@@ -1,0 +1,29 @@
+@layer utilities {
+  .terminal-grid {
+    background-image: radial-gradient(circle, oklch(from var(--foreground) l c h / var(--grid-dot-opacity)) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .terminal-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      oklch(from var(--foreground) l c h / var(--scanline-opacity)) 3px,
+      oklch(from var(--foreground) l c h / var(--scanline-opacity)) 4px
+    );
+  }
+
+  .terminal-glow-border {
+    box-shadow:
+      0 -1px 0 0 oklch(from var(--accent) l c h / var(--glow-opacity)),
+      0 1px 0 0 oklch(from var(--accent) l c h / var(--glow-opacity));
+  }
+
+  .terminal-glow-border-intense {
+    box-shadow:
+      0 -1px 0 0 oklch(from var(--accent) l c h / var(--glow-intense-opacity)),
+      0 1px 0 0 oklch(from var(--accent) l c h / var(--glow-intense-opacity)),
+      inset 0 1px 20px oklch(from var(--accent) l c h / var(--glow-inset-opacity));
+  }
+}
