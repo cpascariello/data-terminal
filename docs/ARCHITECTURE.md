@@ -52,8 +52,15 @@ src/
 │   ├── stat-card.tsx
 │   ├── terminal-card.tsx
 │   ├── terminal-prompt.tsx
+│   ├── checkbox.tsx
+│   ├── multi-select.tsx
+│   ├── radio-group.tsx
+│   ├── search-input.tsx
+│   ├── select.tsx
+│   ├── textarea.tsx
 │   ├── terminal-tabs.tsx
 │   ├── terminal-window.tsx
+│   ├── toggle.tsx
 │   └── index.ts       # Barrel export
 ├── hooks/        # Custom hooks
 │   ├── use-count-up.ts
@@ -92,6 +99,12 @@ src/
 **Approach:** Explicit pre-resolved color tokens per theme (`--accent-glow`, `--accent-scan`, `--foreground-dot`, etc.) in `tokens.css`. Components use `var(--accent-glow)` instead of relative color syntax like `oklch(from var(--accent) l c h / ...)`. This ensures compatibility with all browsers that support `oklch()` (Chrome 111+, Safari 15.4+, Firefox 113+) without requiring relative color syntax support.
 **Key files:** `src/theme/tokens.css` (derived tokens section in each theme block)
 **Notes:** When adding a new theme, remember to define all derived tokens (`--accent-glow`, `--accent-glow-intense`, `--accent-glow-inset`, `--accent-glow-line`, `--accent-hover-shadow`, `--accent-scan`, `--accent-scan-subtle`, `--foreground-dot`, `--foreground-scanline`).
+
+### Form Components
+**Context:** Reusable form controls with terminal aesthetic that work out of the box.
+**Approach:** Each form component is a molecule that wraps native HTML elements (checkbox, radio, button, textarea) for free accessibility and keyboard support. All use an uncontrolled-by-default state model — internal `useState` manages state, with optional controlled mode via `value`/`onChange` props. An optional `label` prop renders a `HudLabel` above the control. Styling follows the same border/focus pattern as `CommandInput`: `border-border`, `bg-foreground/[0.02]`, `border-border-hover` on focus/hover.
+**Key files:** `src/molecules/checkbox.tsx`, `src/molecules/radio-group.tsx`, `src/molecules/toggle.tsx`, `src/molecules/select.tsx`, `src/molecules/multi-select.tsx`, `src/molecules/search-input.tsx`, `src/molecules/textarea.tsx`
+**Notes:** Select and MultiSelect use custom dropdown panels (not native `<select>`) for consistent styling across browsers. Both close on outside click and Escape key.
 
 ### Animation Strategy
 **Context:** Terminal aesthetic requires animations (blink, scan, glitch) without heavy animation libraries.

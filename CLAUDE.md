@@ -192,15 +192,22 @@ src/
 
 #### Molecules (`src/molecules/`)
 - `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss
+- `Checkbox` — styled native checkbox with accent glow, Check icon, optional inline label via children
 - `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
 - `DataTable` — monospaced sortable data table with HudLabel headers
+- `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
+- `RadioGroup` — fieldset of native radio inputs with circular accent dot indicator, vertical layout
+- `SearchInput` — search icon prefix, BlinkingCursor, clear button, debounced onSearch callback
 - `Section` — layout section wrapper with spacing, dot grid, scanlines, glow border
 - `SectionHeading` — heading with optional blinking cursor, subtitle, and configurable heading level (h1-h4)
+- `Select` — custom dropdown with button trigger, chevron icon, positioned overlay panel
 - `StatCard` — animated count-up statistic with label (uses useInView + useCountUp)
+- `Textarea` — multi-line terminal-styled input with autoResize option
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor
 - `TerminalTabs` — tabbed content with dot indicators, accent glow, glitch-in animation
+- `Toggle` — sliding switch with pill-shaped track, round thumb with accent glow
 - `TerminalWindow` — terminal window with command and output lines
 
 #### Hooks (`src/hooks/`)
