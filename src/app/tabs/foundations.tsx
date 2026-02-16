@@ -257,6 +257,7 @@ export function FoundationsTab() {
             <Heading level={3}>Heading Level 3</Heading>
             <Heading level={4}>Heading Level 4</Heading>
           </div>
+          <Caption className="mt-2 block">font-heading — Inter</Caption>
         </FadeIn>
       </div>
 
@@ -277,6 +278,7 @@ export function FoundationsTab() {
               Muted text for supplementary context.
             </Text>
           </div>
+          <Caption className="mt-2 block">font-sans — Titillium Web</Caption>
         </FadeIn>
       </div>
 
@@ -286,6 +288,7 @@ export function FoundationsTab() {
           <div className="space-y-3 border border-border p-6">
             <Caption>Figure 1.0 — System diagnostic output</Caption>
           </div>
+          <Caption className="mt-2 block">font-display — JetBrains Mono</Caption>
         </FadeIn>
       </div>
 
@@ -298,6 +301,7 @@ export function FoundationsTab() {
               <Code>localhost:3000</Code>.
             </Text>
           </div>
+          <Caption className="mt-2 block">font-mono — Source Code Pro</Caption>
         </FadeIn>
       </div>
 
