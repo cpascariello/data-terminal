@@ -340,11 +340,54 @@ Horizontal scroll progress indicator.
 
 Client component. Uses CSS `scroll-timeline` with JS fallback.
 
+### Skeleton
+
+Loading placeholder with scan animation.
+
+```tsx
+<Skeleton variant="text" lines={3} />
+<Skeleton variant="heading" />
+<Skeleton variant="circle" />
+<Skeleton variant="card" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `variant` | `"text" \| "heading" \| "circle" \| "card"` | `"text"` |
+| `width` | `string \| number` | — |
+| `height` | `string \| number` | — |
+| `lines` | `number` | `1` |
+
+Server component. Multi-line text uses progressively shorter widths. Scan animation via inline `@keyframes`. `role="status"` and `aria-label="Loading"`.
+
 ---
 
 ## Molecules
 
 Composed components. Import from `@/molecules/<name>`.
+
+### Accordion
+
+Collapsible content sections for FAQ-style layouts.
+
+```tsx
+<Accordion
+  items={[
+    { id: "1", title: "Question one?", children: <span>Answer one.</span> },
+    { id: "2", title: "Question two?", children: <span>Answer two.</span> },
+  ]}
+  single
+  defaultOpen={["1"]}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `items` | `{ id: string; title: string; children: ReactNode }[]` | required |
+| `single` | `boolean` | `false` |
+| `defaultOpen` | `string[]` | `[]` |
+
+Client component. CSS grid height transition (`grid-template-rows: 0fr → 1fr`). Chevron rotation on expand. Left accent border on expanded items. `single` mode collapses other items when one opens.
 
 ### Button
 
@@ -481,6 +524,28 @@ Sortable monospaced data table.
 |------|------|---------|
 | `columns` | `{ key: string; label: string; sortable?: boolean }[]` | required |
 | `rows` | `Record<string, ReactNode>[]` | required |
+
+### Modal
+
+Dialog overlay with focus trap and terminal chrome.
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<Button onClick={() => setOpen(true)}>Open</Button>
+<Modal open={open} onClose={() => setOpen(false)} title="SYS:CONFIRM" size="sm">
+  <p>Are you sure?</p>
+</Modal>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `title` | `string` | — |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` |
+
+Client component. Portal-rendered with backdrop blur. Composes `TerminalTopBar` + `CornerNotch`. Focus trap via Tab/Shift+Tab cycling with focus restore on close. Closes on backdrop click or Escape. Body scroll lock while open. Enter animation: scale 95%→100% + fade.
 
 ### MultiSelect
 
@@ -754,6 +819,52 @@ Sliding switch with accent glow.
 | `disabled` | `boolean` | `false` |
 | `children` | `ReactNode` | — (inline label) |
 
+### Toast Notifications
+
+Auto-dismissing notification toasts with variant styles. Requires `ToastProvider` wrapping the app and `ToastContainer` in the layout.
+
+```tsx
+// layout.tsx
+<ToastProvider>
+  {children}
+  <ToastContainer />
+</ToastProvider>
+
+// In any component
+const { addToast } = useToast();
+addToast({ message: "Deployment complete.", variant: "success" });
+addToast({ message: "Memory at 92%.", variant: "warning", duration: 8000 });
+```
+
+**addToast input:**
+
+| Field | Type | Default |
+|-------|------|---------|
+| `message` | `string` | required |
+| `variant` | `"success" \| "error" \| "warning" \| "info"` | required |
+| `duration` | `number` (ms) | `5000` |
+
+Client component. Portal-rendered, stacked bottom-right, max 5 toasts. Slide-in/out animation. Progress bar countdown. Variant icons match Alert. Scanline hover effect.
+
+### Tooltip
+
+Hover/focus tooltip with directional positioning.
+
+```tsx
+<Tooltip content="Settings panel" position="top" delay={200}>
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `content` | `ReactNode` | required |
+| `children` | `ReactElement` | required |
+| `position` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` |
+| `delay` | `number` (ms) | `200` |
+
+Client component. CSS border triangle arrows. Focus + hover accessible. Accent glow shadow. `font-display` uppercase styling.
+
 ### Navbar
 
 Horizontal top bar navigation with compact and mega dropdown menus.
@@ -1014,11 +1125,11 @@ The preview page (`/`) is organized into 6 functional tabs. Each tab is a file u
 
 | Tab | File | Content |
 |-----|------|---------|
-| Foundations | `foundations.tsx` | Atomic primitives, typography (headings, text, code), buttons |
+| Foundations | `foundations.tsx` | Atomic primitives, typography, buttons, color tokens, icons |
 | Data Display | `data-display.tsx` | Terminal cards, stats, processes, boot sequence, tabs, tables, prompt |
 | Forms | `forms.tsx` | Command input, checkboxes, radios, toggles, selects, search, textarea |
-| Feedback | `feedback.tsx` | Alerts, progress bars, data stream |
+| Feedback | `feedback.tsx` | Alerts, toasts, modal, accordion, tooltips, skeleton, progress, data stream |
 | Navigation | `navigation.tsx` | Navbar (horizontal with dropdowns), Sidebar (expanded + collapsed demos) |
-| Effects | `effects.tsx` | Scroll progress, fade-in directions, typewriter, sticky sections |
+| Effects | `effects.tsx` | Scroll progress, fade-in directions, typewriter, parallax, sticky sections |
 
 Tab state is managed via `useState` with URL hash sync (`#foundations`, `#data-display`, etc.). To add a new component demo, add it to the appropriate tab file.

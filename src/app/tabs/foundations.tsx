@@ -30,14 +30,32 @@ import {
   Section,
   SectionHeading,
 } from "@/molecules";
+import { cn } from "@/lib/cn";
 import {
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  ChevronDown,
   Copy,
+  Database,
   Download,
   ExternalLink,
+  Eye,
+  Layers,
+  Lock,
+  Monitor,
+  Network,
+  RefreshCw,
   Search,
+  Server,
   Settings,
+  Shield,
   Terminal,
   Trash2,
+  Upload,
+  Wifi,
+  X,
+  Zap,
 } from "lucide-react";
 
 export function FoundationsTab() {
@@ -429,6 +447,142 @@ export function Dashboard() {
               size="lg"
               aria-label="Settings large"
             />
+          </div>
+        </FadeIn>
+      </div>
+    </Section>
+
+    <Section spacing="lg">
+      <SectionHeading subtitle="Semantic design tokens from the active theme.">
+        Color Tokens
+      </SectionHeading>
+
+      <div className="mt-12 space-y-8">
+        <HudLabel>CORE_TOKENS</HudLabel>
+        <FadeIn>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { token: "--background", label: "background", cls: "bg-background border border-border" },
+              { token: "--foreground", label: "foreground", cls: "bg-foreground" },
+              { token: "--accent", label: "accent", cls: "bg-accent" },
+              { token: "--primary", label: "primary", cls: "bg-primary" },
+              { token: "--muted", label: "muted", cls: "bg-muted" },
+              { token: "--card", label: "card", cls: "bg-card border border-border" },
+            ].map(({ token, label, cls }) => (
+              <div key={token} className="flex items-center gap-3 border border-border p-3">
+                <div className={cn("h-10 w-10 shrink-0", cls)} />
+                <div>
+                  <Caption className="block">{label}</Caption>
+                  <span className="font-mono text-xs text-foreground/40">{token}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+
+        <HudLabel>SEMANTIC_TOKENS</HudLabel>
+        <FadeIn delay={0.1}>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { token: "--success", label: "success", cls: "bg-success" },
+              { token: "--warning", label: "warning", cls: "bg-warning" },
+              { token: "--error", label: "error", cls: "bg-error" },
+              { token: "--border", label: "border", cls: "bg-border" },
+              { token: "--ring", label: "ring", cls: "bg-ring" },
+              { token: "--input", label: "input", cls: "bg-input" },
+            ].map(({ token, label, cls }) => (
+              <div key={token} className="flex items-center gap-3 border border-border p-3">
+                <div className={cn("h-10 w-10 shrink-0", cls)} />
+                <div>
+                  <Caption className="block">{label}</Caption>
+                  <span className="font-mono text-xs text-foreground/40">{token}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+
+        <HudLabel>FOREGROUND_PAIRINGS</HudLabel>
+        <FadeIn delay={0.2}>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[
+              { bg: "bg-accent", fg: "text-accent-foreground", label: "accent / accent-foreground" },
+              { bg: "bg-primary", fg: "text-primary-foreground", label: "primary / primary-foreground" },
+              { bg: "bg-muted", fg: "text-muted-foreground", label: "muted / muted-foreground" },
+              { bg: "bg-card", fg: "text-card-foreground", label: "card / card-foreground" },
+            ].map(({ bg, fg, label }) => (
+              <div key={label} className={cn("p-4", bg)}>
+                <span className={cn("font-display text-sm", fg)}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+      </div>
+    </Section>
+
+    <Section spacing="lg">
+      <SectionHeading subtitle="Lucide icons used throughout the design system.">
+        Icons
+      </SectionHeading>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>SYSTEM_ICONS</HudLabel>
+        <FadeIn>
+          <div className="grid grid-cols-4 gap-4 sm:grid-cols-6 lg:grid-cols-8">
+            {[
+              { icon: Terminal, name: "Terminal" },
+              { icon: Monitor, name: "Monitor" },
+              { icon: Server, name: "Server" },
+              { icon: Database, name: "Database" },
+              { icon: Network, name: "Network" },
+              { icon: Wifi, name: "Wifi" },
+              { icon: Shield, name: "Shield" },
+              { icon: Lock, name: "Lock" },
+              { icon: Activity, name: "Activity" },
+              { icon: Zap, name: "Zap" },
+              { icon: Layers, name: "Layers" },
+              { icon: Eye, name: "Eye" },
+              { icon: Settings, name: "Settings" },
+              { icon: RefreshCw, name: "RefreshCw" },
+              { icon: Upload, name: "Upload" },
+              { icon: Download, name: "Download" },
+            ].map(({ icon: IconComp, name }) => (
+              <div
+                key={name}
+                className="flex flex-col items-center gap-2 border border-border p-3 transition-colors hover:border-border-hover"
+              >
+                <IconComp size={20} className="text-foreground/70" />
+                <span className="font-display text-[10px] uppercase tracking-wider text-foreground/40">
+                  {name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </FadeIn>
+
+        <HudLabel>ACTION_ICONS</HudLabel>
+        <FadeIn delay={0.1}>
+          <div className="grid grid-cols-4 gap-4 sm:grid-cols-6 lg:grid-cols-8">
+            {[
+              { icon: Search, name: "Search" },
+              { icon: Copy, name: "Copy" },
+              { icon: Trash2, name: "Trash" },
+              { icon: ExternalLink, name: "External" },
+              { icon: ChevronDown, name: "Chevron" },
+              { icon: X, name: "Close" },
+              { icon: CheckCircle, name: "Check" },
+              { icon: AlertTriangle, name: "Warning" },
+            ].map(({ icon: IconComp, name }) => (
+              <div
+                key={name}
+                className="flex flex-col items-center gap-2 border border-border p-3 transition-colors hover:border-border-hover"
+              >
+                <IconComp size={20} className="text-foreground/70" />
+                <span className="font-display text-[10px] uppercase tracking-wider text-foreground/40">
+                  {name}
+                </span>
+              </div>
+            ))}
           </div>
         </FadeIn>
       </div>

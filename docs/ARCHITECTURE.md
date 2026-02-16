@@ -24,7 +24,7 @@ src/
 │   ├── globals.css    # Tailwind imports + @theme inline mapping
 │   ├── layout.tsx     # Root layout with font loading + ThemeProvider
 │   ├── page.tsx       # Tab shell: header + tab bar + active tab
-│   ├── scroll-effects-demo.tsx  # Client component for StickySection demo
+│   ├── sticky-section-demo.tsx  # Client component for StickySection demo
 │   ├── theme-switcher.tsx
 │   └── tabs/          # Preview page tab content
 │       ├── foundations.tsx    # Atoms showcase
@@ -49,6 +49,7 @@ src/
 │   ├── progress-bar.tsx
 │   ├── scanline-overlay.tsx
 │   ├── service-tag.tsx
+│   ├── skeleton.tsx
 │   ├── status-dot.tsx
 │   ├── terminal-top-bar.tsx
 │   ├── text-flicker.tsx
@@ -57,6 +58,7 @@ src/
 ├── types/        # Shared TypeScript types
 │   └── nav.ts         # NavItem type + isItemActive utility
 ├── molecules/    # Composed components
+│   ├── accordion.tsx
 │   ├── alert.tsx
 │   ├── button.tsx
 │   ├── checkbox.tsx
@@ -64,6 +66,7 @@ src/
 │   ├── command-input.tsx
 │   ├── data-table.tsx
 │   ├── icon-button.tsx
+│   ├── modal.tsx
 │   ├── multi-select.tsx
 │   ├── navbar.tsx
 │   ├── process-card.tsx
@@ -80,7 +83,9 @@ src/
 │   ├── terminal-tabs.tsx
 │   ├── terminal-window.tsx
 │   ├── textarea.tsx
+│   ├── toast.tsx
 │   ├── toggle.tsx
+│   ├── tooltip.tsx
 │   └── index.ts       # Barrel export
 ├── hooks/        # Custom hooks
 │   ├── use-count-up.ts
@@ -93,7 +98,8 @@ src/
 │   ├── highlighter.ts # Shiki singleton with CSS-variables theme
 │   └── supports-scroll-timeline.ts  # CSS scroll-timeline feature detection
 ├── providers/    # Context providers
-│   └── theme-provider.tsx
+│   ├── theme-provider.tsx
+│   └── toast-provider.tsx
 ├── theme/        # Design tokens and CSS
 │   ├── tokens.css     # CSS custom properties per theme
 │   ├── animations.css # @keyframes definitions
@@ -154,6 +160,12 @@ src/
 **Key files:** `src/molecules/button.tsx`, `src/molecules/icon-button.tsx`
 **Notes:** Link variant strips padding for inline text use. Danger variant exists for destructive actions.
 
+### Feedback Components
+**Context:** User feedback patterns — alerts, toasts, modals, accordions, tooltips, skeletons.
+**Approach:** Each component follows the design system's variant pattern with `Record<Variant, string>` maps for styling. Toast uses a Provider/Context pattern (`ToastProvider` + `useToast` hook) with portal rendering via `createPortal`. Modal uses portal + `useFocusTrap` custom hook for Tab cycling and focus restore. Accordion uses CSS grid trick (`grid-template-rows: 0fr → 1fr`) for smooth height transitions. Tooltip uses absolute positioning with CSS border triangles for arrows. Skeleton is a server component with inline `@keyframes` for the scan animation.
+**Key files:** `src/molecules/accordion.tsx`, `src/molecules/modal.tsx`, `src/molecules/toast.tsx`, `src/molecules/tooltip.tsx`, `src/atoms/skeleton.tsx`, `src/providers/toast-provider.tsx`
+**Notes:** Toast system requires both `ToastProvider` and `ToastContainer` in the layout. Modal locks body scroll via `overflow-hidden` on `<body>`. Tooltip delay prevents flicker on quick mouse movements.
+
 ### Navigation
 **Context:** Horizontal and vertical navigation components with two-level hierarchy and mega dropdown support.
 **Approach:** Two independent molecules sharing a `NavItem` type from `src/types/nav.ts`. `Navbar` renders a sticky horizontal bar with two dropdown modes: compact (via `children`) and mega (via `mega`). Mega dropdowns span the full navbar width with a two-column layout (left: heading + links/description, right: optional featured items with images). Positioning uses `static` on the trigger container and `relative` on the `<nav>` so the mega panel anchors to the navbar. Hover handlers are passed to the mega panel to maintain the hover zone across the gap. `Sidebar` renders a vertical panel that collapses to an icon rail with tooltips and flyouts. Both use uncontrolled-default/controlled-override state for active item tracking. Dropdowns/flyouts use hover with delayed enter/leave timers plus click toggle and Escape/outside-click dismiss.
@@ -191,11 +203,11 @@ src/
 **Tab mapping:**
 | Tab | Content |
 |-----|---------|
-| Foundations | Atomic primitives, typography (headings, text, code), buttons |
+| Foundations | Atomic primitives, typography, buttons, color tokens, icons |
 | Data Display | Terminal cards, stats, processes, tables, tabs, prompt |
 | Forms | Command input, checkboxes, radios, toggles, selects, textarea |
-| Feedback | Alerts, progress bars, data stream |
+| Feedback | Alerts, toasts, modal, accordion, tooltips, skeleton, progress, data stream |
 | Navigation | Navbar (horizontal with dropdowns), Sidebar (expanded + collapsed demos) |
-| Effects | Scroll effects, fade-in directions, typewriter, sticky sections |
+| Effects | Scroll progress, fade-in directions, typewriter, parallax, sticky sections |
 
 **Notes:** To add a component demo, add it to the appropriate tab file. Tabs with no content show a "coming soon" placeholder. Tab state syncs with URL hash (`#foundations`, `#data-display`, etc.) for direct linking.

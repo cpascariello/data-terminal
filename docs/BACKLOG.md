@@ -4,60 +4,7 @@ Parking lot for scope creep and deferred ideas.
 
 ---
 
-### 2026-02-16 - FAQ accordion / dropdown
-**Source:** Identified during tabbed preview page design
-**Description:** Collapsible content sections for FAQ-style layouts. Add to Feedback tab.
-**Priority:** Medium
-
-### 2026-02-16 - Modal / dialog
-**Source:** Identified during tabbed preview page design
-**Description:** Modal overlay with backdrop, close button, focus trap. Add to Feedback tab.
-**Priority:** Medium
-
-### 2026-02-16 - Toast notifications
-**Source:** Identified during tabbed preview page design
-**Description:** Auto-dismissing notification toasts with variants (success/error/info/warning). Add to Feedback tab.
-**Priority:** Medium
-
-### 2026-02-16 - Tooltips
-**Source:** Identified during tabbed preview page design
-**Description:** Hover/focus tooltips with positioning (top/bottom/left/right). Add to Feedback tab.
-**Priority:** Low
-
-### 2026-02-16 - Loading skeletons
-**Source:** Identified during tabbed preview page design
-**Description:** Skeleton placeholder components for loading states. Add to Feedback tab.
-**Priority:** Low
-
-### 2026-02-16 - Color palette / token reference
-**Source:** Identified during tabbed preview page design
-**Description:** Visual display of all theme tokens with swatches. Add to Foundations tab.
-**Priority:** Low
-
-### 2026-02-16 - Icons showcase
-**Source:** Identified during tabbed preview page design
-**Description:** Icon system and visual reference of available icons. Add to Foundations tab.
-**Priority:** Low
-
-### 2026-02-16 - Scroll effects: review suggestions not yet applied
-**Source:** Code review of feature/scroll-effects branch
-**Description:** The frontend expert review found 5 nice-to-have suggestions that weren't implemented:
-- S1: Extract CSS variable helper in FadeIn (the nested ternary at lines 63-69 is dense)
-- S2: Use `satisfies` instead of `Record<string, string>` for `directionClasses` in FadeIn
-- S3: Memoize parallax style object in `useParallax` with `useMemo`
-- S4: Rename `ScrollEffectsDemo` to `StickySectionDemo` (or make it demo all 3 scroll effects)
-- S5: Listen for live `prefers-reduced-motion` changes in hooks (currently a one-time snapshot, consistent with existing `useCountUp`)
-**Priority:** Low
-
-### 2026-02-16 - Parallax not yet demonstrated on showcase page
-**Source:** Identified during scroll effects implementation
-**Description:** The `useParallax` hook is implemented but not yet used on the showcase page. Plan was to apply it to `DataStream` and `DotGrid` decorative elements so backgrounds drift at a different rate than content. This requires a client component wrapper since `useParallax` is a hook and the showcase page is a server component.
-**Priority:** Medium
-
-### 2026-02-13 - Add oxlint for linting
-**Source:** Identified during initial implementation — Next.js 16 removed `next lint`
-**Description:** Install oxlint and oxfmt, add `pnpm lint` and `pnpm format` scripts. Enable typescript, import, unicorn plugins per global standards.
-**Priority:** Medium
+*(No open items)*
 
 ---
 
@@ -74,3 +21,43 @@ Parking lot for scope creep and deferred ideas.
 ### 2026-02-16 - Navigation components
 **Completed:** 2026-02-16
 **Delivered:** Navbar (horizontal, dropdown menus, hover/click), Sidebar (vertical, collapsible icon rail, tooltips, flyouts)
+
+### 2026-02-16 - FAQ accordion
+**Completed:** 2026-02-16
+**Delivered:** Accordion molecule with CSS grid height transition, chevron rotation, single/multi mode
+
+### 2026-02-16 - Modal / dialog
+**Completed:** 2026-02-16
+**Delivered:** Modal molecule with portal, focus trap, TerminalTopBar + CornerNotch chrome, 3 sizes
+
+### 2026-02-16 - Toast notifications
+**Completed:** 2026-02-16
+**Delivered:** Toast system (ToastProvider + ToastContainer + useToast hook), 4 variants, auto-dismiss with progress bar
+
+### 2026-02-16 - Tooltips
+**Completed:** 2026-02-16
+**Delivered:** Tooltip molecule with 4 positions, CSS arrow, hover delay, focus accessibility
+
+### 2026-02-16 - Loading skeletons
+**Completed:** 2026-02-16
+**Delivered:** Skeleton atom (server component), 4 variants (text/heading/circle/card), scan animation
+
+### 2026-02-16 - Color palette / token reference
+**Completed:** 2026-02-16
+**Delivered:** Color token swatches (core, semantic, foreground pairings) in Foundations tab
+
+### 2026-02-16 - Icons showcase
+**Completed:** 2026-02-16
+**Delivered:** Lucide icon grid (system + action icons) in Foundations tab
+
+### 2026-02-16 - Scroll effects cleanup
+**Completed:** 2026-02-16
+**Delivered:** All 5 review suggestions applied (satisfies, buildFadeStyle, useMemo, rename, live reduced-motion listeners)
+
+### 2026-02-16 - Parallax demo
+**Completed:** 2026-02-16
+**Delivered:** Parallax demo section in Effects tab showing 3 speed levels with useParallax hook
+
+### 2026-02-16 - oxlint setup
+**Completed:** 2026-02-16
+**Delivered:** oxlint 1.48.0 with typescript/import/unicorn plugins, `pnpm lint` script, 0 warnings

@@ -147,6 +147,7 @@ A cyberpunk terminal aesthetic design system extracted into standalone React + T
 pnpm dev        # Dev server (Turbopack)
 pnpm build      # Production build
 pnpm typecheck  # Type check
+pnpm lint       # Lint with oxlint
 ```
 
 ### Key Directories
@@ -160,7 +161,7 @@ src/
 ├── hooks/        # Custom React hooks
 ├── lib/          # Utilities (cn)
 ├── types/        # Shared TypeScript types (NavItem)
-├── providers/    # Context providers (ThemeProvider)
+├── providers/    # Context providers (ThemeProvider, ToastProvider)
 ├── theme/        # CSS tokens, animations, utilities, fonts
 └── fonts/        # Local font files (.woff2)
 ```
@@ -173,7 +174,9 @@ src/
 - Scroll effects (fade-in, parallax, sticky sections, scroll progress)
 - Typography system (Heading, Text, Caption, Code, CodeBlock with Shiki syntax highlighting)
 - Button system (5 variants, 3 sizes, icon support, IconButton)
-- Reduced-motion support
+- Feedback components (Accordion, Modal, Toast notifications, Tooltip, Skeleton)
+- Linting with oxlint (typescript, import, unicorn plugins)
+- Reduced-motion support (live listener for preference changes)
 - Theme persistence via localStorage
 - Tabbed preview page (Foundations, Data Display, Forms, Feedback, Navigation, Effects) with hash-based routing
 
@@ -201,11 +204,13 @@ src/
 - `TerminalTopBar` — window chrome bar with dots, optional tag/label, configurable dot position
 - `Text` — body text with body/large/small/muted variants (font-sans)
 - `TextFlicker` — accent-colored text with random letter opacity flicker effect
+- `Skeleton` — loading placeholder with scan animation, 4 variants (text/heading/circle/card), multi-line support (server component)
 - `FadeIn` — scroll-triggered fade-in with configurable direction, distance, delay, and duration (IntersectionObserver + CSS transitions)
 - `ScrollProgressBar` — horizontal scroll progress indicator, CSS scroll-timeline with JS fallback, inline or fixed position
 - `TypewriterText` — character-by-character text reveal with BlinkingCursor
 
 #### Molecules (`src/molecules/`)
+- `Accordion` — collapsible content sections with CSS grid height transition, chevron rotation, single/multi mode, left accent border
 - `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss
 - `Button` — action button with 5 variants (primary/secondary/ghost/link/danger), 3 sizes, optional left/right icons, renders as button or anchor
 - `Checkbox` — styled native checkbox with accent glow, Check icon, optional inline label via children
@@ -213,6 +218,7 @@ src/
 - `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
 - `DataTable` — monospaced sortable data table with HudLabel headers
 - `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label
+- `Modal` — portal-rendered dialog with focus trap, TerminalTopBar + CornerNotch chrome, backdrop blur, 3 sizes (sm/md/lg)
 - `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items
 - `Navbar` — horizontal top bar with logo, nav items with compact dropdowns (via `children`) and full-width mega dropdowns (via `mega` with heading, description, links, optional featured items with images), actions slot; hover/click dropdowns, uncontrolled/controlled active state
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
@@ -228,7 +234,9 @@ src/
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor
 - `TerminalTabs` — tabbed content with dot indicators, accent glow, glitch-in animation
+- `ToastContainer` — portal-rendered toast stack (bottom-right), slide-in/out animation, progress bar countdown, max 5
 - `Toggle` — sliding switch with pill-shaped track, round thumb with accent glow
+- `Tooltip` — hover/focus tooltip with 4 positions, CSS arrow, configurable delay, accent glow
 - `TerminalWindow` — terminal window with command and output lines
 
 #### Hooks (`src/hooks/`)
@@ -240,3 +248,4 @@ src/
 
 #### Providers (`src/providers/`)
 - `ThemeProvider` — theme context with localStorage persistence and class toggling
+- `ToastProvider` — toast context with addToast/removeToast, useToast hook, max 5 toasts

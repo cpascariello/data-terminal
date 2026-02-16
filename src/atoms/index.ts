@@ -15,6 +15,7 @@ export { ProgressBar } from "./progress-bar";
 export { ScanlineOverlay } from "./scanline-overlay";
 export { ScrollProgressBar } from "./scroll-progress-bar";
 export { ServiceTag } from "./service-tag";
+export { Skeleton } from "./skeleton";
 export { StatusDot } from "./status-dot";
 export { TerminalTopBar } from "./terminal-top-bar";
 export { Text } from "./text";

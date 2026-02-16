@@ -6,6 +6,8 @@ import {
   JetBrains_Mono,
 } from "next/font/google";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { ToastProvider } from "@/providers/toast-provider";
+import { ToastContainer } from "@/molecules/toast";
 import "./globals.css";
 
 const titilliumWeb = Titillium_Web({
@@ -58,7 +60,12 @@ export default function RootLayout({
       <body
         className={`${titilliumWeb.variable} ${sourceCodePro.variable} ${headingFont.variable} ${jetbrainsMono.variable}`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ToastProvider>
+            {children}
+            <ToastContainer />
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

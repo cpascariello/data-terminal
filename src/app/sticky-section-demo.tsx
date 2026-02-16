@@ -11,7 +11,7 @@ import {
   TerminalCard,
 } from "@/molecules";
 
-export function ScrollEffectsDemo() {
+export function StickySectionDemo() {
   return (
     <>
       <GlowLine />

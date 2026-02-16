@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "import", "unicorn"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "unicorn/filename-case": "off",
+    "import/no-default-export": "off"
+  },
+  "ignorePatterns": [".next", "node_modules"]
+}

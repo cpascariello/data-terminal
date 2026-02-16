@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface UseParallaxOptions {
   /** Parallax speed factor (default: 0.5). 1 = no movement, 0 = full displacement. */
@@ -16,13 +16,23 @@ export function useParallax<T extends HTMLElement = HTMLElement>(
   const ref = useRef<T>(null);
   const rafId = useRef(0);
   const [offset, setOffset] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mql.matches);
+    function onChange(e: MediaQueryListEvent) {
+      setReducedMotion(e.matches);
+    }
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
-    if (prefersReduced) return;
+  useEffect(() => {
+    if (reducedMotion) {
+      setOffset(0);
+      return;
+    }
 
     function update() {
       const element = ref.current;
@@ -49,15 +59,15 @@ export function useParallax<T extends HTMLElement = HTMLElement>(
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [speed]);
+  }, [speed, reducedMotion]);
 
-  const translate =
-    direction === "horizontal"
-      ? `translateX(${offset}px)`
-      : `translateY(${offset}px)`;
+  const style = useMemo<React.CSSProperties>(() => {
+    const translate =
+      direction === "horizontal"
+        ? `translateX(${offset}px)`
+        : `translateY(${offset}px)`;
+    return { transform: translate };
+  }, [direction, offset]);
 
-  return {
-    ref,
-    style: { transform: translate },
-  };
+  return { ref, style };
 }

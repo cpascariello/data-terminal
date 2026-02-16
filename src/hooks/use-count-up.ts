@@ -20,9 +20,25 @@ export function useCountUp({
   enabled = true,
 }: UseCountUpOptions): string {
   const [value, setValue] = useState(from);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mql.matches);
+    function onChange(e: MediaQueryListEvent) {
+      setReducedMotion(e.matches);
+    }
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     if (!enabled) return;
+
+    if (reducedMotion) {
+      setValue(to);
+      return;
+    }
 
     const start = performance.now();
     let raf: number;
@@ -38,18 +54,9 @@ export function useCountUp({
       }
     }
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReduced) {
-      setValue(to);
-      return;
-    }
-
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [from, to, duration, enabled]);
+  }, [from, to, duration, enabled, reducedMotion]);
 
   return decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
 }

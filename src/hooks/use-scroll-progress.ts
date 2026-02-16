@@ -13,15 +13,22 @@ export function useScrollProgress(
   const { target, enabled = true } = options;
   const [progress, setProgress] = useState(0);
   const rafId = useRef(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mql.matches);
+    function onChange(e: MediaQueryListEvent) {
+      setReducedMotion(e.matches);
+    }
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     if (!enabled) return;
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReduced) {
+    if (reducedMotion) {
       setProgress(1);
       return;
     }
@@ -55,7 +62,7 @@ export function useScrollProgress(
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [target, enabled]);
+  }, [target, enabled, reducedMotion]);
 
   return progress;
 }
