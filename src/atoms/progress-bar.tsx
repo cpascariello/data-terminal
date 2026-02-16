@@ -1,15 +1,18 @@
 import { cn } from "@/lib/cn";
 
-interface ProgressBarProps {
-  value?: number;
-  indeterminate?: boolean;
+export type ProgressBarProps = {
   className?: string;
-}
+  label?: string;
+} & (
+  | { indeterminate: true; value?: never }
+  | { indeterminate?: false; value?: number }
+);
 
 export function ProgressBar({
   value = 0,
   indeterminate = false,
   className,
+  label,
 }: ProgressBarProps) {
   const clamped = Math.min(100, Math.max(0, value));
 
@@ -20,6 +23,7 @@ export function ProgressBar({
         className,
       )}
       role="progressbar"
+      aria-label={label}
       aria-valuenow={indeterminate ? undefined : clamped}
       aria-valuemin={0}
       aria-valuemax={100}

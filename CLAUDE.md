@@ -160,6 +160,8 @@ src/
 ├── molecules/    # Composed components (TerminalCard, Section, etc.)
 ├── hooks/        # Custom React hooks
 ├── lib/          # Utilities (cn)
+│   ├── feedback-variants.ts # Shared feedback variant maps
+│   ├── button-variants.ts   # Shared button variant styles
 ├── types/        # Shared TypeScript types (NavItem)
 ├── providers/    # Context providers (ThemeProvider, ToastProvider)
 ├── theme/        # CSS tokens, animations, utilities, fonts
@@ -186,7 +188,7 @@ src/
 
 #### Atoms (`src/atoms/`)
 - `Badge` — small pill with 5 variants (success/warning/error/info/neutral), monospace uppercase
-- `BlinkingCursor` — animated cursor with block, line, underscore variants
+- `BlinkingCursor` — animated cursor with block, line, underscore variants, aria-hidden
 - `Caption` — small monospace uppercase annotation text (font-display)
 - `Code` — inline code span with accent color and subtle background (font-mono)
 - `CornerNotch` — container with clipped top-right corner
@@ -194,56 +196,58 @@ src/
 - `DotGrid` — decorative dot grid background overlay
 - `GlitchText` — text with random characters swapping to symbols at intervals
 - `GlowBorder` — container with glowing border (normal/intense)
-- `GlowLine` — horizontal divider with glow effect
+- `GlowLine` — horizontal divider with glow effect, role=separator
+- `HoverScanline` — reusable hover scanline effect with intensity (normal/subtle) and speed props, `aria-hidden`, server component
 - `Heading` — semantic h1-h4 with 4-level type scale (font-heading)
 - `HudLabel` — small uppercase tracking label
-- `ProgressBar` — determinate (percentage) and indeterminate (sweeping) progress bar with glow
+- `ProgressBar` — determinate (percentage) and indeterminate (sweeping) progress bar with glow, discriminated union props, label prop
 - `ScanlineOverlay` — CRT scanline effect overlay
 - `ServiceTag` — bracketed service identifier `[TAG]`
-- `StatusDot` — pulsing status indicator dot
+- `StatusDot` — pulsing status indicator dot with 5 variants (success/warning/error/info/neutral), aria-hidden
 - `TerminalTopBar` — window chrome bar with dots, optional tag/label, configurable dot position
 - `Text` — body text with body/large/small/muted variants (font-sans)
 - `TextFlicker` — accent-colored text with random letter opacity flicker effect
-- `Skeleton` — loading placeholder with scan animation, 4 variants (text/heading/circle/card), multi-line support (server component)
+- `Skeleton` — loading placeholder with scan animation via animations.css, 4 variants (text/heading/circle/card), multi-line support (server component)
 - `FadeIn` — scroll-triggered fade-in with configurable direction, distance, delay, and duration (IntersectionObserver + CSS transitions)
 - `ScrollProgressBar` — horizontal scroll progress indicator, CSS scroll-timeline with JS fallback, inline or fixed position
 - `TypewriterText` — character-by-character text reveal with BlinkingCursor
 
 #### Molecules (`src/molecules/`)
-- `Accordion` — collapsible content sections with CSS grid height transition, chevron rotation, single/multi mode, left accent border
-- `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss
-- `Button` — action button with 5 variants (primary/secondary/ghost/link/danger), 3 sizes, optional left/right icons, renders as button or anchor
+- `Accordion` — collapsible content sections with CSS grid height transition, chevron rotation, single/multi mode, left accent border, ARIA region/controls pattern, HoverScanline
+- `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss, shared variant maps from feedback-variants, HoverScanline
+- `Button` — action button with 5 variants (primary/secondary/ghost/link/danger), 3 sizes, optional left/right icons, renders as button or anchor, forwardRef support
 - `Checkbox` — styled native checkbox with accent glow, Check icon, optional inline label via children
 - `CodeBlock` — multi-line code with Shiki syntax highlighting, TerminalTopBar, line numbers, copy button, CSS-variables theme
 - `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
-- `DataTable` — monospaced sortable data table with HudLabel headers
-- `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label
-- `Modal` — portal-rendered dialog with focus trap, TerminalTopBar + CornerNotch chrome, backdrop blur, 3 sizes (sm/md/lg)
-- `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items
-- `Navbar` — horizontal top bar with logo, nav items with compact dropdowns (via `children`) and full-width mega dropdowns (via `mega` with heading, description, links, optional featured items with images), actions slot; hover/click dropdowns, uncontrolled/controlled active state
+- `DataTable` — monospaced sortable data table with HudLabel headers, generic type parameter, accessible sortable headers with aria-sort
+- `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label, forwardRef support
+- `Modal` — portal-rendered dialog with focus trap, TerminalTopBar + CornerNotch chrome, backdrop blur, 3 sizes (sm/md/lg), useDismiss, dialog role on panel
+- `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items, ARIA listbox pattern, keyboard navigation, useDismiss
+- `Navbar` — horizontal top bar with logo, nav items with compact dropdowns (via `children`) and full-width mega dropdowns (via `mega` with heading, description, links, optional featured items with images), actions slot; hover/click dropdowns, uncontrolled/controlled active state, ARIA menu pattern, keyboard navigation, useDismiss
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
 - `RadioGroup` — fieldset of native radio inputs with circular accent dot indicator, vertical layout
 - `SearchInput` — search icon prefix, BlinkingCursor, clear button, debounced onSearch callback
 - `Sidebar` — vertical nav with collapsible icon rail, header with logo, two-level items with group expand, tooltips and flyouts when collapsed
 - `Section` — layout section wrapper with spacing, dot grid, scanlines, glow border
 - `SectionHeading` — heading with optional blinking cursor, subtitle, and configurable heading level (h1-h4)
-- `Select` — custom dropdown with button trigger, chevron icon, positioned overlay panel
+- `Select` — custom dropdown with button trigger, chevron icon, positioned overlay panel, ARIA listbox pattern, keyboard navigation, useDismiss
 - `StatCard` — animated count-up statistic with label (uses useInView + useCountUp)
 - `StickySection` — sticky scroll-through section with render prop providing progress and activeStep
 - `Textarea` — multi-line terminal-styled input with autoResize option
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor
-- `TerminalTabs` — tabbed content with dot indicators, accent glow, glitch-in animation
-- `ToastContainer` — portal-rendered toast stack (bottom-right), slide-in/out animation, progress bar countdown, max 5
+- `TerminalTabs` — tabbed content with dot indicators, accent glow, glitch-in animation, ARIA tablist pattern with keyboard navigation
+- `ToastContainer` — portal-rendered toast stack (bottom-right), slide-in/out animation, progress bar countdown, max 5, shared variant maps, role=alert for error/warning, HoverScanline
 - `Toggle` — sliding switch with pill-shaped track, round thumb with accent glow
-- `Tooltip` — hover/focus tooltip with 4 positions, CSS arrow, configurable delay, accent glow
+- `Tooltip` — hover/focus tooltip with 4 positions, CSS arrow, configurable delay, accent glow, aria-describedby via useId
 - `TerminalWindow` — terminal window with command and output lines
 
 #### Hooks (`src/hooks/`)
 - `useCountUp` — rAF-based number animation with easing and reduced-motion support
 - `useInView` — IntersectionObserver hook for scroll-triggered effects
-- `useParallax` — rAF-throttled parallax displacement hook returning ref + style
-- `useScrollProgress` — scroll progress (0–1) for page or target element, rAF-throttled
+- `useParallax` — rAF-throttled parallax displacement hook returning ref + style, direct DOM manipulation, no React re-renders
+- `useDismiss` — click-outside + Escape key dismiss hook for dropdowns and modals
+- `useScrollProgress` — scroll progress (0–1) for page or target element, rAF-throttled, threshold check to reduce re-renders
 - `useTheme` — ThemeContext consumer hook
 
 #### Providers (`src/providers/`)

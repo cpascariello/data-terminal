@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { BlinkingCursor } from "@/atoms/blinking-cursor";
 
-interface CommandInputProps {
+export interface CommandInputProps {
   prefix?: string;
   placeholder?: string;
   onSubmit?: (value: string) => void;
@@ -49,6 +49,7 @@ export function CommandInput({
           onBlur={() => setFocused(false)}
           onKeyDown={handleKeyDown}
           placeholder={!focused ? placeholder : undefined}
+          aria-label="Command input"
           className={cn(
             "w-full bg-transparent font-display text-sm text-accent outline-none",
             "placeholder:text-foreground/20",

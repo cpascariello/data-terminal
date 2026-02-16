@@ -62,15 +62,17 @@ export function TextFlicker({ children, className }: TextFlickerProps) {
   }, [children]);
 
   return (
-    <span className={cn("text-accent", className)}>
-      {[...children].map((char, i) => (
-        <span
-          key={i}
-          className={flickering.has(i) ? "opacity-0" : undefined}
-        >
-          {char}
-        </span>
-      ))}
+    <span className={cn("text-accent", className)} aria-label={children}>
+      {[...children].map((char, i) => {
+        if (flickering.has(i)) {
+          return (
+            <span key={i} className="opacity-0">
+              {char}
+            </span>
+          );
+        }
+        return char;
+      })}
     </span>
   );
 }

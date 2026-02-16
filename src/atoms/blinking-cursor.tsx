@@ -21,6 +21,7 @@ export function BlinkingCursor({
           height: "0.8em",
           animation: "terminal-blink 1s step-end infinite",
         }}
+        aria-hidden="true"
       />
     );
   }
@@ -29,6 +30,7 @@ export function BlinkingCursor({
     <span
       className={cn("font-display text-accent", className)}
       style={{ animation: "terminal-blink 1s step-end infinite" }}
+      aria-hidden="true"
     >
       {chars[variant]}
     </span>

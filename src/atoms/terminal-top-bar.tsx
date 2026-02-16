@@ -7,8 +7,8 @@ interface TerminalTopBarProps {
   /** Text label shown next to dots */
   label?: string | undefined;
   /** Position of window dots relative to tag/label */
-  dotsPosition?: "left" | "right" | undefined;
-  className?: string | undefined;
+  dotsPosition?: "left" | "right";
+  className?: string;
 }
 
 export function TerminalTopBar({

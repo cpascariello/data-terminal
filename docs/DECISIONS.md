@@ -4,6 +4,36 @@ Decision log with rationale.
 
 ---
 
+## Decision #14 - 2026-02-17
+**Context:** Code review found 53 issues across the codebase — ARIA gaps, duplicated code, performance issues, and inconsistent imports.
+**Decision:** Implement all 53 fixes systematically in 7 phases with automated verification (typecheck + lint + test + build) between each wave.
+**Rationale:** Batch processing with verification gates catches regressions early. Parallelizing independent phases (hooks ∥ atoms, forms ∥ feedback) speeds execution without conflict risk.
+**Alternatives considered:** Cherry-picking individual fixes (slower, harder to verify holistically)
+
+## Decision #13 - 2026-02-17
+**Context:** Button and IconButton duplicated variant styles and base classes. Alert and Toast duplicated variant-to-style/icon/color maps.
+**Decision:** Extract shared maps into `src/lib/feedback-variants.ts` and `src/lib/button-variants.ts`. Components import from these modules.
+**Rationale:** Single source of truth for variant definitions. Adding a new variant or changing a style updates all consumers. Button's unique `link` variant stays local since only Button uses it.
+**Alternatives considered:** Keeping duplicated code (simpler but drift-prone), creating a generic variant system (over-engineered for two use cases)
+
+## Decision #12 - 2026-02-17
+**Context:** Six molecules duplicated an identical scanline hover effect div (15+ lines each).
+**Decision:** Extract into `HoverScanline` atom with `intensity` and `speed` props.
+**Rationale:** Eliminates ~90 lines of duplicated code. The atom is a server component with `aria-hidden`, following the existing atom pattern. Consumers just add `<HoverScanline />` inside a `group relative` container.
+**Alternatives considered:** CSS utility class only (less flexible, can't parameterize intensity/speed)
+
+## Decision #11 - 2026-02-17
+**Context:** Select, MultiSelect, Navbar, and Modal all had duplicated click-outside + Escape key dismiss logic.
+**Decision:** Create `useDismiss(ref, onDismiss, enabled)` hook combining both patterns.
+**Rationale:** Eliminates ~20 lines of duplicated event listener code per component. Uses `mousedown` (not `click`) for immediate response. The `enabled` flag prevents listener attachment when unnecessary.
+**Alternatives considered:** Keeping inline useEffects (more code, same bugs in each copy)
+
+## Decision #10 - 2026-02-17
+**Context:** `useParallax` called `getBoundingClientRect()` + `setState()` on every scroll frame, causing layout thrashing and unnecessary React re-renders.
+**Decision:** Replace `useState(offset)` with direct DOM manipulation via `element.style.transform`. Store offset in a ref, not state.
+**Rationale:** Eliminates React re-renders on scroll entirely. The rAF callback writes directly to the DOM, which is the standard approach for scroll-driven visual effects. The returned `style` is a static empty object.
+**Alternatives considered:** Throttling setState (still causes re-renders, just fewer), CSS scroll-driven animations (limited browser support for parallax)
+
 ## Decision #9 - 2026-02-16
 **Context:** CodeBlock needs Shiki syntax highlighting, but the Foundations tab is a client component (`"use client"` for tab state).
 **Decision:** CodeBlock is a client component that highlights async via `useEffect` with a plain-text fallback during loading.

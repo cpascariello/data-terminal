@@ -13,6 +13,7 @@ export function useScrollProgress(
   const { target, enabled = true } = options;
   const [progress, setProgress] = useState(0);
   const rafId = useRef(0);
+  const lastProgress = useRef(0);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -34,16 +35,25 @@ export function useScrollProgress(
     }
 
     function update() {
+      let next: number;
+
       if (target?.current) {
         const rect = target.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         const total = viewportHeight + rect.height;
         const traversed = viewportHeight - rect.top;
-        setProgress(Math.min(Math.max(traversed / total, 0), 1));
+        next = Math.min(Math.max(traversed / total, 0), 1);
       } else {
         const scrollable =
           document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 1);
+        next = scrollable > 0
+          ? Math.min(window.scrollY / scrollable, 1)
+          : 1;
+      }
+
+      if (Math.abs(next - lastProgress.current) > 0.005) {
+        lastProgress.current = next;
+        setProgress(next);
       }
     }
 

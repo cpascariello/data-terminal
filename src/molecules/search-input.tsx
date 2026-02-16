@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { HudLabel } from "@/atoms/hud-label";
 import { BlinkingCursor } from "@/atoms/blinking-cursor";
 import { Search, X } from "lucide-react";
 
-interface SearchInputProps {
+export interface SearchInputProps {
   label?: string;
   placeholder?: string;
   value?: string;
@@ -27,6 +27,8 @@ export function SearchInput({
   debounceMs = 300,
   className,
 }: SearchInputProps) {
+  const id = useId();
+  const labelId = `${id}-label`;
   const isControlled = controlledValue !== undefined;
   const [internalValue, setInternalValue] = useState(defaultValue);
   const current = isControlled ? controlledValue : internalValue;
@@ -58,7 +60,7 @@ export function SearchInput({
 
   return (
     <div className={cn("space-y-2", className)}>
-      {label && <HudLabel>{label}</HudLabel>}
+      {label && <HudLabel><span id={labelId}>{label}</span></HudLabel>}
       <div
         className={cn(
           "flex items-center gap-2 border border-border bg-foreground/[0.02] px-4 py-3",
@@ -77,6 +79,7 @@ export function SearchInput({
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             placeholder={!focused ? placeholder : undefined}
+            aria-labelledby={label ? labelId : undefined}
             className={cn(
               "w-full bg-transparent font-display text-sm text-accent outline-none",
               "placeholder:text-foreground/20",

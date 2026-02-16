@@ -1,14 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { TerminalTopBar } from "@/atoms/terminal-top-bar";
 import { CornerNotch } from "@/atoms/corner-notch";
+import { HoverScanline } from "@/atoms/hover-scanline";
+import { useDismiss } from "@/hooks/use-dismiss";
 import type { ReactNode } from "react";
 
-interface ModalProps {
+export interface ModalProps {
   open: boolean;
   onClose: () => void;
   title?: string;
@@ -84,10 +86,10 @@ export function Modal({
   className,
 }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useFocusTrap(panelRef, open);
+  useDismiss(panelRef, onClose, open);
 
   useEffect(() => {
     if (open) {
@@ -105,38 +107,16 @@ export function Modal({
     };
   }, [open]);
 
-  const handleEscape = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    },
-    [onClose],
-  );
-
-  useEffect(() => {
-    if (!open) return;
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [open, handleEscape]);
-
-  function handleBackdropClick(e: React.MouseEvent) {
-    if (e.target === backdropRef.current) onClose();
-  }
-
   if (!open) return null;
 
   return createPortal(
     <div
-      ref={backdropRef}
       className={cn(
         "fixed inset-0 z-50 flex items-center justify-center p-4",
         "bg-black/60 backdrop-blur-sm",
         "transition-opacity duration-150 ease-out",
         visible ? "opacity-100" : "opacity-0",
       )}
-      onClick={handleBackdropClick}
-      aria-modal="true"
-      role="dialog"
-      aria-label={title ?? "Dialog"}
     >
       <div
         ref={panelRef}
@@ -147,6 +127,9 @@ export function Modal({
             ? "scale-100 opacity-100"
             : "scale-95 opacity-0",
         )}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title ?? "Dialog"}
       >
         <CornerNotch>
           <div
@@ -176,18 +159,7 @@ export function Modal({
 
             <div className="flex-1 p-6">{children}</div>
 
-            <div
-              className={cn(
-                "pointer-events-none absolute inset-0",
-                "opacity-0 transition-opacity group-hover:opacity-100",
-              )}
-              style={{
-                background:
-                  "linear-gradient(180deg, transparent 0%, var(--accent-scan) 50%, transparent 100%)",
-                animation: "terminal-scan 1.5s ease-in-out infinite",
-              }}
-              aria-hidden="true"
-            />
+            <HoverScanline speed={1.5} />
           </div>
         </CornerNotch>
       </div>

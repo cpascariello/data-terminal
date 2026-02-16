@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 import { BlinkingCursor } from "@/atoms/blinking-cursor";
 import { TerminalTopBar } from "@/atoms/terminal-top-bar";
 
-interface TerminalPromptProps {
+export interface TerminalPromptProps {
   command: string;
   className?: string;
 }

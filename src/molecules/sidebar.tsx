@@ -11,7 +11,7 @@ import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { isItemActive, type NavItem } from "@/types/nav";
 
-interface SidebarProps {
+export interface SidebarProps {
   items: NavItem[];
   activeId?: string;
   defaultActiveId?: string;
@@ -132,7 +132,13 @@ function ExpandedItem({
       <a
         href={item.href}
         className={itemClasses}
-        onClick={() => onNavigate(item.id)}
+        onClick={(e) => {
+          if (item.disabled) {
+            e.preventDefault();
+            return;
+          }
+          onNavigate(item.id);
+        }}
         aria-disabled={item.disabled}
       >
         {item.icon && <span className="shrink-0">{item.icon}</span>}
@@ -177,7 +183,13 @@ function ExpandedLeafItem({
       <a
         href={item.href}
         className={classes}
-        onClick={() => onNavigate(item.id)}
+        onClick={(e) => {
+          if (item.disabled) {
+            e.preventDefault();
+            return;
+          }
+          onNavigate(item.id);
+        }}
         aria-disabled={item.disabled}
       >
         {item.icon && <span className="shrink-0">{item.icon}</span>}
@@ -247,6 +259,8 @@ function CollapsedItem({
       className="relative"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onFocus={handleEnter}
+      onBlur={handleLeave}
     >
       {hasChildren ? (
         <CollapsedParentContent
@@ -283,9 +297,15 @@ function CollapsedParentContent({
 }) {
   return (
     <>
-      <div className={collapsedIconClasses(highlighted, item.disabled)}>
+      <button
+        type="button"
+        className={collapsedIconClasses(highlighted, item.disabled)}
+        aria-label={item.label}
+        aria-haspopup="menu"
+        disabled={item.disabled}
+      >
         {item.icon ?? <span className="size-4" />}
-      </div>
+      </button>
       {hovered && (
         <div
           className={cn(
@@ -329,7 +349,13 @@ function CollapsedLeafContent({
         <a
           href={item.href}
           className={classes}
-          onClick={() => onNavigate(item.id)}
+          onClick={(e) => {
+            if (item.disabled) {
+              e.preventDefault();
+              return;
+            }
+            onNavigate(item.id);
+          }}
           aria-disabled={item.disabled}
         >
           {item.icon ?? <span className="size-4" />}
@@ -382,7 +408,13 @@ function FlyoutChildItem({
       <a
         href={item.href}
         className={classes}
-        onClick={() => onNavigate(item.id)}
+        onClick={(e) => {
+          if (item.disabled) {
+            e.preventDefault();
+            return;
+          }
+          onNavigate(item.id);
+        }}
         aria-disabled={item.disabled}
       >
         {item.icon && <span className="shrink-0">{item.icon}</span>}
@@ -456,6 +488,7 @@ export function Sidebar({
 
   return (
     <nav
+      aria-label="Sidebar navigation"
       className={cn(
         "flex h-full flex-col border-r border-border bg-card",
         "transition-[width] duration-200 ease-in-out",

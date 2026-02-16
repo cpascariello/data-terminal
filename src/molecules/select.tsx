@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { HudLabel } from "@/atoms/hud-label";
+import { useDismiss } from "@/hooks/use-dismiss";
 import { ChevronDown } from "lucide-react";
 
 interface SelectOption {
@@ -10,7 +11,7 @@ interface SelectOption {
   label: string;
 }
 
-interface SelectProps {
+export interface SelectProps {
   label?: string;
   options: SelectOption[];
   value?: string;
@@ -32,6 +33,7 @@ export function Select({
   className,
 }: SelectProps) {
   const id = useId();
+  const labelId = `${id}-label`;
   const isControlled = controlledValue !== undefined;
   const [internalValue, setInternalValue] = useState(defaultValue);
   const selected = isControlled ? controlledValue : internalValue;
@@ -46,39 +48,45 @@ export function Select({
     setOpen(false);
   }
 
-  useEffect(() => {
+  const handleClose = useCallback(() => setOpen(false), []);
+  useDismiss(containerRef, handleClose, open);
+
+  function handleKeyDown(e: React.KeyboardEvent) {
     if (!open) return;
-
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const buttons =
+        containerRef.current?.querySelectorAll<HTMLElement>(
+          '[role="option"]',
+        );
+      if (!buttons?.length) return;
+      const currentIndex = Array.from(buttons).findIndex(
+        (b) => b === document.activeElement,
+      );
+      const nextIndex =
+        e.key === "ArrowDown"
+          ? Math.min(currentIndex + 1, buttons.length - 1)
+          : Math.max(currentIndex - 1, 0);
+      buttons[nextIndex]?.focus();
     }
-
-    function handleEscape(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [open]);
+  }
 
   return (
     <div className={cn("space-y-2", className)} ref={containerRef}>
-      {label && <HudLabel>{label}</HudLabel>}
+      {label && (
+        <HudLabel>
+          <span id={labelId}>{label}</span>
+        </HudLabel>
+      )}
       <div className="relative">
         <button
           id={id}
           type="button"
           onClick={() => !disabled && setOpen((prev) => !prev)}
           disabled={disabled}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-labelledby={label ? labelId : undefined}
           className={cn(
             "flex w-full items-center justify-between gap-2 border px-4 py-3",
             "bg-foreground/[0.02] transition-colors",
@@ -106,6 +114,8 @@ export function Select({
 
         {open && (
           <div
+            role="listbox"
+            onKeyDown={handleKeyDown}
             className={cn(
               "absolute z-50 mt-1 w-full border border-border bg-card shadow-lg",
               "max-h-60 overflow-y-auto",
@@ -115,6 +125,8 @@ export function Select({
               <button
                 key={option.value}
                 type="button"
+                role="option"
+                aria-selected={option.value === selected}
                 onClick={() => handleSelect(option.value)}
                 className={cn(
                   "flex w-full items-center px-4 py-2.5 text-left font-display text-sm transition-colors",

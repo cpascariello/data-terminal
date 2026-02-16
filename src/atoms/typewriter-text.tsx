@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { BlinkingCursor } from "@/atoms/blinking-cursor";
 
@@ -21,22 +21,21 @@ export function TypewriterText({
 }: TypewriterTextProps) {
   const [charCount, setCharCount] = useState(0);
   const [started, setStarted] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mq.matches) {
       setCharCount(children.length);
       setStarted(true);
-      onComplete?.();
+      onCompleteRef.current?.();
       return;
     }
 
-    const delayTimer = setTimeout(() => {
-      setStarted(true);
-    }, delay);
-
+    const delayTimer = setTimeout(() => setStarted(true), delay);
     return () => clearTimeout(delayTimer);
-  }, [delay, children.length, onComplete]);
+  }, [delay, children.length]);
 
   useEffect(() => {
     if (!started || charCount >= children.length) return;
@@ -44,13 +43,13 @@ export function TypewriterText({
     const timer = setTimeout(() => {
       setCharCount((c) => {
         const next = c + 1;
-        if (next >= children.length) onComplete?.();
+        if (next >= children.length) onCompleteRef.current?.();
         return next;
       });
     }, speed);
 
     return () => clearTimeout(timer);
-  }, [started, charCount, children.length, speed, onComplete]);
+  }, [started, charCount, children.length, speed]);
 
   if (!started) {
     return (

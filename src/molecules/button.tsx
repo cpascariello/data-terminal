@@ -1,5 +1,15 @@
+import { forwardRef } from "react";
+import type {
+  ReactNode,
+  ButtonHTMLAttributes,
+  AnchorHTMLAttributes,
+  Ref,
+} from "react";
 import { cn } from "@/lib/cn";
-import type { ReactNode, ButtonHTMLAttributes } from "react";
+import {
+  sharedVariantStyles,
+  sharedBaseClasses,
+} from "@/lib/button-variants";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "link" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
@@ -19,32 +29,17 @@ type ButtonAsButton = ButtonBaseProps &
   };
 
 type ButtonAsAnchor = ButtonBaseProps &
-  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof ButtonBaseProps> & {
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof ButtonBaseProps> & {
     as: "a";
   };
 
 export type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: [
-    "bg-accent text-accent-foreground border-transparent",
-    "hover:brightness-110 hover:shadow-[0_0_20px_-4px_var(--accent-glow-intense)]",
-  ].join(" "),
-  secondary: [
-    "bg-transparent text-foreground border-border",
-    "hover:border-border-hover hover:shadow-[0_0_20px_-4px_var(--accent-hover-shadow)]",
-  ].join(" "),
-  ghost: [
-    "bg-transparent text-foreground/70 border-transparent",
-    "hover:bg-foreground/[0.06] hover:text-foreground",
-  ].join(" "),
+  ...sharedVariantStyles,
   link: [
     "bg-transparent text-accent border-transparent px-0 py-0",
     "hover:underline",
-  ].join(" "),
-  danger: [
-    "bg-error/10 text-error border-error/30",
-    "hover:bg-error/20",
   ].join(" "),
 };
 
@@ -54,7 +49,10 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: "px-6 py-3 text-base gap-2.5",
 };
 
-export function Button(props: ButtonProps) {
+export const Button = forwardRef(function Button(
+  props: ButtonProps,
+  ref: Ref<HTMLButtonElement | HTMLAnchorElement>,
+) {
   const {
     variant = "primary",
     size = "md",
@@ -69,11 +67,8 @@ export function Button(props: ButtonProps) {
   const isLink = variant === "link";
 
   const classes = cn(
-    "inline-flex items-center justify-center border font-display uppercase tracking-wider",
-    "transition-all duration-150",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-    "active:scale-[0.98]",
-    "disabled:cursor-not-allowed disabled:opacity-50",
+    sharedBaseClasses,
+    "font-display uppercase tracking-wider",
     variantStyles[variant],
     !isLink && sizeStyles[size],
     className,
@@ -88,9 +83,13 @@ export function Button(props: ButtonProps) {
   );
 
   if (Tag === "a") {
-    const anchorProps = rest as React.AnchorHTMLAttributes<HTMLAnchorElement>;
+    const anchorProps = rest as AnchorHTMLAttributes<HTMLAnchorElement>;
     return (
-      <a className={classes} {...anchorProps}>
+      <a
+        ref={ref as Ref<HTMLAnchorElement>}
+        className={classes}
+        {...anchorProps}
+      >
         {content}
       </a>
     );
@@ -98,8 +97,12 @@ export function Button(props: ButtonProps) {
 
   const buttonProps = rest as ButtonHTMLAttributes<HTMLButtonElement>;
   return (
-    <button className={classes} {...buttonProps}>
+    <button
+      ref={ref as Ref<HTMLButtonElement>}
+      className={classes}
+      {...buttonProps}
+    >
       {content}
     </button>
   );
-}
+});

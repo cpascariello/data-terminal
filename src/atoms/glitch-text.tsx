@@ -77,7 +77,7 @@ export function GlitchText({ children, className }: GlitchTextProps) {
   const glitchMap = new Map(glitching.map((g) => [g.index, g.char]));
 
   return (
-    <span className={cn("text-foreground", className)}>
+    <span className={cn("text-foreground", className)} aria-label={children}>
       {[...children].map((char, i) => {
         const replacement = glitchMap.get(i);
         if (replacement) {
@@ -91,7 +91,7 @@ export function GlitchText({ children, className }: GlitchTextProps) {
             </span>
           );
         }
-        return <span key={i}>{char}</span>;
+        return char;
       })}
     </span>
   );

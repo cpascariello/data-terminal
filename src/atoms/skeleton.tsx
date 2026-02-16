@@ -37,13 +37,6 @@ const scanStyle: React.CSSProperties = {
   animation: "skeleton-scan 1.5s ease-in-out infinite",
 };
 
-const keyframes = [
-  "@keyframes skeleton-scan {",
-  "  0% { background-position: 200% 0; }",
-  "  100% { background-position: -200% 0; }",
-  "}",
-].join("\n");
-
 export function Skeleton({
   variant = "text",
   width,
@@ -65,7 +58,6 @@ export function Skeleton({
         role="status"
         aria-label="Loading"
       >
-        <style dangerouslySetInnerHTML={{ __html: keyframes }} />
         {Array.from({ length: lines }, (_, i) => (
           <div
             key={i}
@@ -93,8 +85,6 @@ export function Skeleton({
       style={{ ...scanStyle, ...overrides }}
       role="status"
       aria-label="Loading"
-    >
-      <style dangerouslySetInnerHTML={{ __html: keyframes }} />
-    </div>
+    />
   );
 }

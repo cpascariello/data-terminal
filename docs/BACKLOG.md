@@ -4,11 +4,13 @@ Parking lot for scope creep and deferred ideas.
 
 ---
 
-*(No open items)*
-
 ---
 
 ## Completed
+
+### 2026-02-17 - Code Review Fixes (53 items across 7 phases)
+**Completed:** 2026-02-17
+**Delivered:** Shared variant maps (feedback-variants.ts, button-variants.ts), useDismiss hook, HoverScanline atom, comprehensive ARIA patterns (listbox, menu, tablist, accordion, dialog, tooltip, table), scroll performance fixes (useParallax direct DOM, useScrollProgress threshold), forwardRef on Button/IconButton, discriminated union ProgressBar props, StatusDot variant enum, all props interfaces exported, vitest setup with tests, tsconfig strictness, dependency pinning
 
 ### 2026-02-16 - Typography components
 **Completed:** 2026-02-16

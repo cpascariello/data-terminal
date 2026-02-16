@@ -1,16 +1,17 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useId, useState } from "react";
 import { cn } from "@/lib/cn";
 import { HudLabel } from "@/atoms/hud-label";
 
-interface ToggleProps {
+export interface ToggleProps {
   label?: string;
   checked?: boolean;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 

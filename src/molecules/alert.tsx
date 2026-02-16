@@ -2,39 +2,23 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { CheckCircle, AlertTriangle, XCircle, Info, X } from "lucide-react";
+import { X } from "lucide-react";
+import {
+  variantStyles,
+  variantIcons,
+  variantIconColor,
+} from "@/lib/feedback-variants";
+import type { FeedbackVariant } from "@/lib/feedback-variants";
+import { HoverScanline } from "@/atoms/hover-scanline";
 import type { ReactNode } from "react";
 
-type AlertVariant = "success" | "warning" | "error" | "info";
-
-interface AlertProps {
+export interface AlertProps {
   children: ReactNode;
-  variant?: AlertVariant;
+  variant?: FeedbackVariant;
   dismissible?: boolean;
   onDismiss?: () => void;
   className?: string;
 }
-
-const variantStyles: Record<AlertVariant, string> = {
-  success: "border-l-success bg-success/5",
-  warning: "border-l-warning bg-warning/5",
-  error: "border-l-error bg-error/5",
-  info: "border-l-accent bg-accent/5",
-};
-
-const variantIcons: Record<AlertVariant, typeof Info> = {
-  success: CheckCircle,
-  warning: AlertTriangle,
-  error: XCircle,
-  info: Info,
-};
-
-const variantIconColor: Record<AlertVariant, string> = {
-  success: "text-success",
-  warning: "text-warning",
-  error: "text-error",
-  info: "text-accent",
-};
 
 export function Alert({
   children,
@@ -76,15 +60,7 @@ export function Alert({
           <X size={16} />
         </button>
       )}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
-        style={{
-          background:
-            "linear-gradient(180deg, transparent 0%, var(--accent-scan-subtle) 50%, transparent 100%)",
-          animation: "terminal-scan 2s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
+      <HoverScanline intensity="subtle" />
     </div>
   );
 }

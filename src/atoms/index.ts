@@ -10,6 +10,7 @@ export { GlitchText } from "./glitch-text";
 export { GlowBorder } from "./glow-border";
 export { GlowLine } from "./glow-line";
 export { Heading } from "./heading";
+export { HoverScanline } from "./hover-scanline";
 export { HudLabel } from "./hud-label";
 export { ProgressBar } from "./progress-bar";
 export { ScanlineOverlay } from "./scanline-overlay";

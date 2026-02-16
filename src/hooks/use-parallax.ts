@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface UseParallaxOptions {
   /** Parallax speed factor (default: 0.5). 1 = no movement, 0 = full displacement. */
@@ -9,13 +9,14 @@ interface UseParallaxOptions {
   direction?: "vertical" | "horizontal";
 }
 
+const STATIC_STYLE: React.CSSProperties = {};
+
 export function useParallax<T extends HTMLElement = HTMLElement>(
   options: UseParallaxOptions = {},
 ): { ref: React.RefObject<T | null>; style: React.CSSProperties } {
   const { speed = 0.5, direction = "vertical" } = options;
   const ref = useRef<T>(null);
   const rafId = useRef(0);
-  const [offset, setOffset] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -30,7 +31,9 @@ export function useParallax<T extends HTMLElement = HTMLElement>(
 
   useEffect(() => {
     if (reducedMotion) {
-      setOffset(0);
+      if (ref.current) {
+        ref.current.style.transform = "";
+      }
       return;
     }
 
@@ -41,7 +44,13 @@ export function useParallax<T extends HTMLElement = HTMLElement>(
       const rect = element.getBoundingClientRect();
       const elementCenter = rect.top + rect.height / 2;
       const viewportCenter = window.innerHeight / 2;
-      setOffset((elementCenter - viewportCenter) * (1 - speed));
+      const offset = (elementCenter - viewportCenter) * (1 - speed);
+
+      const translate =
+        direction === "horizontal"
+          ? `translateX(${offset}px)`
+          : `translateY(${offset}px)`;
+      element.style.transform = translate;
     }
 
     function onScroll() {
@@ -59,15 +68,7 @@ export function useParallax<T extends HTMLElement = HTMLElement>(
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId.current);
     };
-  }, [speed, reducedMotion]);
+  }, [speed, direction, reducedMotion]);
 
-  const style = useMemo<React.CSSProperties>(() => {
-    const translate =
-      direction === "horizontal"
-        ? `translateX(${offset}px)`
-        : `translateY(${offset}px)`;
-    return { transform: translate };
-  }, [direction, offset]);
-
-  return { ref, style };
+  return { ref, style: STATIC_STYLE };
 }

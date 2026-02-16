@@ -1,11 +1,12 @@
 import { cn } from "@/lib/cn";
 import { TerminalTopBar } from "@/atoms/terminal-top-bar";
+import type { ReactNode } from "react";
 
-interface TerminalWindowProps {
+export interface TerminalWindowProps {
   label?: string;
   command: string;
   output?: string[];
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 

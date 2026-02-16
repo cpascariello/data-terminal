@@ -209,6 +209,24 @@ Horizontal 1px divider with glow.
 <GlowLine />
 ```
 
+### HoverScanline
+
+Reusable hover scanline effect for terminal-styled containers.
+
+```tsx
+<div className="group relative">
+  {content}
+  <HoverScanline intensity="subtle" speed={2} />
+</div>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `intensity` | `"normal" \| "subtle"` | `"normal"` |
+| `speed` | `number` (seconds) | `2` |
+
+Server component. Parent must have `group` and `relative` classes. `aria-hidden`.
+
 ### HudLabel
 
 Small uppercase tracking label (10px, monospace).
@@ -228,8 +246,9 @@ Determinate or indeterminate progress bar.
 
 | Prop | Type | Default |
 |------|------|---------|
-| `value` | `number` (0–100) | `0` |
+| `value` | `number` (0–100) | — (required when not indeterminate) |
 | `indeterminate` | `boolean` | `false` |
+| `label` | `string` | — |
 
 ### ScanlineOverlay
 
@@ -252,12 +271,12 @@ Bracketed service identifier.
 Pulsing status indicator dot.
 
 ```tsx
-<StatusDot color="bg-success" speed={1.5} />
+<StatusDot variant="success" speed={1.5} />
 ```
 
 | Prop | Type | Default |
 |------|------|---------|
-| `color` | `string` (Tailwind bg class) | `"bg-accent"` |
+| `variant` | `"success" \| "warning" \| "error" \| "info" \| "neutral"` | `"info"` |
 | `speed` | `number` (seconds) | `2` |
 
 ### TerminalTopBar
@@ -358,7 +377,7 @@ Loading placeholder with scan animation.
 | `height` | `string \| number` | — |
 | `lines` | `number` | `1` |
 
-Server component. Multi-line text uses progressively shorter widths. Scan animation via inline `@keyframes`. `role="status"` and `aria-label="Loading"`.
+Server component. Multi-line text uses progressively shorter widths. Scan animation via `animations.css` keyframe. `role="status"` and `aria-label="Loading"`.
 
 ---
 
@@ -411,7 +430,7 @@ Action button with 5 variants, 3 sizes, and optional icons.
 | `as` | `"button" \| "a"` | `"button"` |
 | `disabled` | `boolean` | `false` |
 
-Uses `font-display` uppercase tracking. Link variant strips padding for inline use.
+Uses `font-display` uppercase tracking. Link variant strips padding for inline use. Supports `ref` forwarding via `forwardRef`.
 
 ### CodeBlock
 
@@ -453,7 +472,7 @@ Square icon-only button.
 | `aria-label` | `string` | required |
 | `disabled` | `boolean` | `false` |
 
-Sizes: sm = 32px, md = 40px, lg = 48px.
+Sizes: sm = 32px, md = 40px, lg = 48px. Supports `ref` forwarding via `forwardRef`.
 
 ### Alert
 
@@ -522,8 +541,10 @@ Sortable monospaced data table.
 
 | Prop | Type | Default |
 |------|------|---------|
-| `columns` | `{ key: string; label: string; sortable?: boolean }[]` | required |
-| `rows` | `Record<string, ReactNode>[]` | required |
+| `columns` | `Column<K>[]` (`{ key: K; label: string; sortable?: boolean }`) | required |
+| `rows` | `Record<K, ReactNode>[]` | required |
+
+Type parameter `K extends string` ties column keys to row keys for type safety. Sortable columns render accessible `<button>` elements with `aria-sort`.
 
 ### Modal
 
@@ -1019,6 +1040,24 @@ return <div ref={ref} style={style}>Parallax content</div>;
 |--------|------|---------|
 | `speed` | `number` (0–1) | `0.5` |
 | `direction` | `"vertical" \| "horizontal"` | `"vertical"` |
+
+### useDismiss
+
+Click-outside and Escape key dismissal for dropdowns and modals.
+
+```tsx
+const ref = useRef<HTMLDivElement>(null);
+const handleClose = useCallback(() => setOpen(false), []);
+useDismiss(ref, handleClose, open);
+```
+
+| Param | Type | Default |
+|-------|------|---------|
+| `ref` | `RefObject<HTMLElement \| null>` | required |
+| `onDismiss` | `() => void` | required |
+| `enabled` | `boolean` | `true` |
+
+Uses `mousedown` for click-outside (not `click`). Checks `instanceof Node` before `contains()`.
 
 ### useScrollProgress
 

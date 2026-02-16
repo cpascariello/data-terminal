@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import { HudLabel } from "@/atoms/hud-label";
+import { HoverScanline } from "@/atoms/hover-scanline";
 import type { ReactNode } from "react";
 
 interface ProcessCardProps {
@@ -40,15 +41,7 @@ export function ProcessCard({
       <p className="mt-2 text-sm leading-relaxed text-foreground/50">
         {description}
       </p>
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
-        style={{
-          background:
-            "linear-gradient(180deg, transparent 0%, var(--accent-scan-subtle) 50%, transparent 100%)",
-          animation: "terminal-scan 2s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
+      <HoverScanline intensity="subtle" />
     </div>
   );
 }

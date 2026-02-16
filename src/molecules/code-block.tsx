@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 import { TerminalTopBar } from "@/atoms/terminal-top-bar";
 import { getHighlighter } from "@/lib/highlighter";
-import { CopyButton } from "./copy-button";
+import { CopyButton } from "@/molecules/copy-button";
 
-interface CodeBlockProps {
+export interface CodeBlockProps {
   code: string;
   language: string;
   showLineNumbers?: boolean;
@@ -34,8 +34,10 @@ export function CodeBlock({
         });
         setHtml(result);
       })
-      .catch(() => {
-        /* fall back to plain text rendering */
+      .catch((error: unknown) => {
+        if (process.env.NODE_ENV === "development") {
+          console.warn("Shiki highlighting failed:", error);
+        }
       });
     return () => {
       cancelled = true;

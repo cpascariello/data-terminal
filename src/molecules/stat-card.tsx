@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 import { useInView } from "@/hooks/use-in-view";
 import { useCountUp } from "@/hooks/use-count-up";
 
-interface StatCardProps {
+export interface StatCardProps {
   to: number;
   label: string;
   suffix?: string;

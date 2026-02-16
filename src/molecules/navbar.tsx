@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { useDismiss } from "@/hooks/use-dismiss";
 import {
   isItemActive,
   type MegaDropdownConfig,
@@ -11,7 +12,7 @@ import {
   type NavItem,
 } from "@/types/nav";
 
-interface NavbarProps {
+export interface NavbarProps {
   items: NavItem[];
   activeId?: string;
   defaultActiveId?: string;
@@ -23,6 +24,24 @@ interface NavbarProps {
 
 const HOVER_ENTER_DELAY = 150;
 const HOVER_LEAVE_DELAY = 100;
+
+function handleDropdownKeyDown(e: React.KeyboardEvent) {
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    e.preventDefault();
+    const items = e.currentTarget.querySelectorAll<HTMLElement>(
+      '[role="menuitem"]',
+    );
+    if (!items.length) return;
+    const currentIndex = Array.from(items).findIndex(
+      (el) => el === document.activeElement,
+    );
+    const nextIndex =
+      e.key === "ArrowDown"
+        ? Math.min(currentIndex + 1, items.length - 1)
+        : Math.max(currentIndex - 1, 0);
+    items[nextIndex]?.focus();
+  }
+}
 
 function NavbarDropdownItem({
   item,
@@ -53,8 +72,15 @@ function NavbarDropdownItem({
     return (
       <a
         href={item.href}
+        role="menuitem"
         className={classes}
-        onClick={onSelect}
+        onClick={(e) => {
+          if (item.disabled) {
+            e.preventDefault();
+            return;
+          }
+          onSelect();
+        }}
         aria-disabled={item.disabled}
       >
         {content}
@@ -65,6 +91,7 @@ function NavbarDropdownItem({
   return (
     <button
       type="button"
+      role="menuitem"
       className={classes}
       onClick={onSelect}
       disabled={item.disabled}
@@ -103,7 +130,13 @@ function NavbarMegaLink({
       <a
         href={item.href}
         className={classes}
-        onClick={onSelect}
+        onClick={(e) => {
+          if (item.disabled) {
+            e.preventDefault();
+            return;
+          }
+          onSelect();
+        }}
         aria-disabled={item.disabled}
       >
         {content}
@@ -321,6 +354,7 @@ function NavbarTrigger({
       onClick={onTopLevelClick}
       disabled={item.disabled}
       aria-expanded={hasChildren ? open : undefined}
+      aria-haspopup={hasChildren ? "menu" : undefined}
     >
       {content}
     </button>
@@ -369,29 +403,8 @@ function NavbarItem({ item, activeId, onNavigate }: NavbarItemProps) {
     return clearTimeouts;
   }, [clearTimeouts]);
 
-  useEffect(() => {
-    if (!open) return;
-
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    function handleEscape(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [open]);
+  const handleClose = useCallback(() => setOpen(false), []);
+  useDismiss(containerRef, handleClose, open);
 
   function handleTopLevelClick() {
     if (hasChildren) {
@@ -429,10 +442,12 @@ function NavbarItem({ item, activeId, onNavigate }: NavbarItemProps) {
           />
         ) : (
           <div
+            role="menu"
             className={cn(
               "absolute left-0 top-full z-50 mt-0.5 min-w-48",
               "border border-border bg-card shadow-lg",
             )}
+            onKeyDown={handleDropdownKeyDown}
           >
             {item.children!.map((child) => (
               <NavbarDropdownItem
@@ -472,6 +487,7 @@ export function Navbar({
 
   return (
     <nav
+      aria-label="Main navigation"
       className={cn(
         "relative sticky top-0 z-40 w-full",
         "border-b border-border bg-background/80 backdrop-blur-md",

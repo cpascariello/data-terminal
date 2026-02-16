@@ -1,11 +1,12 @@
 import { cn } from "@/lib/cn";
 import { DotGrid } from "@/atoms/dot-grid";
 import { ScanlineOverlay } from "@/atoms/scanline-overlay";
+import type { ReactNode } from "react";
 
 type SectionSpacing = "sm" | "md" | "lg" | "xl" | "none";
 
-interface SectionProps {
-  children: React.ReactNode;
+export interface SectionProps {
+  children: ReactNode;
   className?: string;
   spacing?: SectionSpacing;
   dotGrid?: boolean;

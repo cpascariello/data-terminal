@@ -1,21 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Copy, Check } from "lucide-react";
 import { cn } from "@/lib/cn";
 
-interface CopyButtonProps {
+export interface CopyButtonProps {
   text: string;
   className?: string;
 }
 
 export function CopyButton({ text, className }: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      timerRef.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API may fail in insecure contexts
+    }
   }
 
   return (
@@ -26,7 +37,7 @@ export function CopyButton({ text, className }: CopyButtonProps) {
         "text-foreground/30 transition-colors hover:text-foreground/60",
         className,
       )}
-      aria-label="Copy code"
+      aria-label={copied ? "Copied" : "Copy code"}
     >
       {copied ? <Check size={14} /> : <Copy size={14} />}
     </button>

@@ -9,7 +9,7 @@ interface RadioOption {
   label: string;
 }
 
-interface RadioGroupProps {
+export interface RadioGroupProps {
   label?: string;
   options: RadioOption[];
   value?: string;

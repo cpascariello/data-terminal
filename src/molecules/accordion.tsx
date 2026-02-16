@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useId } from "react";
 import { cn } from "@/lib/cn";
 import { ChevronDown } from "lucide-react";
+import { HoverScanline } from "@/atoms/hover-scanline";
 import type { ReactNode } from "react";
 
 interface AccordionItem {
@@ -11,7 +12,7 @@ interface AccordionItem {
   children: ReactNode;
 }
 
-interface AccordionProps {
+export interface AccordionProps {
   items: AccordionItem[];
   single?: boolean;
   defaultOpen?: string[];
@@ -72,6 +73,9 @@ function AccordionEntry({
   onToggle: (id: string) => void;
   isLast: boolean;
 }) {
+  const panelId = useId();
+  const buttonId = useId();
+
   return (
     <div
       className={cn(
@@ -82,6 +86,7 @@ function AccordionEntry({
     >
       <button
         type="button"
+        id={buttonId}
         onClick={() => onToggle(item.id)}
         className={cn(
           "flex w-full items-center justify-between gap-3 px-4 py-3",
@@ -90,6 +95,7 @@ function AccordionEntry({
           "hover:bg-foreground/[0.04]",
         )}
         aria-expanded={isOpen}
+        aria-controls={panelId}
       >
         {item.title}
         <ChevronDown
@@ -108,21 +114,18 @@ function AccordionEntry({
         )}
       >
         <div className="overflow-hidden">
-          <div className="px-4 pb-4 pt-1 font-sans text-sm text-foreground/80">
+          <div
+            id={panelId}
+            role="region"
+            aria-labelledby={buttonId}
+            className="px-4 pb-4 pt-1 font-sans text-sm text-foreground/80"
+          >
             {item.children}
           </div>
         </div>
       </div>
 
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover/item:opacity-100"
-        style={{
-          background:
-            "linear-gradient(180deg, transparent 0%, var(--accent-scan-subtle) 50%, transparent 100%)",
-          animation: "terminal-scan 2s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
+      <HoverScanline intensity="subtle" className="group-hover/item:opacity-100" />
     </div>
   );
 }

@@ -21,7 +21,7 @@ const speedDurations: Record<DataStreamProps["speed"] & string, number> = {
 function randomHexColumn(rows: number): string {
   return Array.from(
     { length: rows },
-    () => HEX_CHARS[Math.floor(Math.random() * HEX_CHARS.length)],
+    () => HEX_CHARS[Math.floor(Math.random() * HEX_CHARS.length)]!,
   ).join("\n");
 }
 
@@ -39,16 +39,34 @@ export function DataStream({
 
     const intervals: ReturnType<typeof setInterval>[] = [];
 
-    colRefs.current.forEach((el) => {
-      if (!el) return;
-      el.textContent = randomHexColumn(ROWS);
-      const interval = setInterval(() => {
+    function startIntervals() {
+      colRefs.current.forEach((el) => {
+        if (!el) return;
         el.textContent = randomHexColumn(ROWS);
-      }, duration * 1000);
-      intervals.push(interval);
-    });
+        const interval = setInterval(() => {
+          el.textContent = randomHexColumn(ROWS);
+        }, duration * 1000);
+        intervals.push(interval);
+      });
+    }
 
-    return () => intervals.forEach(clearInterval);
+    startIntervals();
+
+    function handleVisibility() {
+      if (document.hidden) {
+        intervals.forEach(clearInterval);
+        intervals.length = 0;
+      } else {
+        startIntervals();
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      intervals.forEach(clearInterval);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
   }, [columns, duration]);
 
   return (

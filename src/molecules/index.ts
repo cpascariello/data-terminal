@@ -3,6 +3,7 @@ export { Alert } from "./alert";
 export { Button } from "./button";
 export { Checkbox } from "./checkbox";
 export { CodeBlock } from "./code-block";
+export { CopyButton } from "./copy-button";
 export { CommandInput } from "./command-input";
 export { DataTable } from "./data-table";
 export { IconButton } from "./icon-button";

@@ -11,6 +11,7 @@ export function GlowLine({ className }: GlowLineProps) {
       style={{
         boxShadow: "0 0 8px var(--accent-glow-line)",
       }}
+      role="separator"
     />
   );
 }

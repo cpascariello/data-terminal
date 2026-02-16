@@ -30,12 +30,12 @@ export function StickySectionDemo() {
                 <div className="space-y-4 p-5">
                   <div className="flex items-center gap-3">
                     <StatusDot
-                      color={
+                      variant={
                         activeStep === 0
-                          ? "bg-accent"
+                          ? "info"
                           : activeStep === 1
-                            ? "bg-warning"
-                            : "bg-success"
+                            ? "warning"
+                            : "success"
                       }
                     />
                     <span className="font-display text-lg font-bold text-foreground">

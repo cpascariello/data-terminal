@@ -88,9 +88,9 @@ export function FoundationsTab() {
             <HudLabel>STATUS_DOT</HudLabel>
             <div className="flex items-center gap-4 pt-2">
               <StatusDot />
-              <StatusDot speed={1} color="bg-success" />
-              <StatusDot speed={3} color="bg-warning" />
-              <StatusDot speed={0.5} color="bg-error" />
+              <StatusDot speed={1} variant="success" />
+              <StatusDot speed={3} variant="warning" />
+              <StatusDot speed={0.5} variant="error" />
             </div>
           </div>
         </FadeIn>

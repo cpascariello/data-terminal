@@ -45,6 +45,7 @@ src/
 │   ├── glitch-text.tsx
 │   ├── glow-border.tsx
 │   ├── glow-line.tsx
+│   ├── hover-scanline.tsx
 │   ├── hud-label.tsx
 │   ├── progress-bar.tsx
 │   ├── scanline-overlay.tsx
@@ -91,10 +92,13 @@ src/
 │   ├── use-count-up.ts
 │   ├── use-in-view.ts
 │   ├── use-parallax.ts
+│   ├── use-dismiss.ts
 │   ├── use-scroll-progress.ts
 │   └── use-theme.ts
 ├── lib/          # Utilities
 │   ├── cn.ts          # clsx + tailwind-merge
+│   ├── feedback-variants.ts # Shared feedback variant maps
+│   ├── button-variants.ts   # Shared button variant styles
 │   ├── highlighter.ts # Shiki singleton with CSS-variables theme
 │   └── supports-scroll-timeline.ts  # CSS scroll-timeline feature detection
 ├── providers/    # Context providers
@@ -166,6 +170,43 @@ src/
 **Key files:** `src/molecules/accordion.tsx`, `src/molecules/modal.tsx`, `src/molecules/toast.tsx`, `src/molecules/tooltip.tsx`, `src/atoms/skeleton.tsx`, `src/providers/toast-provider.tsx`
 **Notes:** Toast system requires both `ToastProvider` and `ToastContainer` in the layout. Modal locks body scroll via `overflow-hidden` on `<body>`. Tooltip delay prevents flicker on quick mouse movements.
 
+### Shared Variant Maps
+**Context:** Alert and Toast shared identical variant-to-style, variant-to-icon, and variant-to-color mappings. Button and IconButton shared variant styles and base classes.
+**Approach:** Extract shared maps into `src/lib/feedback-variants.ts` and `src/lib/button-variants.ts`. Components import from these modules instead of defining locally.
+**Key files:** `src/lib/feedback-variants.ts`, `src/lib/button-variants.ts`
+**Notes:** When adding a new feedback variant, update `feedback-variants.ts` — Alert and Toast pick it up automatically. When adding a new button variant shared between Button and IconButton, update `button-variants.ts`. Button's unique `link` variant stays in `button.tsx`.
+
+### Dismiss Pattern
+**Context:** Select, MultiSelect, Navbar, and Modal all needed click-outside and Escape key dismissal with duplicated event listener code.
+**Approach:** `useDismiss(ref, onDismiss, enabled)` hook combines `mousedown` listener for click-outside detection and `keydown` listener for Escape. The `enabled` flag prevents attaching listeners when the dropdown/modal is closed.
+**Key files:** `src/hooks/use-dismiss.ts`
+**Notes:** Uses `mousedown` (not `click`) for immediate response. Checks `e.target instanceof Node` before `contains()`. For Modal, it handles both backdrop clicks (target is outside panel) and Escape — replacing the separate `handleBackdropClick` and `handleEscape` patterns.
+
+### HoverScanline Atom
+**Context:** Six molecules (Alert, Toast, Modal, Accordion, ProcessCard, TerminalCard) duplicated an identical scanline hover effect div.
+**Approach:** Extract into `HoverScanline` atom with `intensity` ("normal" = `--accent-scan`, "subtle" = `--accent-scan-subtle`) and `speed` props. Server component. `aria-hidden="true"`.
+**Key files:** `src/atoms/hover-scanline.tsx`
+**Notes:** Parent must have `group` and `relative` classes. For named groups (e.g., Accordion's `group/item`), pass the appropriate `className` override for the hover trigger.
+
+### ARIA Widget Patterns
+**Context:** Custom widgets (Select, MultiSelect, Navbar, TerminalTabs, Accordion, Tooltip, DataTable, Modal) needed proper ARIA roles and keyboard navigation for accessibility.
+**Approach:** Each widget implements the relevant WAI-ARIA pattern:
+- **Listbox** (Select, MultiSelect): `aria-haspopup="listbox"`, `aria-expanded`, `role="listbox"`, `role="option"`, `aria-selected`, arrow key navigation
+- **Menu** (Navbar dropdowns): `role="menu"`, `role="menuitem"`, `aria-haspopup="menu"`, arrow key navigation
+- **Tablist** (TerminalTabs): `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, `aria-controls`, `aria-labelledby`, roving tabindex, arrow keys
+- **Accordion**: `aria-expanded`, `aria-controls`, `role="region"`, `aria-labelledby`
+- **Dialog** (Modal): `role="dialog"` + `aria-modal="true"` on panel (not backdrop), `aria-label`
+- **Tooltip**: `role="tooltip"`, `id`, `aria-describedby` via cloneElement
+- **Table** (DataTable): Sortable headers in `<button>`, `aria-sort`
+**Key files:** Listed component files
+**Notes:** All form inputs use `aria-labelledby` to connect HudLabel to the input via `useId()`. Label text is wrapped in `<span id={labelId}>` inside HudLabel.
+
+### Performance: Scroll Hooks
+**Context:** `useParallax` caused layout thrashing (getBoundingClientRect + setState per frame). `useScrollProgress` re-rendered 60x/sec for target elements.
+**Approach:** `useParallax` writes directly to `element.style.transform` instead of setState — no React re-renders on scroll. `useScrollProgress` compares against a `lastProgress` ref and only calls setState when the change exceeds 0.005.
+**Key files:** `src/hooks/use-parallax.ts`, `src/hooks/use-scroll-progress.ts`
+**Notes:** `useParallax` returns a static empty style object; the actual transform is applied via direct DOM manipulation in the rAF callback.
+
 ### Navigation
 **Context:** Horizontal and vertical navigation components with two-level hierarchy and mega dropdown support.
 **Approach:** Two independent molecules sharing a `NavItem` type from `src/types/nav.ts`. `Navbar` renders a sticky horizontal bar with two dropdown modes: compact (via `children`) and mega (via `mega`). Mega dropdowns span the full navbar width with a two-column layout (left: heading + links/description, right: optional featured items with images). Positioning uses `static` on the trigger container and `relative` on the `<nav>` so the mega panel anchors to the navbar. Hover handlers are passed to the mega panel to maintain the hover zone across the gap. `Sidebar` renders a vertical panel that collapses to an icon rail with tooltips and flyouts. Both use uncontrolled-default/controlled-override state for active item tracking. Dropdowns/flyouts use hover with delayed enter/leave timers plus click toggle and Escape/outside-click dismiss.
@@ -195,6 +236,15 @@ src/
 3. Export from `src/molecules/index.ts`
 4. Add usage example and prop table to `docs/DESIGN-SYSTEM.md`
 5. Update `CLAUDE.md` component inventory
+
+### Accessibility Checklist for New Components
+1. **Interactive elements:** Use `<button>` for actions, `<a>` for navigation. Never use `<div>` with click handlers.
+2. **Labels:** Connect labels to inputs via `aria-labelledby` with `useId()`. Use `aria-label` for icon-only buttons.
+3. **ARIA roles:** Custom widgets must implement the appropriate WAI-ARIA pattern (listbox, menu, tablist, dialog, etc.).
+4. **Keyboard:** All interactive elements must be keyboard-accessible. Custom widgets need arrow key navigation.
+5. **Decorative elements:** Use `aria-hidden="true"` on decorative elements (scanlines, cursors, dot grids).
+6. **Disabled links:** `<a>` with `aria-disabled` must also prevent default on click.
+7. **Focus management:** Modals need focus trap. Dropdowns should return focus on close.
 
 ### Preview Page Tabs
 **Context:** Components organized by function for a hybrid showcase/docs experience.

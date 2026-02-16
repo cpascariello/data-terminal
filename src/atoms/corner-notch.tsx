@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 interface CornerNotchProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   size?: number;
 }

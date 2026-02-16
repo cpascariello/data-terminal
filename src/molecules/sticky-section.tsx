@@ -3,14 +3,15 @@
 import { useRef } from "react";
 import { cn } from "@/lib/cn";
 import { useScrollProgress } from "@/hooks/use-scroll-progress";
+import type { ReactNode } from "react";
 
-interface StickySectionProps {
+export interface StickySectionProps {
   steps: number;
   stepHeight?: string;
   children: (state: {
     progress: number;
     activeStep: number;
-  }) => React.ReactNode;
+  }) => ReactNode;
   className?: string;
 }
 

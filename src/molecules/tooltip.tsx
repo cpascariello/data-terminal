@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useId, useEffect, cloneElement } from "react";
 import { cn } from "@/lib/cn";
 import type { ReactNode, ReactElement } from "react";
 
 type TooltipPosition = "top" | "bottom" | "left" | "right";
 
-interface TooltipProps {
+export interface TooltipProps {
   content: ReactNode;
-  children: ReactElement;
+  children: ReactElement<Record<string, unknown>>;
   position?: TooltipPosition;
   delay?: number;
   className?: string;
@@ -60,6 +60,13 @@ export function Tooltip({
 }: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tooltipId = useId();
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const show = useCallback(
     (withDelay: boolean) => {
@@ -86,8 +93,11 @@ export function Tooltip({
       onFocus={() => show(false)}
       onBlur={hide}
     >
-      {children}
+      {cloneElement(children, {
+        "aria-describedby": visible ? tooltipId : undefined,
+      })}
       <span
+        id={tooltipId}
         role="tooltip"
         className={cn(
           "pointer-events-none absolute z-50 w-max max-w-xs",

@@ -5,51 +5,27 @@ import { createPortal } from "react-dom";
 import { cn } from "@/lib/cn";
 import { useToast } from "@/providers/toast-provider";
 import type { Toast } from "@/providers/toast-provider";
+import { X } from "lucide-react";
 import {
-  CheckCircle,
-  AlertTriangle,
-  XCircle,
-  Info,
-  X,
-} from "lucide-react";
+  variantStyles,
+  variantIcons,
+  variantIconColor,
+} from "@/lib/feedback-variants";
+import { HoverScanline } from "@/atoms/hover-scanline";
 
-type ToastVariant = Toast["variant"];
-
-const variantStyles: Record<ToastVariant, string> = {
-  success: "border-l-success bg-success/5",
-  warning: "border-l-warning bg-warning/5",
-  error: "border-l-error bg-error/5",
-  info: "border-l-accent bg-accent/5",
-};
-
-const variantIcons: Record<ToastVariant, typeof Info> = {
-  success: CheckCircle,
-  warning: AlertTriangle,
-  error: XCircle,
-  info: Info,
-};
-
-const variantIconColor: Record<ToastVariant, string> = {
-  success: "text-success",
-  warning: "text-warning",
-  error: "text-error",
-  info: "text-accent",
-};
-
-const variantProgressColor: Record<ToastVariant, string> = {
+const variantProgressColor: Record<Toast["variant"], string> = {
   success: "bg-success",
   warning: "bg-warning",
   error: "bg-error",
   info: "bg-accent",
 };
 
-function ToastItem({
-  toast,
-  onDismiss,
-}: {
+export interface ToastItemProps {
   toast: Toast;
   onDismiss: (id: string) => void;
-}) {
+}
+
+function ToastItem({ toast, onDismiss }: ToastItemProps) {
   const [exiting, setExiting] = useState(false);
   const [entered, setEntered] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -89,7 +65,7 @@ function ToastItem({
           ? "translate-x-0 opacity-100"
           : "translate-x-full opacity-0",
       )}
-      role="status"
+      role={toast.variant === "error" || toast.variant === "warning" ? "alert" : "status"}
       onTransitionEnd={handleTransitionEnd}
     >
       <Icon
@@ -110,19 +86,7 @@ function ToastItem({
         <X size={14} />
       </button>
 
-      {/* Scanline hover effect */}
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-0",
-          "opacity-0 transition-opacity group-hover:opacity-100",
-        )}
-        style={{
-          background:
-            "linear-gradient(180deg, transparent 0%, var(--accent-scan-subtle) 50%, transparent 100%)",
-          animation: "terminal-scan 2s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
+      <HoverScanline intensity="subtle" />
 
       {/* Progress bar countdown */}
       <div
@@ -137,14 +101,6 @@ function ToastItem({
         }}
         aria-hidden="true"
       />
-
-      {/* Inline keyframes for the progress bar */}
-      <style>{`
-        @keyframes toast-progress {
-          from { transform: scaleX(1); }
-          to { transform: scaleX(0); }
-        }
-      `}</style>
     </div>
   );
 }
