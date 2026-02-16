@@ -7,25 +7,34 @@ import {
   Globe,
 } from "lucide-react";
 import {
+  Badge,
   BlinkingCursor,
   CornerNotch,
+  DataStream,
   DotGrid,
+  GlitchText,
   GlowBorder,
   GlowLine,
   HudLabel,
+  ProgressBar,
   ScanlineOverlay,
   ServiceTag,
   StatusDot,
   TerminalTopBar,
-  TextGradient,
+  TextFlicker,
+  TypewriterText,
 } from "@/atoms";
 import {
+  Alert,
+  CommandInput,
+  DataTable,
   ProcessCard,
   Section,
   SectionHeading,
   StatCard,
   TerminalCard,
   TerminalPrompt,
+  TerminalTabs,
   TerminalWindow,
 } from "@/molecules";
 import { ThemeSwitcher } from "./theme-switcher";
@@ -84,15 +93,12 @@ export default function Home() {
             </div>
           </div>
 
-          {/* TextGradient */}
+          {/* TextFlicker */}
           <div className="space-y-3 border border-border p-6">
-            <HudLabel>TEXT_GRADIENT</HudLabel>
+            <HudLabel>TEXT_FLICKER</HudLabel>
             <div className="space-y-2 pt-2">
               <p className="font-display text-2xl font-bold">
-                <TextGradient variant="main">Main Gradient</TextGradient>
-              </p>
-              <p className="font-display text-2xl font-bold">
-                <TextGradient variant="accent">Accent Gradient</TextGradient>
+                <TextFlicker>Signal Unstable</TextFlicker>
               </p>
             </div>
           </div>
@@ -129,6 +135,57 @@ export default function Home() {
                   Larger notch (32px)
                 </div>
               </CornerNotch>
+            </div>
+          </div>
+
+          {/* TypewriterText */}
+          <div className="space-y-3 border border-border p-6">
+            <HudLabel>TYPEWRITER_TEXT</HudLabel>
+            <div className="pt-2">
+              <p className="font-display text-lg">
+                <TypewriterText speed={40} delay={500}>
+                  Initializing data terminal...
+                </TypewriterText>
+              </p>
+            </div>
+          </div>
+
+          {/* GlitchText */}
+          <div className="space-y-3 border border-border p-6">
+            <HudLabel>GLITCH_TEXT</HudLabel>
+            <div className="pt-2">
+              <p className="font-display text-2xl font-bold">
+                <GlitchText>System Corrupted</GlitchText>
+              </p>
+            </div>
+          </div>
+
+          {/* ProgressBar */}
+          <div className="space-y-3 border border-border p-6">
+            <HudLabel>PROGRESS_BAR</HudLabel>
+            <div className="space-y-3 pt-2">
+              <ProgressBar value={72} />
+              <ProgressBar indeterminate />
+            </div>
+          </div>
+
+          {/* Badge */}
+          <div className="space-y-3 border border-border p-6">
+            <HudLabel>BADGE</HudLabel>
+            <div className="flex flex-wrap items-center gap-2 pt-2">
+              <Badge variant="success">Online</Badge>
+              <Badge variant="warning">Degraded</Badge>
+              <Badge variant="error">Offline</Badge>
+              <Badge variant="info">v2.1.0</Badge>
+              <Badge variant="neutral">Beta</Badge>
+            </div>
+          </div>
+
+          {/* DataStream */}
+          <div className="space-y-3 border border-border p-6">
+            <HudLabel>DATA_STREAM</HudLabel>
+            <div className="relative h-32 pt-2">
+              <DataStream columns={5} speed="fast" className="h-full" />
             </div>
           </div>
         </div>
@@ -322,6 +379,117 @@ export default function Home() {
               "status: ONLINE",
             ]}
           />
+        </div>
+      </Section>
+
+      <GlowLine />
+
+      {/* Alerts */}
+      <Section spacing="lg" id="alerts">
+        <SectionHeading subtitle="System messages and feedback indicators.">
+          Alerts
+        </SectionHeading>
+
+        <div className="mt-12 space-y-4">
+          <Alert variant="info">
+            System update available. Run &apos;update --latest&apos; to install.
+          </Alert>
+          <Alert variant="success">
+            Deployment complete. All 256 nodes reporting healthy.
+          </Alert>
+          <Alert variant="warning">
+            Memory usage at 87%. Consider scaling compute resources.
+          </Alert>
+          <Alert variant="error" dismissible>
+            Connection to node_042 lost. Automatic failover initiated.
+          </Alert>
+        </div>
+      </Section>
+
+      <GlowLine />
+
+      {/* Terminal Tabs */}
+      <Section spacing="lg" dotGrid id="tabs">
+        <SectionHeading subtitle="Tabbed content with glitch transitions.">
+          Terminal Tabs
+        </SectionHeading>
+
+        <div className="mt-12">
+          <TerminalTabs
+            tabs={[
+              {
+                label: "LOGS",
+                content: (
+                  <div className="space-y-1 font-display text-sm text-foreground/60">
+                    <div>[00:12:34] Connection established</div>
+                    <div>[00:12:35] Authenticating...</div>
+                    <div>[00:12:35] Session initialized</div>
+                    <div>[00:12:36] Ready for input</div>
+                  </div>
+                ),
+              },
+              {
+                label: "METRICS",
+                content: (
+                  <div className="grid grid-cols-2 gap-4">
+                    <StatCard to={99.9} suffix="%" decimals={1} label="UPTIME" />
+                    <StatCard to={42} suffix="ms" label="LATENCY" />
+                  </div>
+                ),
+              },
+              {
+                label: "CONFIG",
+                content: (
+                  <div className="space-y-1 font-display text-sm text-foreground/60">
+                    <div>region: us-east-1</div>
+                    <div>cluster: production</div>
+                    <div>replicas: 3</div>
+                    <div>auto_scale: true</div>
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </Section>
+
+      <GlowLine />
+
+      {/* Data Table */}
+      <Section spacing="lg" id="table">
+        <SectionHeading subtitle="Sortable data grid for system records.">
+          Data Table
+        </SectionHeading>
+
+        <div className="mt-12">
+          <DataTable
+            columns={[
+              { key: "pid", label: "PID", sortable: true },
+              { key: "name", label: "Process", sortable: true },
+              { key: "cpu", label: "CPU %", sortable: true },
+              { key: "status", label: "Status" },
+            ]}
+            rows={[
+              { pid: "001", name: "data-ingestion", cpu: "12.4", status: "running" },
+              { pid: "002", name: "compute-engine", cpu: "45.2", status: "running" },
+              { pid: "003", name: "security-monitor", cpu: "3.1", status: "idle" },
+              { pid: "004", name: "edge-relay", cpu: "28.7", status: "running" },
+              { pid: "005", name: "api-gateway", cpu: "8.9", status: "running" },
+            ]}
+          />
+        </div>
+      </Section>
+
+      <GlowLine />
+
+      {/* Command Input */}
+      <Section spacing="lg" id="input">
+        <SectionHeading subtitle="Interactive terminal command input.">
+          Command Input
+        </SectionHeading>
+
+        <div className="mt-12 max-w-xl">
+          <CommandInput placeholder="enter command..." />
         </div>
       </Section>
 
