@@ -754,6 +754,67 @@ Sliding switch with accent glow.
 | `disabled` | `boolean` | `false` |
 | `children` | `ReactNode` | — (inline label) |
 
+### Navbar
+
+Horizontal top bar navigation with dropdown menus.
+
+```tsx
+<Navbar
+  items={[
+    { id: "home", label: "Home" },
+    { id: "tools", label: "Tools", children: [
+      { id: "editor", label: "Editor", icon: <Code size={14} /> },
+    ]},
+  ]}
+  defaultActiveId="home"
+  onNavigate={(id) => {}}
+  logo={<span>LOGO</span>}
+  actions={<ThemeSwitcher />}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `items` | `NavItem[]` | required |
+| `activeId` | `string` | — (controlled) |
+| `defaultActiveId` | `string` | `""` |
+| `onNavigate` | `(id: string) => void` | — |
+| `logo` | `ReactNode` | — |
+| `actions` | `ReactNode` | — |
+
+Dropdowns open on hover (150ms delay) and click. Close on mouse leave, outside click, or Escape. Active item shows accent border glow.
+
+### Sidebar
+
+Vertical navigation with collapsible icon rail.
+
+```tsx
+<Sidebar
+  items={[
+    { id: "home", label: "Home", icon: <Home size={18} /> },
+    { id: "settings", label: "Settings", icon: <Settings size={18} />, children: [
+      { id: "profile", label: "Profile", icon: <User size={14} /> },
+    ]},
+  ]}
+  defaultActiveId="home"
+  onNavigate={(id) => {}}
+  header={{ logo: <span>APP</span>, collapsedLogo: <span>A</span> }}
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `items` | `NavItem[]` | required |
+| `activeId` | `string` | — (controlled) |
+| `defaultActiveId` | `string` | `""` |
+| `onNavigate` | `(id: string) => void` | — |
+| `header` | `{ logo: ReactNode; collapsedLogo: ReactNode }` | — |
+| `collapsed` | `boolean` | — (controlled) |
+| `defaultCollapsed` | `boolean` | `false` |
+| `onCollapsedChange` | `(collapsed: boolean) => void` | — |
+
+Expanded: 240px with icon + label. Collapsed: 56px icon rail with tooltips/flyouts. Built-in collapse toggle at bottom.
+
 ---
 
 ## Hooks
@@ -923,7 +984,7 @@ The preview page (`/`) is organized into 6 functional tabs. Each tab is a file u
 | Data Display | `data-display.tsx` | Terminal cards, stats, processes, boot sequence, tabs, tables, prompt |
 | Forms | `forms.tsx` | Command input, checkboxes, radios, toggles, selects, search, textarea |
 | Feedback | `feedback.tsx` | Alerts, progress bars, data stream |
-| Navigation | `navigation.tsx` | Coming soon placeholder |
+| Navigation | `navigation.tsx` | Navbar (horizontal with dropdowns), Sidebar (expanded + collapsed demos) |
 | Effects | `effects.tsx` | Scroll progress, fade-in directions, typewriter, sticky sections |
 
 Tab state is managed via `useState` with URL hash sync (`#foundations`, `#data-display`, etc.). To add a new component demo, add it to the appropriate tab file.

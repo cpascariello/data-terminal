@@ -31,7 +31,7 @@ src/
 │       ├── data-display.tsx  # Terminal cards, stats, processes, tables
 │       ├── forms.tsx         # Form controls and inputs
 │       ├── feedback.tsx      # Alerts, progress, data stream
-│       ├── navigation.tsx    # Coming soon placeholder
+│       ├── navigation.tsx    # Navbar and Sidebar demos
 │       ├── effects.tsx       # Scroll effects, fade-in, typewriter
 │       └── index.ts          # Barrel export
 ├── atoms/        # Atomic UI primitives
@@ -54,25 +54,32 @@ src/
 │   ├── text-flicker.tsx
 │   ├── typewriter-text.tsx
 │   └── index.ts       # Barrel export
+├── types/        # Shared TypeScript types
+│   └── nav.ts         # NavItem type + isItemActive utility
 ├── molecules/    # Composed components
 │   ├── alert.tsx
+│   ├── button.tsx
+│   ├── checkbox.tsx
+│   ├── code-block.tsx
 │   ├── command-input.tsx
 │   ├── data-table.tsx
+│   ├── icon-button.tsx
+│   ├── multi-select.tsx
+│   ├── navbar.tsx
 │   ├── process-card.tsx
+│   ├── radio-group.tsx
+│   ├── search-input.tsx
 │   ├── section.tsx
 │   ├── section-heading.tsx
+│   ├── select.tsx
+│   ├── sidebar.tsx
 │   ├── stat-card.tsx
 │   ├── sticky-section.tsx
 │   ├── terminal-card.tsx
 │   ├── terminal-prompt.tsx
-│   ├── checkbox.tsx
-│   ├── multi-select.tsx
-│   ├── radio-group.tsx
-│   ├── search-input.tsx
-│   ├── select.tsx
-│   ├── textarea.tsx
 │   ├── terminal-tabs.tsx
 │   ├── terminal-window.tsx
+│   ├── textarea.tsx
 │   ├── toggle.tsx
 │   └── index.ts       # Barrel export
 ├── hooks/        # Custom hooks
@@ -147,6 +154,12 @@ src/
 **Key files:** `src/molecules/button.tsx`, `src/molecules/icon-button.tsx`
 **Notes:** Link variant strips padding for inline text use. Danger variant exists for destructive actions.
 
+### Navigation
+**Context:** Horizontal and vertical navigation components with two-level hierarchy.
+**Approach:** Two independent molecules sharing a `NavItem` type from `src/types/nav.ts`. `Navbar` renders a sticky horizontal bar with hover/click dropdowns. `Sidebar` renders a vertical panel that collapses to an icon rail with tooltips and flyouts. Both use uncontrolled-default/controlled-override state for active item tracking. Dropdowns/flyouts use hover with delayed enter/leave timers plus click toggle and Escape/outside-click dismiss.
+**Key files:** `src/molecules/navbar.tsx`, `src/molecules/sidebar.tsx`, `src/types/nav.ts`
+**Notes:** `NavItem.icon` is required for Sidebar (collapsed rail), optional for Navbar. Sidebar collapse state is independently controllable via `collapsed`/`onCollapsedChange`.
+
 ---
 
 ## Recipes
@@ -182,7 +195,7 @@ src/
 | Data Display | Terminal cards, stats, processes, tables, tabs, prompt |
 | Forms | Command input, checkboxes, radios, toggles, selects, textarea |
 | Feedback | Alerts, progress bars, data stream |
-| Navigation | Coming soon placeholder |
+| Navigation | Navbar (horizontal with dropdowns), Sidebar (expanded + collapsed demos) |
 | Effects | Scroll effects, fade-in directions, typewriter, sticky sections |
 
 **Notes:** To add a component demo, add it to the appropriate tab file. Tabs with no content show a "coming soon" placeholder. Tab state syncs with URL hash (`#foundations`, `#data-display`, etc.) for direct linking.

@@ -9,11 +9,6 @@ Parking lot for scope creep and deferred ideas.
 **Description:** Collapsible content sections for FAQ-style layouts. Add to Feedback tab.
 **Priority:** Medium
 
-### 2026-02-16 - Navigation components
-**Source:** Identified during tabbed preview page design
-**Description:** Navbar, sidebar, breadcrumbs, footer, pagination. Will populate the Navigation tab.
-**Priority:** Medium
-
 ### 2026-02-16 - Modal / dialog
 **Source:** Identified during tabbed preview page design
 **Description:** Modal overlay with backdrop, close button, focus trap. Add to Feedback tab.
@@ -75,3 +70,7 @@ Parking lot for scope creep and deferred ideas.
 ### 2026-02-16 - Button components
 **Completed:** 2026-02-16
 **Delivered:** Button (5 variants, 3 sizes, icon support), IconButton (4 variants, 3 sizes)
+
+### 2026-02-16 - Navigation components
+**Completed:** 2026-02-16
+**Delivered:** Navbar (horizontal, dropdown menus, hover/click), Sidebar (vertical, collapsible icon rail, tooltips, flyouts)

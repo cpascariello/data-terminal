@@ -159,6 +159,7 @@ src/
 ├── molecules/    # Composed components (TerminalCard, Section, etc.)
 ├── hooks/        # Custom React hooks
 ├── lib/          # Utilities (cn)
+├── types/        # Shared TypeScript types (NavItem)
 ├── providers/    # Context providers (ThemeProvider)
 ├── theme/        # CSS tokens, animations, utilities, fonts
 └── fonts/        # Local font files (.woff2)
@@ -213,9 +214,11 @@ src/
 - `DataTable` — monospaced sortable data table with HudLabel headers
 - `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label
 - `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items
+- `Navbar` — horizontal top bar with logo, nav items with dropdowns, actions slot; hover/click dropdowns, uncontrolled/controlled active state
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
 - `RadioGroup` — fieldset of native radio inputs with circular accent dot indicator, vertical layout
 - `SearchInput` — search icon prefix, BlinkingCursor, clear button, debounced onSearch callback
+- `Sidebar` — vertical nav with collapsible icon rail, header with logo, two-level items with group expand, tooltips and flyouts when collapsed
 - `Section` — layout section wrapper with spacing, dot grid, scanlines, glow border
 - `SectionHeading` — heading with optional blinking cursor, subtitle, and configurable heading level (h1-h4)
 - `Select` — custom dropdown with button trigger, chevron icon, positioned overlay panel
