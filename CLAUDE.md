@@ -151,6 +151,7 @@ pnpm typecheck  # Type check
 ```
 src/
 ├── app/          # Pages/routes (Next.js App Router)
+│   └── tabs/     # Preview page tab content (foundations, data-display, forms, feedback, navigation, effects)
 ├── atoms/        # Atomic UI primitives (BlinkingCursor, StatusDot, etc.)
 ├── molecules/    # Composed components (TerminalCard, Section, etc.)
 ├── hooks/        # Custom React hooks
@@ -168,6 +169,7 @@ src/
 - Scroll effects (fade-in, parallax, sticky sections, scroll progress)
 - Reduced-motion support
 - Theme persistence via localStorage
+- Tabbed preview page (Foundations, Data Display, Forms, Feedback, Navigation, Effects) with hash-based routing
 
 ### Component Inventory
 

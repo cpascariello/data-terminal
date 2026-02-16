@@ -4,6 +4,56 @@ Parking lot for scope creep and deferred ideas.
 
 ---
 
+### 2026-02-16 - Typography components
+**Source:** Identified during tabbed preview page design
+**Description:** Heading scale (h1–h6), body text variants, caption, code/pre blocks, inline code. Add to Foundations tab.
+**Priority:** High
+
+### 2026-02-16 - Button components
+**Source:** Identified during tabbed preview page design
+**Description:** Button variants (primary, secondary, ghost, icon button). Add to Foundations tab and Forms tab (submit/reset context).
+**Priority:** High
+
+### 2026-02-16 - FAQ accordion / dropdown
+**Source:** Identified during tabbed preview page design
+**Description:** Collapsible content sections for FAQ-style layouts. Add to Feedback tab.
+**Priority:** Medium
+
+### 2026-02-16 - Navigation components
+**Source:** Identified during tabbed preview page design
+**Description:** Navbar, sidebar, breadcrumbs, footer, pagination. Will populate the Navigation tab.
+**Priority:** Medium
+
+### 2026-02-16 - Modal / dialog
+**Source:** Identified during tabbed preview page design
+**Description:** Modal overlay with backdrop, close button, focus trap. Add to Feedback tab.
+**Priority:** Medium
+
+### 2026-02-16 - Toast notifications
+**Source:** Identified during tabbed preview page design
+**Description:** Auto-dismissing notification toasts with variants (success/error/info/warning). Add to Feedback tab.
+**Priority:** Medium
+
+### 2026-02-16 - Tooltips
+**Source:** Identified during tabbed preview page design
+**Description:** Hover/focus tooltips with positioning (top/bottom/left/right). Add to Feedback tab.
+**Priority:** Low
+
+### 2026-02-16 - Loading skeletons
+**Source:** Identified during tabbed preview page design
+**Description:** Skeleton placeholder components for loading states. Add to Feedback tab.
+**Priority:** Low
+
+### 2026-02-16 - Color palette / token reference
+**Source:** Identified during tabbed preview page design
+**Description:** Visual display of all theme tokens with swatches. Add to Foundations tab.
+**Priority:** Low
+
+### 2026-02-16 - Icons showcase
+**Source:** Identified during tabbed preview page design
+**Description:** Icon system and visual reference of available icons. Add to Foundations tab.
+**Priority:** Low
+
 ### 2026-02-16 - Scroll effects: review suggestions not yet applied
 **Source:** Code review of feature/scroll-effects branch
 **Description:** The frontend expert review found 5 nice-to-have suggestions that weren't implemented:

@@ -4,6 +4,12 @@ Decision log with rationale.
 
 ---
 
+## Decision #6 - 2026-02-16
+**Context:** Preview page was a single 640-line scroll-through showcase. Planning to add many more components (typography, buttons, navigation, modals, etc.) which would make it unmanageable.
+**Decision:** Reorganize preview page into functional tabs: Foundations, Data Display, Forms, Feedback, Navigation, Effects. Group by purpose, not atomic design layer.
+**Rationale:** Functional grouping matches how developers look for components — by what they need (form input, feedback UI, navigation), not by abstraction level (atom vs molecule). Scales well as the system grows. Atomic design tabs (Atoms | Molecules | Organisms) would create arbitrary buckets where users have to guess which layer a component lives on.
+**Alternatives considered:** Atomic design tabs (familiar but poor UX at scale), minimal tabs + sidebar (over-engineered for current component count)
+
 ## Decision #5 - 2026-02-16
 **Context:** FadeIn component was invisible on page load — CSS scroll-driven animation path caused hydration mismatches (SSR renders JS fallback, client renders CSS path) and elements already in viewport stayed at opacity:0 because their `animation-range: entry` had already passed
 **Decision:** FadeIn uses IntersectionObserver + CSS transitions exclusively, not CSS scroll-driven animations. ScrollProgressBar keeps the CSS path but defers detection to useEffect.

@@ -23,9 +23,17 @@ src/
 ├── app/          # Next.js App Router pages
 │   ├── globals.css    # Tailwind imports + @theme inline mapping
 │   ├── layout.tsx     # Root layout with font loading + ThemeProvider
-│   ├── page.tsx       # Showcase/demo page
+│   ├── page.tsx       # Tab shell: header + tab bar + active tab
 │   ├── scroll-effects-demo.tsx  # Client component for StickySection demo
-│   └── theme-switcher.tsx
+│   ├── theme-switcher.tsx
+│   └── tabs/          # Preview page tab content
+│       ├── foundations.tsx    # Atoms showcase
+│       ├── data-display.tsx  # Terminal cards, stats, processes, tables
+│       ├── forms.tsx         # Form controls and inputs
+│       ├── feedback.tsx      # Alerts, progress, data stream
+│       ├── navigation.tsx    # Coming soon placeholder
+│       ├── effects.tsx       # Scroll effects, fade-in, typewriter
+│       └── index.ts          # Barrel export
 ├── atoms/        # Atomic UI primitives
 │   ├── badge.tsx
 │   ├── blinking-cursor.tsx
@@ -147,3 +155,19 @@ src/
 2. Import atoms from `@/atoms` as needed
 3. Export from `src/molecules/index.ts`
 4. Update `CLAUDE.md` component inventory
+
+### Preview Page Tabs
+**Context:** Components organized by function for a hybrid showcase/docs experience.
+**Approach:** `page.tsx` is a slim shell (~100 lines) with a sticky header, tab bar, and `useState` + hash sync. Each tab is a self-contained file in `src/app/tabs/` rendering its own sections with `FadeIn`, `GlowLine`, and `Section` wrappers.
+**Key files:** `src/app/page.tsx`, `src/app/tabs/`
+**Tab mapping:**
+| Tab | Content |
+|-----|---------|
+| Foundations | Atomic primitives (cursors, badges, glows, overlays, text effects) |
+| Data Display | Terminal cards, stats, processes, tables, tabs, prompt |
+| Forms | Command input, checkboxes, radios, toggles, selects, textarea |
+| Feedback | Alerts, progress bars, data stream |
+| Navigation | Coming soon placeholder |
+| Effects | Scroll effects, fade-in directions, typewriter, sticky sections |
+
+**Notes:** To add a component demo, add it to the appropriate tab file. Tabs with no content show a "coming soon" placeholder. Tab state syncs with URL hash (`#foundations`, `#data-display`, etc.) for direct linking.
