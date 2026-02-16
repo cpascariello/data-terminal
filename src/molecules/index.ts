@@ -10,6 +10,7 @@ export { Section } from "./section";
 export { SectionHeading } from "./section-heading";
 export { Select } from "./select";
 export { StatCard } from "./stat-card";
+export { StickySection } from "./sticky-section";
 export { Textarea } from "./textarea";
 export { TerminalCard } from "./terminal-card";
 export { TerminalPrompt } from "./terminal-prompt";

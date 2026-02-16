@@ -48,4 +48,40 @@
     animation: pulse-ring 1.5s ease-out infinite;
     pointer-events: none;
   }
+
+  @supports (animation-timeline: view()) {
+    .scroll-fade-in {
+      animation: scroll-fade-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+
+  .scroll-fade-in-up {
+    --fade-distance: 20px;
+  }
+
+  .scroll-fade-in-down {
+    --fade-distance: -20px;
+  }
+
+  .scroll-fade-in-left {
+    --fade-translate-x: 20px;
+  }
+
+  .scroll-fade-in-right {
+    --fade-translate-x: -20px;
+  }
+
+  .scroll-progress {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: scroll-progress-fill linear both;
+      animation-timeline: scroll();
+    }
+  }
 }

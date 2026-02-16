@@ -23,10 +23,14 @@ src/
 ├── app/          # Next.js App Router pages
 │   ├── globals.css    # Tailwind imports + @theme inline mapping
 │   ├── layout.tsx     # Root layout with font loading + ThemeProvider
-│   └── page.tsx       # Showcase/demo page
+│   ├── page.tsx       # Showcase/demo page
+│   ├── scroll-effects-demo.tsx  # Client component for StickySection demo
+│   └── theme-switcher.tsx
 ├── atoms/        # Atomic UI primitives
 │   ├── badge.tsx
 │   ├── blinking-cursor.tsx
+│   ├── fade-in.tsx
+│   ├── scroll-progress-bar.tsx
 │   ├── corner-notch.tsx
 │   ├── data-stream.tsx
 │   ├── dot-grid.tsx
@@ -50,6 +54,7 @@ src/
 │   ├── section.tsx
 │   ├── section-heading.tsx
 │   ├── stat-card.tsx
+│   ├── sticky-section.tsx
 │   ├── terminal-card.tsx
 │   ├── terminal-prompt.tsx
 │   ├── checkbox.tsx
@@ -65,9 +70,12 @@ src/
 ├── hooks/        # Custom hooks
 │   ├── use-count-up.ts
 │   ├── use-in-view.ts
+│   ├── use-parallax.ts
+│   ├── use-scroll-progress.ts
 │   └── use-theme.ts
 ├── lib/          # Utilities
-│   └── cn.ts          # clsx + tailwind-merge
+│   ├── cn.ts          # clsx + tailwind-merge
+│   └── supports-scroll-timeline.ts  # CSS scroll-timeline feature detection
 ├── providers/    # Context providers
 │   └── theme-provider.tsx
 ├── theme/        # Design tokens and CSS
@@ -111,6 +119,12 @@ src/
 **Approach:** Pure CSS `@keyframes` in `animations.css`. JavaScript-driven animations use `requestAnimationFrame` in hooks (`useCountUp`) or `setTimeout` for character-level text effects (`TextFlicker`, `GlitchText`, `TypewriterText`). All animations respect `prefers-reduced-motion`.
 **Key files:** `src/theme/animations.css`, `src/theme/utilities.css`, `src/hooks/use-count-up.ts`
 **Notes:** Zero animation library dependencies — no Framer Motion, no GSAP. CSS keyframes include `reveal-up`, `glitch-in`, `pulse-ring`, `data-stream-scroll`, `progress-sweep`. Utility classes `.animate-reveal`, `.animate-glitch-in`, `.pulse-ring` are available in `utilities.css`.
+
+### Scroll Effects
+**Context:** Scroll-driven effects (fade-in, parallax, sticky sections, scroll progress) for the design system.
+**Approach:** Two layers — JS hooks for custom compositions and drop-in components for common patterns. `FadeIn` uses IntersectionObserver + CSS transitions (not CSS scroll-driven animations, which caused hydration mismatches). `ScrollProgressBar` uses CSS `animation-timeline: scroll()` where supported, with JS fallback via `useScrollProgress`. `StickySection` uses `position: sticky` with scroll progress tracking via a render prop. `useParallax` provides rAF-throttled parallax displacement.
+**Key files:** `src/atoms/fade-in.tsx`, `src/atoms/scroll-progress-bar.tsx`, `src/molecules/sticky-section.tsx`, `src/hooks/use-scroll-progress.ts`, `src/hooks/use-parallax.ts`, `src/lib/supports-scroll-timeline.ts`
+**Notes:** CSS scroll-driven animation utilities (`scroll-fade-in`, `scroll-progress`) remain available in `utilities.css` for direct use. The `supportsScrollTimeline()` function is lazy-cached and SSR-safe. Components that use it defer detection to `useEffect` to avoid hydration mismatches.
 
 ---
 

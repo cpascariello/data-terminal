@@ -165,6 +165,7 @@ src/
 - Multi-theme system (dark, light, contrast, warm, cool)
 - CSS custom property tokens with OKLCH colors
 - Terminal animations (blink, glitch, scan, data-flow)
+- Scroll effects (fade-in, parallax, sticky sections, scroll progress)
 - Reduced-motion support
 - Theme persistence via localStorage
 
@@ -188,6 +189,8 @@ src/
 - `StatusDot` — pulsing status indicator dot
 - `TerminalTopBar` — window chrome bar with dots, optional tag/label, configurable dot position
 - `TextFlicker` — accent-colored text with random letter opacity flicker effect
+- `FadeIn` — scroll-triggered fade-in with configurable direction, distance, delay, and duration (IntersectionObserver + CSS transitions)
+- `ScrollProgressBar` — horizontal scroll progress indicator, CSS scroll-timeline with JS fallback, inline or fixed position
 - `TypewriterText` — character-by-character text reveal with BlinkingCursor
 
 #### Molecules (`src/molecules/`)
@@ -203,6 +206,7 @@ src/
 - `SectionHeading` — heading with optional blinking cursor, subtitle, and configurable heading level (h1-h4)
 - `Select` — custom dropdown with button trigger, chevron icon, positioned overlay panel
 - `StatCard` — animated count-up statistic with label (uses useInView + useCountUp)
+- `StickySection` — sticky scroll-through section with render prop providing progress and activeStep
 - `Textarea` — multi-line terminal-styled input with autoResize option
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor
@@ -213,6 +217,8 @@ src/
 #### Hooks (`src/hooks/`)
 - `useCountUp` — rAF-based number animation with easing and reduced-motion support
 - `useInView` — IntersectionObserver hook for scroll-triggered effects
+- `useParallax` — rAF-throttled parallax displacement hook returning ref + style
+- `useScrollProgress` — scroll progress (0–1) for page or target element, rAF-throttled
 - `useTheme` — ThemeContext consumer hook
 
 #### Providers (`src/providers/`)

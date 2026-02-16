@@ -12,12 +12,14 @@ import {
   CornerNotch,
   DataStream,
   DotGrid,
+  FadeIn,
   GlitchText,
   GlowBorder,
   GlowLine,
   HudLabel,
   ProgressBar,
   ScanlineOverlay,
+  ScrollProgressBar,
   ServiceTag,
   StatusDot,
   TerminalTopBar,
@@ -44,6 +46,7 @@ import {
   Toggle,
   TerminalWindow,
 } from "@/molecules";
+import { ScrollEffectsDemo } from "./scroll-effects-demo";
 import { ThemeSwitcher } from "./theme-switcher";
 
 export default function Home() {
@@ -59,6 +62,8 @@ export default function Home() {
         </div>
       </div>
 
+      <ScrollProgressBar position="fixed" glow />
+
       {/* ===== ATOMS SHOWCASE ===== */}
       <Section spacing="lg" id="atoms">
         <SectionHeading subtitle="Atomic primitives that compose into larger patterns.">
@@ -67,134 +72,156 @@ export default function Home() {
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {/* BlinkingCursor */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>BLINKING_CURSOR</HudLabel>
-            <div className="flex items-center gap-6 pt-2 font-display text-lg">
-              <span className="text-foreground/50">block:</span>
-              <BlinkingCursor variant="block" />
-              <span className="text-foreground/50">line:</span>
-              <BlinkingCursor variant="line" />
-              <span className="text-foreground/50">_:</span>
-              <BlinkingCursor variant="underscore" />
+          <FadeIn delay={0}>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>BLINKING_CURSOR</HudLabel>
+              <div className="flex items-center gap-6 pt-2 font-display text-lg">
+                <span className="text-foreground/50">block:</span>
+                <BlinkingCursor variant="block" />
+                <span className="text-foreground/50">line:</span>
+                <BlinkingCursor variant="line" />
+                <span className="text-foreground/50">_:</span>
+                <BlinkingCursor variant="underscore" />
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* StatusDot */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>STATUS_DOT</HudLabel>
-            <div className="flex items-center gap-4 pt-2">
-              <StatusDot />
-              <StatusDot speed={1} color="bg-success" />
-              <StatusDot speed={3} color="bg-warning" />
-              <StatusDot speed={0.5} color="bg-error" />
+          <FadeIn delay={0.05}>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>STATUS_DOT</HudLabel>
+              <div className="flex items-center gap-4 pt-2">
+                <StatusDot />
+                <StatusDot speed={1} color="bg-success" />
+                <StatusDot speed={3} color="bg-warning" />
+                <StatusDot speed={0.5} color="bg-error" />
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* HudLabel + ServiceTag */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>LABELS_AND_TAGS</HudLabel>
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <HudLabel>SYS:MONITOR</HudLabel>
-              <ServiceTag tag="SVC:COMPUTE" />
-              <ServiceTag tag="NET:EDGE" />
+          <FadeIn delay={0.1}>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>LABELS_AND_TAGS</HudLabel>
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <HudLabel>SYS:MONITOR</HudLabel>
+                <ServiceTag tag="SVC:COMPUTE" />
+                <ServiceTag tag="NET:EDGE" />
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* TextFlicker */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>TEXT_FLICKER</HudLabel>
-            <div className="space-y-2 pt-2">
-              <p className="font-display text-2xl font-bold">
-                <TextFlicker>Signal Unstable</TextFlicker>
-              </p>
+          <FadeIn delay={0.15}>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>TEXT_FLICKER</HudLabel>
+              <div className="space-y-2 pt-2">
+                <p className="font-display text-2xl font-bold">
+                  <TextFlicker>Signal Unstable</TextFlicker>
+                </p>
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* GlowLine + GlowBorder */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>GLOW_EFFECTS</HudLabel>
-            <div className="space-y-4 pt-2">
-              <GlowLine />
-              <GlowBorder>
-                <div className="px-4 py-2 text-sm text-foreground/60">
-                  Standard glow border
-                </div>
-              </GlowBorder>
-              <GlowBorder intense>
-                <div className="px-4 py-2 text-sm text-foreground/60">
-                  Intense glow border
-                </div>
-              </GlowBorder>
+          <FadeIn delay={0.2}>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>GLOW_EFFECTS</HudLabel>
+              <div className="space-y-4 pt-2">
+                <GlowLine />
+                <GlowBorder>
+                  <div className="px-4 py-2 text-sm text-foreground/60">
+                    Standard glow border
+                  </div>
+                </GlowBorder>
+                <GlowBorder intense>
+                  <div className="px-4 py-2 text-sm text-foreground/60">
+                    Intense glow border
+                  </div>
+                </GlowBorder>
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* CornerNotch */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>CORNER_NOTCH</HudLabel>
-            <div className="pt-2">
-              <CornerNotch>
-                <div className="bg-foreground/[0.04] px-4 py-3 text-sm text-foreground/60">
-                  Clipped top-right corner (16px)
-                </div>
-              </CornerNotch>
-              <CornerNotch size={32} className="mt-3">
-                <div className="bg-foreground/[0.04] px-4 py-3 text-sm text-foreground/60">
-                  Larger notch (32px)
-                </div>
-              </CornerNotch>
+          <FadeIn delay={0.25}>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>CORNER_NOTCH</HudLabel>
+              <div className="pt-2">
+                <CornerNotch>
+                  <div className="bg-foreground/[0.04] px-4 py-3 text-sm text-foreground/60">
+                    Clipped top-right corner (16px)
+                  </div>
+                </CornerNotch>
+                <CornerNotch size={32} className="mt-3">
+                  <div className="bg-foreground/[0.04] px-4 py-3 text-sm text-foreground/60">
+                    Larger notch (32px)
+                  </div>
+                </CornerNotch>
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* TypewriterText */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>TYPEWRITER_TEXT</HudLabel>
-            <div className="pt-2">
-              <p className="font-display text-lg">
-                <TypewriterText speed={40} delay={500}>
-                  Initializing data terminal...
-                </TypewriterText>
-              </p>
+          <FadeIn>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>TYPEWRITER_TEXT</HudLabel>
+              <div className="pt-2">
+                <p className="font-display text-lg">
+                  <TypewriterText speed={40} delay={500}>
+                    Initializing data terminal...
+                  </TypewriterText>
+                </p>
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* GlitchText */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>GLITCH_TEXT</HudLabel>
-            <div className="pt-2">
-              <p className="font-display text-2xl font-bold">
-                <GlitchText>System Corrupted</GlitchText>
-              </p>
+          <FadeIn>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>GLITCH_TEXT</HudLabel>
+              <div className="pt-2">
+                <p className="font-display text-2xl font-bold">
+                  <GlitchText>System Corrupted</GlitchText>
+                </p>
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* ProgressBar */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>PROGRESS_BAR</HudLabel>
-            <div className="space-y-3 pt-2">
-              <ProgressBar value={72} />
-              <ProgressBar indeterminate />
+          <FadeIn>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>PROGRESS_BAR</HudLabel>
+              <div className="space-y-3 pt-2">
+                <ProgressBar value={72} />
+                <ProgressBar indeterminate />
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* Badge */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>BADGE</HudLabel>
-            <div className="flex flex-wrap items-center gap-2 pt-2">
-              <Badge variant="success">Online</Badge>
-              <Badge variant="warning">Degraded</Badge>
-              <Badge variant="error">Offline</Badge>
-              <Badge variant="info">v2.1.0</Badge>
-              <Badge variant="neutral">Beta</Badge>
+          <FadeIn>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>BADGE</HudLabel>
+              <div className="flex flex-wrap items-center gap-2 pt-2">
+                <Badge variant="success">Online</Badge>
+                <Badge variant="warning">Degraded</Badge>
+                <Badge variant="error">Offline</Badge>
+                <Badge variant="info">v2.1.0</Badge>
+                <Badge variant="neutral">Beta</Badge>
+              </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* DataStream */}
-          <div className="space-y-3 border border-border p-6">
-            <HudLabel>DATA_STREAM</HudLabel>
-            <div className="relative h-32 pt-2">
-              <DataStream columns={5} speed="fast" className="h-full" />
+          <FadeIn>
+            <div className="space-y-3 border border-border p-6">
+              <HudLabel>DATA_STREAM</HudLabel>
+              <div className="relative h-32 pt-2">
+                <DataStream columns={5} speed="fast" className="h-full" />
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
 
         {/* TerminalTopBar */}
@@ -244,43 +271,45 @@ export default function Home() {
           Molecules
         </SectionHeading>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <TerminalCard tag="SVC:COMPUTE" label="cluster_01">
-            <div className="p-5">
-              <h3 className="font-display text-lg font-bold text-foreground">
-                Edge Computing
-              </h3>
-              <p className="mt-2 text-sm text-foreground/50">
-                Distributed compute nodes processing data at the network edge
-                with sub-millisecond latency.
-              </p>
-            </div>
-          </TerminalCard>
+        <FadeIn>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <TerminalCard tag="SVC:COMPUTE" label="cluster_01">
+              <div className="p-5">
+                <h3 className="font-display text-lg font-bold text-foreground">
+                  Edge Computing
+                </h3>
+                <p className="mt-2 text-sm text-foreground/50">
+                  Distributed compute nodes processing data at the network edge
+                  with sub-millisecond latency.
+                </p>
+              </div>
+            </TerminalCard>
 
-          <TerminalCard tag="SVC:STORAGE" label="vault_07">
-            <div className="p-5">
-              <h3 className="font-display text-lg font-bold text-foreground">
-                Data Vault
-              </h3>
-              <p className="mt-2 text-sm text-foreground/50">
-                Encrypted distributed storage with automatic replication across
-                three geographic zones.
-              </p>
-            </div>
-          </TerminalCard>
+            <TerminalCard tag="SVC:STORAGE" label="vault_07">
+              <div className="p-5">
+                <h3 className="font-display text-lg font-bold text-foreground">
+                  Data Vault
+                </h3>
+                <p className="mt-2 text-sm text-foreground/50">
+                  Encrypted distributed storage with automatic replication across
+                  three geographic zones.
+                </p>
+              </div>
+            </TerminalCard>
 
-          <TerminalCard tag="SVC:NETWORK" label="mesh_03">
-            <div className="p-5">
-              <h3 className="font-display text-lg font-bold text-foreground">
-                Neural Mesh
-              </h3>
-              <p className="mt-2 text-sm text-foreground/50">
-                Self-healing network fabric with adaptive routing and zero-trust
-                authentication at every hop.
-              </p>
-            </div>
-          </TerminalCard>
-        </div>
+            <TerminalCard tag="SVC:NETWORK" label="mesh_03">
+              <div className="p-5">
+                <h3 className="font-display text-lg font-bold text-foreground">
+                  Neural Mesh
+                </h3>
+                <p className="mt-2 text-sm text-foreground/50">
+                  Self-healing network fabric with adaptive routing and zero-trust
+                  authentication at every hop.
+                </p>
+              </div>
+            </TerminalCard>
+          </div>
+        </FadeIn>
       </Section>
 
       <GlowLine />
@@ -291,12 +320,14 @@ export default function Home() {
           System Stats
         </SectionHeading>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard to={99.97} suffix="%" decimals={2} label="UPTIME_SCORE" />
-          <StatCard to={847} suffix="ms" label="AVG_RESPONSE_TIME" />
-          <StatCard to={12} suffix="M+" label="REQUESTS_DAILY" />
-          <StatCard to={256} label="ACTIVE_NODES" />
-        </div>
+        <FadeIn>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <StatCard to={99.97} suffix="%" decimals={2} label="UPTIME_SCORE" />
+            <StatCard to={847} suffix="ms" label="AVG_RESPONSE_TIME" />
+            <StatCard to={12} suffix="M+" label="REQUESTS_DAILY" />
+            <StatCard to={256} label="ACTIVE_NODES" />
+          </div>
+        </FadeIn>
       </Section>
 
       <GlowLine />
@@ -307,44 +338,46 @@ export default function Home() {
           Processes
         </SectionHeading>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <ProcessCard
-            pid="001"
-            title="Data Ingestion"
-            description="Real-time data pipeline processing streaming events from distributed sensors and APIs."
-            icon={<Database size={24} />}
-          />
-          <ProcessCard
-            pid="002"
-            title="Compute Engine"
-            description="Parallel processing engine for running analytical workloads across the cluster."
-            icon={<Cpu size={24} />}
-          />
-          <ProcessCard
-            pid="003"
-            title="Security Monitor"
-            description="Continuous threat detection and automated response across all network endpoints."
-            icon={<Shield size={24} />}
-          />
-          <ProcessCard
-            pid="004"
-            title="Edge Relay"
-            description="Low-latency relay nodes for distributing processed data to edge consumers."
-            icon={<Zap size={24} />}
-          />
-          <ProcessCard
-            pid="005"
-            title="API Gateway"
-            description="Unified entry point handling authentication, rate limiting, and request routing."
-            icon={<Globe size={24} />}
-          />
-          <ProcessCard
-            pid="006"
-            title="Cluster Manager"
-            description="Orchestration layer managing node health, scaling, and workload distribution."
-            icon={<Server size={24} />}
-          />
-        </div>
+        <FadeIn>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ProcessCard
+              pid="001"
+              title="Data Ingestion"
+              description="Real-time data pipeline processing streaming events from distributed sensors and APIs."
+              icon={<Database size={24} />}
+            />
+            <ProcessCard
+              pid="002"
+              title="Compute Engine"
+              description="Parallel processing engine for running analytical workloads across the cluster."
+              icon={<Cpu size={24} />}
+            />
+            <ProcessCard
+              pid="003"
+              title="Security Monitor"
+              description="Continuous threat detection and automated response across all network endpoints."
+              icon={<Shield size={24} />}
+            />
+            <ProcessCard
+              pid="004"
+              title="Edge Relay"
+              description="Low-latency relay nodes for distributing processed data to edge consumers."
+              icon={<Zap size={24} />}
+            />
+            <ProcessCard
+              pid="005"
+              title="API Gateway"
+              description="Unified entry point handling authentication, rate limiting, and request routing."
+              icon={<Globe size={24} />}
+            />
+            <ProcessCard
+              pid="006"
+              title="Cluster Manager"
+              description="Orchestration layer managing node health, scaling, and workload distribution."
+              icon={<Server size={24} />}
+            />
+          </div>
+        </FadeIn>
       </Section>
 
       <GlowLine />
@@ -413,7 +446,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <GlowLine />
+      <ScrollEffectsDemo />
 
       {/* Terminal Tabs */}
       <Section spacing="lg" dotGrid id="tabs">
@@ -589,18 +622,20 @@ export default function Home() {
 
       {/* CTA Terminal Prompt */}
       <Section spacing="xl" glowIntense id="cta">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Ready to deploy?
-          </h2>
-          <p className="mt-4 text-foreground/50">
-            Initialize your terminal session and start building with the Data
-            Terminal design system.
-          </p>
-          <div className="mt-8">
-            <TerminalPrompt command="npx create-data-terminal my-project" />
+        <FadeIn direction="none">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              Ready to deploy?
+            </h2>
+            <p className="mt-4 text-foreground/50">
+              Initialize your terminal session and start building with the Data
+              Terminal design system.
+            </p>
+            <div className="mt-8">
+              <TerminalPrompt command="npx create-data-terminal my-project" />
+            </div>
           </div>
-        </div>
+        </FadeIn>
       </Section>
     </main>
   );
