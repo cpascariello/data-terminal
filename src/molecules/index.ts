@@ -1,7 +1,10 @@
 export { Alert } from "./alert";
+export { Button } from "./button";
 export { Checkbox } from "./checkbox";
+export { CodeBlock } from "./code-block";
 export { CommandInput } from "./command-input";
 export { DataTable } from "./data-table";
+export { IconButton } from "./icon-button";
 export { MultiSelect } from "./multi-select";
 export { ProcessCard } from "./process-card";
 export { RadioGroup } from "./radio-group";

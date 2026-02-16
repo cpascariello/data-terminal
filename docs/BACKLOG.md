@@ -4,16 +4,6 @@ Parking lot for scope creep and deferred ideas.
 
 ---
 
-### 2026-02-16 - Typography components
-**Source:** Identified during tabbed preview page design
-**Description:** Heading scale (h1–h6), body text variants, caption, code/pre blocks, inline code. Add to Foundations tab.
-**Priority:** High
-
-### 2026-02-16 - Button components
-**Source:** Identified during tabbed preview page design
-**Description:** Button variants (primary, secondary, ghost, icon button). Add to Foundations tab and Forms tab (submit/reset context).
-**Priority:** High
-
 ### 2026-02-16 - FAQ accordion / dropdown
 **Source:** Identified during tabbed preview page design
 **Description:** Collapsible content sections for FAQ-style layouts. Add to Feedback tab.
@@ -73,3 +63,15 @@ Parking lot for scope creep and deferred ideas.
 **Source:** Identified during initial implementation — Next.js 16 removed `next lint`
 **Description:** Install oxlint and oxfmt, add `pnpm lint` and `pnpm format` scripts. Enable typescript, import, unicorn plugins per global standards.
 **Priority:** Medium
+
+---
+
+## Completed
+
+### 2026-02-16 - Typography components
+**Completed:** 2026-02-16
+**Delivered:** Heading (4-level scale), Text (4 variants), Caption, Code (inline), CodeBlock (Shiki syntax highlighting)
+
+### 2026-02-16 - Button components
+**Completed:** 2026-02-16
+**Delivered:** Button (5 variants, 3 sizes, icon support), IconButton (4 variants, 3 sizes)

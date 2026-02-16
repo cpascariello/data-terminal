@@ -4,6 +4,24 @@ Decision log with rationale.
 
 ---
 
+## Decision #9 - 2026-02-16
+**Context:** CodeBlock needs Shiki syntax highlighting, but the Foundations tab is a client component (`"use client"` for tab state).
+**Decision:** CodeBlock is a client component that highlights async via `useEffect` with a plain-text fallback during loading.
+**Rationale:** Server component rendering would require restructuring the tab system or using a separate API route. Client-side Shiki with a lazy singleton highlighter is pragmatic — loads once, caches, and the fallback ensures no flash of empty content.
+**Alternatives considered:** Server component with route handler (overengineered for a showcase), React 19 `use()` with Suspense (adds complexity for minimal benefit)
+
+## Decision #8 - 2026-02-16
+**Context:** Shiki syntax highlighting needs to work across all 5 themes without generating separate theme configs.
+**Decision:** Use Shiki's `createCssVariablesTheme` with `--shiki-*` CSS variables mapped to design system tokens in a single `:root` block in `tokens.css`.
+**Rationale:** CSS custom property resolution is lazy — `var(--shiki-token-keyword)` resolves to `var(--primary)` which resolves to whatever the active theme defines. One mapping, zero theme-switching JS.
+**Alternatives considered:** Multiple Shiki themes switched via JS (duplicates theme logic), inline styles with JS theme detection (breaks the CSS-only theme system)
+
+## Decision #7 - 2026-02-16
+**Context:** Typography components needed for the design system. Could be React wrapper components or Tailwind utility classes/presets.
+**Decision:** React components (Heading, Text, Caption, Code, CodeBlock) rather than Tailwind-only classes. Single Button component with variant prop rather than separate components per variant.
+**Rationale:** The design system's goal is reskinning without touching structural code. Components provide the seam — change `Heading`'s styles once and every heading updates. Tailwind classes scattered through markup would require grep-and-replace on redesign. Single Button with variant prop keeps the API tight and avoids duplicating shared logic.
+**Alternatives considered:** Tailwind classes only (no reskin seam), polymorphic Typography component (grab-bag API), separate button components per variant (duplication)
+
 ## Decision #6 - 2026-02-16
 **Context:** Preview page was a single 640-line scroll-through showcase. Planning to add many more components (typography, buttons, navigation, modals, etc.) which would make it unmanageable.
 **Decision:** Reorganize preview page into functional tabs: Foundations, Data Display, Forms, Feedback, Navigation, Effects. Group by purpose, not atomic design layer.

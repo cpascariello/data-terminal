@@ -65,15 +65,17 @@ When the conversation drifts from the stated task:
 
 **Before merging:** Update ALL docs before squash merging to main.
 - `docs/ARCHITECTURE.md` -- add/update patterns for any new architectural decisions, new files, or changed structure
-- `CLAUDE.md` -- update the Current Features list if user-facing behavior changed
+- `docs/DESIGN-SYSTEM.md` -- add/update API reference (props, usage examples) for any new or changed components
+- `CLAUDE.md` -- update the Current Features list and Component Inventory if user-facing behavior changed
 - `docs/DECISIONS.md` -- log any key decisions made during the feature
 - `docs/BACKLOG.md` -- move completed items to Completed section, add any deferred ideas
 
 **Checklist before merge:**
 1. ARCHITECTURE.md updated?
-2. CLAUDE.md features updated?
-3. DECISIONS.md has implementation decisions?
-4. BACKLOG.md item moved to Completed?
+2. DESIGN-SYSTEM.md has entries for new/changed components?
+3. CLAUDE.md features and inventory updated?
+4. DECISIONS.md has implementation decisions?
+5. BACKLOG.md item moved to Completed?
 
 **During development:** Track intent, not metrics.
 
@@ -110,6 +112,7 @@ On "sync up" or "catch me up":
 | `docs/DECISIONS.md` | Decision log with rationale |
 | `docs/BACKLOG.md` | Parking lot for scope creep and deferred ideas |
 | `docs/ARCHITECTURE.md` | Technical patterns, component structure, and recipes |
+| `docs/DESIGN-SYSTEM.md` | API reference with usage examples and prop tables |
 | `docs/plans/` | Design and implementation plans (read-only reference) |
 
 ---
@@ -167,6 +170,8 @@ src/
 - CSS custom property tokens with OKLCH colors
 - Terminal animations (blink, glitch, scan, data-flow)
 - Scroll effects (fade-in, parallax, sticky sections, scroll progress)
+- Typography system (Heading, Text, Caption, Code, CodeBlock with Shiki syntax highlighting)
+- Button system (5 variants, 3 sizes, icon support, IconButton)
 - Reduced-motion support
 - Theme persistence via localStorage
 - Tabbed preview page (Foundations, Data Display, Forms, Feedback, Navigation, Effects) with hash-based routing
@@ -178,18 +183,22 @@ src/
 #### Atoms (`src/atoms/`)
 - `Badge` — small pill with 5 variants (success/warning/error/info/neutral), monospace uppercase
 - `BlinkingCursor` — animated cursor with block, line, underscore variants
+- `Caption` — small monospace uppercase annotation text (font-display)
+- `Code` — inline code span with accent color and subtle background (font-mono)
 - `CornerNotch` — container with clipped top-right corner
 - `DataStream` — columns of scrolling random hex characters, configurable speed and column count
 - `DotGrid` — decorative dot grid background overlay
 - `GlitchText` — text with random characters swapping to symbols at intervals
 - `GlowBorder` — container with glowing border (normal/intense)
 - `GlowLine` — horizontal divider with glow effect
+- `Heading` — semantic h1-h4 with 4-level type scale (font-heading)
 - `HudLabel` — small uppercase tracking label
 - `ProgressBar` — determinate (percentage) and indeterminate (sweeping) progress bar with glow
 - `ScanlineOverlay` — CRT scanline effect overlay
 - `ServiceTag` — bracketed service identifier `[TAG]`
 - `StatusDot` — pulsing status indicator dot
 - `TerminalTopBar` — window chrome bar with dots, optional tag/label, configurable dot position
+- `Text` — body text with body/large/small/muted variants (font-sans)
 - `TextFlicker` — accent-colored text with random letter opacity flicker effect
 - `FadeIn` — scroll-triggered fade-in with configurable direction, distance, delay, and duration (IntersectionObserver + CSS transitions)
 - `ScrollProgressBar` — horizontal scroll progress indicator, CSS scroll-timeline with JS fallback, inline or fixed position
@@ -197,9 +206,12 @@ src/
 
 #### Molecules (`src/molecules/`)
 - `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss
+- `Button` — action button with 5 variants (primary/secondary/ghost/link/danger), 3 sizes, optional left/right icons, renders as button or anchor
 - `Checkbox` — styled native checkbox with accent glow, Check icon, optional inline label via children
+- `CodeBlock` — multi-line code with Shiki syntax highlighting, TerminalTopBar, line numbers, copy button, CSS-variables theme
 - `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
 - `DataTable` — monospaced sortable data table with HudLabel headers
+- `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label
 - `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
 - `RadioGroup` — fieldset of native radio inputs with circular accent dot indicator, vertical layout

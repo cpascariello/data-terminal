@@ -3,6 +3,8 @@
 import {
   Badge,
   BlinkingCursor,
+  Caption,
+  Code,
   CornerNotch,
   DataStream,
   DotGrid,
@@ -10,19 +12,37 @@ import {
   GlitchText,
   GlowBorder,
   GlowLine,
+  Heading,
   HudLabel,
   ProgressBar,
   ScanlineOverlay,
   ServiceTag,
   StatusDot,
   TerminalTopBar,
+  Text,
   TextFlicker,
   TypewriterText,
 } from "@/atoms";
-import { Section, SectionHeading } from "@/molecules";
+import {
+  Button,
+  CodeBlock,
+  IconButton,
+  Section,
+  SectionHeading,
+} from "@/molecules";
+import {
+  Copy,
+  Download,
+  ExternalLink,
+  Search,
+  Settings,
+  Terminal,
+  Trash2,
+} from "lucide-react";
 
 export function FoundationsTab() {
   return (
+    <>
     <Section spacing="lg">
       <SectionHeading subtitle="Atomic primitives that compose into larger patterns.">
         Atoms
@@ -222,5 +242,193 @@ export function FoundationsTab() {
         </div>
       </div>
     </Section>
+
+    <Section spacing="lg">
+      <SectionHeading subtitle="Type scale, body text, and code formatting.">
+        Typography
+      </SectionHeading>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>HEADING_SCALE</HudLabel>
+        <FadeIn>
+          <div className="space-y-4 border border-border p-6">
+            <Heading level={1}>Heading Level 1</Heading>
+            <Heading level={2}>Heading Level 2</Heading>
+            <Heading level={3}>Heading Level 3</Heading>
+            <Heading level={4}>Heading Level 4</Heading>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>TEXT_VARIANTS</HudLabel>
+        <FadeIn>
+          <div className="space-y-4 border border-border p-6">
+            <Text variant="large">
+              Large text for introductions and lead paragraphs.
+            </Text>
+            <Text>
+              Default body text for general content and descriptions.
+            </Text>
+            <Text variant="small">
+              Small text for secondary information and metadata.
+            </Text>
+            <Text variant="muted">
+              Muted text for supplementary context.
+            </Text>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>CAPTION</HudLabel>
+        <FadeIn>
+          <div className="space-y-3 border border-border p-6">
+            <Caption>Figure 1.0 — System diagnostic output</Caption>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>INLINE_CODE</HudLabel>
+        <FadeIn>
+          <div className="space-y-3 border border-border p-6">
+            <Text>
+              Run <Code>pnpm dev</Code> to start the development server on{" "}
+              <Code>localhost:3000</Code>.
+            </Text>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>CODE_BLOCK</HudLabel>
+        <FadeIn>
+          <CodeBlock
+            language="typescript"
+            code={`import { TerminalCard } from "@/molecules";
+
+export function Dashboard() {
+  const status = "operational";
+
+  return (
+    <TerminalCard tag="SYS:MONITOR" label="node_01">
+      <p>Status: {status}</p>
+    </TerminalCard>
+  );
+}`}
+          />
+        </FadeIn>
+      </div>
+    </Section>
+
+    <Section spacing="lg">
+      <SectionHeading subtitle="Action triggers with variant and size options.">
+        Buttons
+      </SectionHeading>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>BUTTON_VARIANTS</HudLabel>
+        <FadeIn>
+          <div className="flex flex-wrap items-center gap-4 border border-border p-6">
+            <Button variant="primary">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="link">Link Style</Button>
+            <Button variant="danger">Danger</Button>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>BUTTON_SIZES</HudLabel>
+        <FadeIn>
+          <div className="flex flex-wrap items-end gap-4 border border-border p-6">
+            <Button size="sm">Small</Button>
+            <Button size="md">Medium</Button>
+            <Button size="lg">Large</Button>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>BUTTONS_WITH_ICONS</HudLabel>
+        <FadeIn>
+          <div className="flex flex-wrap items-center gap-4 border border-border p-6">
+            <Button iconLeft={<Terminal size={16} />}>Open Terminal</Button>
+            <Button variant="secondary" iconRight={<Download size={16} />}>
+              Download
+            </Button>
+            <Button variant="ghost" iconLeft={<ExternalLink size={16} />}>
+              View Docs
+            </Button>
+            <Button variant="danger" iconLeft={<Trash2 size={16} />}>
+              Delete
+            </Button>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>BUTTON_STATES</HudLabel>
+        <FadeIn>
+          <div className="flex flex-wrap items-center gap-4 border border-border p-6">
+            <Button>Enabled</Button>
+            <Button disabled>Disabled</Button>
+            <Button variant="secondary" disabled>
+              Disabled
+            </Button>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>ICON_BUTTON</HudLabel>
+        <FadeIn>
+          <div className="flex flex-wrap items-center gap-4 border border-border p-6">
+            <IconButton icon={<Settings size={18} />} aria-label="Settings" />
+            <IconButton
+              icon={<Copy size={18} />}
+              variant="secondary"
+              aria-label="Copy"
+            />
+            <IconButton
+              icon={<Search size={18} />}
+              variant="primary"
+              aria-label="Search"
+            />
+            <IconButton
+              icon={<Trash2 size={18} />}
+              variant="danger"
+              aria-label="Delete"
+            />
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="mt-12 space-y-6">
+        <HudLabel>ICON_BUTTON_SIZES</HudLabel>
+        <FadeIn>
+          <div className="flex flex-wrap items-end gap-4 border border-border p-6">
+            <IconButton
+              icon={<Settings size={14} />}
+              size="sm"
+              aria-label="Settings small"
+            />
+            <IconButton
+              icon={<Settings size={18} />}
+              size="md"
+              aria-label="Settings medium"
+            />
+            <IconButton
+              icon={<Settings size={22} />}
+              size="lg"
+              aria-label="Settings large"
+            />
+          </div>
+        </FadeIn>
+      </div>
+    </Section>
+    </>
   );
 }

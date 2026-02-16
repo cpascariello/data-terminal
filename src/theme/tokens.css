@@ -181,3 +181,20 @@
   --gradient-main: linear-gradient(90deg, oklch(0.18 0.03 250), oklch(0.5 0.2 260));
   --gradient-accent: linear-gradient(90deg, oklch(0.82 0.15 200), oklch(0.72 0.19 145));
 }
+
+/* --- Shiki syntax highlighting token mapping --- */
+/* Maps Shiki CSS-variables theme to design system tokens. */
+/* Inherits theme automatically via the cascade.           */
+:root {
+  --shiki-foreground: var(--foreground);
+  --shiki-background: var(--card);
+  --shiki-token-constant: var(--accent);
+  --shiki-token-string: var(--success);
+  --shiki-token-comment: var(--muted-foreground);
+  --shiki-token-keyword: var(--primary);
+  --shiki-token-parameter: var(--foreground);
+  --shiki-token-function: var(--accent);
+  --shiki-token-string-expression: var(--success);
+  --shiki-token-punctuation: var(--muted-foreground);
+  --shiki-token-link: var(--accent);
+}

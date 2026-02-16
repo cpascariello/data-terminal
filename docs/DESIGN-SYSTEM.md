@@ -65,6 +65,59 @@ Glow tokens (pre-resolved opacity variants of accent): `--accent-glow`, `--accen
 
 Atomic UI primitives. Import from `@/atoms/<name>`.
 
+### Caption
+
+Small monospace uppercase annotation text.
+
+```tsx
+<Caption>Figure 1.0 — System diagnostic output</Caption>
+```
+
+Uses `font-display` (JetBrains Mono), `text-xs`, uppercase, `tracking-wide`.
+
+### Code
+
+Inline code span with accent color.
+
+```tsx
+<Text>Run <Code>pnpm dev</Code> to start the server.</Text>
+```
+
+Uses `font-mono`. Renders a `<code>` element with subtle background and accent text.
+
+### Heading
+
+Semantic heading with 4-level type scale.
+
+```tsx
+<Heading level={1}>System Overview</Heading>
+<Heading level={3}>Subsection</Heading>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `level` | `1 \| 2 \| 3 \| 4` | required |
+
+Uses `font-heading`. Each level maps to a responsive size (e.g., level 1 = `text-4xl md:text-5xl`).
+
+### Text
+
+Body text with variant support.
+
+```tsx
+<Text variant="large">Lead paragraph text.</Text>
+<Text>Default body text.</Text>
+<Text variant="small">Secondary metadata.</Text>
+<Text variant="muted">Supplementary context.</Text>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `variant` | `"body" \| "large" \| "small" \| "muted"` | `"body"` |
+| `as` | `"p" \| "span"` | `"p"` |
+
+Uses `font-sans`.
+
 ### Badge
 
 Small pill label with semantic coloring.
@@ -292,6 +345,72 @@ Client component. Uses CSS `scroll-timeline` with JS fallback.
 ## Molecules
 
 Composed components. Import from `@/molecules/<name>`.
+
+### Button
+
+Action button with 5 variants, 3 sizes, and optional icons.
+
+```tsx
+<Button variant="primary" size="md">Deploy</Button>
+<Button variant="secondary" iconLeft={<Download size={16} />}>Download</Button>
+<Button variant="ghost" iconRight={<ExternalLink size={16} />}>View Docs</Button>
+<Button variant="link">Learn More</Button>
+<Button variant="danger" iconLeft={<Trash2 size={16} />}>Delete</Button>
+<Button as="a" href="/docs">Documentation</Button>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `variant` | `"primary" \| "secondary" \| "ghost" \| "link" \| "danger"` | `"primary"` |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` |
+| `iconLeft` | `ReactNode` | — |
+| `iconRight` | `ReactNode` | — |
+| `as` | `"button" \| "a"` | `"button"` |
+| `disabled` | `boolean` | `false` |
+
+Uses `font-display` uppercase tracking. Link variant strips padding for inline use.
+
+### CodeBlock
+
+Multi-line code block with Shiki syntax highlighting.
+
+```tsx
+<CodeBlock
+  language="typescript"
+  code={`const status = "operational";
+console.log(status);`}
+  showLineNumbers
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `code` | `string` | required |
+| `language` | `string` | required |
+| `showLineNumbers` | `boolean` | `true` |
+
+Client component. Highlights async via Shiki with CSS-variables theme — adapts to all 5 themes automatically. Shows a `TerminalTopBar` with language label and a copy button on hover. Falls back to plain monospace text while Shiki loads.
+
+Supported languages: `typescript`, `javascript`, `tsx`, `jsx`, `css`, `html`, `bash`, `json`.
+
+### IconButton
+
+Square icon-only button.
+
+```tsx
+<IconButton icon={<Settings size={18} />} aria-label="Settings" />
+<IconButton icon={<Trash2 size={18} />} variant="danger" size="sm" aria-label="Delete" />
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `icon` | `ReactNode` | required |
+| `variant` | `"primary" \| "secondary" \| "ghost" \| "danger"` | `"ghost"` |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` |
+| `aria-label` | `string` | required |
+| `disabled` | `boolean` | `false` |
+
+Sizes: sm = 32px, md = 40px, lg = 48px.
 
 ### Alert
 
@@ -800,7 +919,7 @@ The preview page (`/`) is organized into 6 functional tabs. Each tab is a file u
 
 | Tab | File | Content |
 |-----|------|---------|
-| Foundations | `foundations.tsx` | Atomic primitives: cursors, badges, labels, glows, overlays, text effects |
+| Foundations | `foundations.tsx` | Atomic primitives, typography (headings, text, code), buttons |
 | Data Display | `data-display.tsx` | Terminal cards, stats, processes, boot sequence, tabs, tables, prompt |
 | Forms | `forms.tsx` | Command input, checkboxes, radios, toggles, selects, search, textarea |
 | Feedback | `feedback.tsx` | Alerts, progress bars, data stream |

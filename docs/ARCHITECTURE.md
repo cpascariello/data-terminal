@@ -83,6 +83,7 @@ src/
 │   └── use-theme.ts
 ├── lib/          # Utilities
 │   ├── cn.ts          # clsx + tailwind-merge
+│   ├── highlighter.ts # Shiki singleton with CSS-variables theme
 │   └── supports-scroll-timeline.ts  # CSS scroll-timeline feature detection
 ├── providers/    # Context providers
 │   └── theme-provider.tsx
@@ -134,6 +135,18 @@ src/
 **Key files:** `src/atoms/fade-in.tsx`, `src/atoms/scroll-progress-bar.tsx`, `src/molecules/sticky-section.tsx`, `src/hooks/use-scroll-progress.ts`, `src/hooks/use-parallax.ts`, `src/lib/supports-scroll-timeline.ts`
 **Notes:** CSS scroll-driven animation utilities (`scroll-fade-in`, `scroll-progress`) remain available in `utilities.css` for direct use. The `supportsScrollTimeline()` function is lazy-cached and SSR-safe. Components that use it defer detection to `useEffect` to avoid hydration mismatches.
 
+### Typography System
+**Context:** Consistent type scale across the design system with reskinning capability.
+**Approach:** Four atomic components map to semantic HTML elements with design-system fonts: `Heading` (h1-h4, font-heading), `Text` (p/span, font-sans), `Caption` (span, font-display), `Code` (code, font-mono). `CodeBlock` molecule composes TerminalTopBar + Shiki CSS-variables theme + copy button for multi-line syntax-highlighted code. Shiki token colors map to theme tokens via `--shiki-*` CSS variables defined once in `:root` of `tokens.css`, inheriting theme automatically through the cascade.
+**Key files:** `src/atoms/heading.tsx`, `src/atoms/text.tsx`, `src/atoms/caption.tsx`, `src/atoms/code.tsx`, `src/molecules/code-block.tsx`, `src/lib/highlighter.ts`, `src/theme/tokens.css` (Shiki mappings at end of file)
+**Notes:** `SectionHeading` remains a separate molecule for section titles with cursor/subtitle. The Shiki highlighter is a lazy singleton (`src/lib/highlighter.ts`) that loads once and caches. CodeBlock is a client component — Shiki highlights async via `useEffect` with a plain-text fallback during loading.
+
+### Buttons
+**Context:** Action triggers with terminal aesthetic and variant/size system.
+**Approach:** Single `Button` molecule with `variant` prop (primary/secondary/ghost/link/danger) and `size` prop (sm/md/lg). Uses `font-display` uppercase tracking like Badge/HudLabel. Supports optional `iconLeft`/`iconRight` props. Renders `<button>` by default, `<a>` via `as="a"` prop. `IconButton` is a separate molecule for square, icon-only actions with required `aria-label`.
+**Key files:** `src/molecules/button.tsx`, `src/molecules/icon-button.tsx`
+**Notes:** Link variant strips padding for inline text use. Danger variant exists for destructive actions.
+
 ---
 
 ## Recipes
@@ -148,13 +161,15 @@ src/
 1. Create `src/atoms/{name}.tsx`
 2. Accept `className` prop, use `cn()` for merging
 3. Export from `src/atoms/index.ts`
-4. Update `CLAUDE.md` component inventory
+4. Add usage example and prop table to `docs/DESIGN-SYSTEM.md`
+5. Update `CLAUDE.md` component inventory
 
 ### Adding a New Molecule
 1. Create `src/molecules/{name}.tsx`
 2. Import atoms from `@/atoms` as needed
 3. Export from `src/molecules/index.ts`
-4. Update `CLAUDE.md` component inventory
+4. Add usage example and prop table to `docs/DESIGN-SYSTEM.md`
+5. Update `CLAUDE.md` component inventory
 
 ### Preview Page Tabs
 **Context:** Components organized by function for a hybrid showcase/docs experience.
@@ -163,7 +178,7 @@ src/
 **Tab mapping:**
 | Tab | Content |
 |-----|---------|
-| Foundations | Atomic primitives (cursors, badges, glows, overlays, text effects) |
+| Foundations | Atomic primitives, typography (headings, text, code), buttons |
 | Data Display | Terminal cards, stats, processes, tables, tabs, prompt |
 | Forms | Command input, checkboxes, radios, toggles, selects, textarea |
 | Feedback | Alerts, progress bars, data stream |
