@@ -20,13 +20,45 @@ const NAVBAR_ITEMS: NavItem[] = [
   {
     id: "systems",
     label: "Systems",
-    children: [
-      { id: "sys-compute", label: "Compute", icon: <Cpu size={14} /> },
-      { id: "sys-database", label: "Database", icon: <Database size={14} /> },
-      { id: "sys-network", label: "Network", icon: <Shield size={14} /> },
-    ],
+    mega: {
+      heading: "Infrastructure",
+      links: [
+        { id: "sys-compute", label: "Compute", icon: <Cpu size={14} /> },
+        { id: "sys-database", label: "Database", icon: <Database size={14} /> },
+        { id: "sys-network", label: "Network", icon: <Shield size={14} /> },
+      ],
+      featured: [
+        {
+          id: "feat-status",
+          title: "System Status",
+          subtitle: "All services operational",
+          image:
+            "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=450&fit=crop",
+        },
+        {
+          id: "feat-perf",
+          title: "Performance",
+          subtitle: "Real-time monitoring dashboard",
+          image:
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=450&fit=crop",
+        },
+      ],
+    },
   },
-  { id: "reports", label: "Reports" },
+  {
+    id: "reports",
+    label: "Reports",
+    mega: {
+      heading: "Analytics",
+      description:
+        "Access system reports, audit logs, and historical performance data across all infrastructure nodes.",
+      links: [
+        { id: "rep-daily", label: "Daily Summary" },
+        { id: "rep-audit", label: "Audit Log" },
+        { id: "rep-perf", label: "Performance" },
+      ],
+    },
+  },
   { id: "settings", label: "Settings" },
 ];
 
@@ -50,12 +82,12 @@ export function NavigationTab() {
   return (
     <>
       {/* Navbar demo */}
-      <Section spacing="lg">
+      <Section spacing="lg" className="overflow-visible">
         <SectionHeading subtitle="Horizontal navigation with dropdown menus.">
           Navbar
         </SectionHeading>
 
-        <div className="mt-12 overflow-hidden border border-border">
+        <div className="mt-12 border border-border">
           <Navbar
             items={NAVBAR_ITEMS}
             defaultActiveId="dashboard"

@@ -756,15 +756,28 @@ Sliding switch with accent glow.
 
 ### Navbar
 
-Horizontal top bar navigation with dropdown menus.
+Horizontal top bar navigation with compact and mega dropdown menus.
 
 ```tsx
 <Navbar
   items={[
     { id: "home", label: "Home" },
+    // Compact dropdown (via children)
     { id: "tools", label: "Tools", children: [
       { id: "editor", label: "Editor", icon: <Code size={14} /> },
     ]},
+    // Mega dropdown (via mega)
+    { id: "about", label: "About", mega: {
+      heading: "Company",
+      description: "Learn more about our mission.",
+      links: [
+        { id: "team", label: "Team" },
+        { id: "careers", label: "Careers" },
+      ],
+      featured: [
+        { id: "news", title: "Latest News", subtitle: "Q1 update", image: "/news.jpg" },
+      ],
+    }},
   ]}
   defaultActiveId="home"
   onNavigate={(id) => {}}
@@ -782,7 +795,28 @@ Horizontal top bar navigation with dropdown menus.
 | `logo` | `ReactNode` | — |
 | `actions` | `ReactNode` | — |
 
-Dropdowns open on hover (150ms delay) and click. Close on mouse leave, outside click, or Escape. Active item shows accent border glow.
+**NavItem.mega** — `MegaDropdownConfig`:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `heading` | `string?` | Small uppercase label above links |
+| `description` | `string?` | Introductory paragraph (renders above links) |
+| `links` | `NavItem[]?` | Navigation links in the left column |
+| `featured` | `MegaDropdownFeatured[]?` | Featured items with images (right column) |
+
+**MegaDropdownFeatured**:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string` | Unique identifier |
+| `title` | `string` | Card title |
+| `subtitle` | `string?` | Card subtitle |
+| `image` | `string` | Image URL |
+| `href` | `string?` | Optional link |
+
+When `mega` is set, it takes priority over `children`. The mega panel spans the full navbar width. When `featured` items are present, the layout splits into a left column (heading + description + links) and a right area (featured cards in a grid). Without featured items, the panel is single-column.
+
+Dropdowns open on hover (150ms delay) and click. Close on mouse leave, outside click, or Escape. Active item shows accent border glow. Parent containers must not have `overflow-hidden`.
 
 ### Sidebar
 

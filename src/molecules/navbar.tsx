@@ -4,7 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { isItemActive, type NavItem } from "@/types/nav";
+import {
+  isItemActive,
+  type MegaDropdownConfig,
+  type MegaDropdownFeatured,
+  type NavItem,
+} from "@/types/nav";
 
 interface NavbarProps {
   items: NavItem[];
@@ -66,6 +71,184 @@ function NavbarDropdownItem({
     >
       {content}
     </button>
+  );
+}
+
+function NavbarMegaLink({
+  item,
+  isActive,
+  onSelect,
+}: {
+  item: NavItem;
+  isActive: boolean;
+  onSelect: () => void;
+}) {
+  const classes = cn(
+    "flex items-center gap-2 py-1.5 font-display text-xs uppercase tracking-wider transition-colors",
+    isActive
+      ? "text-accent"
+      : "text-foreground/50 hover:text-foreground",
+    item.disabled && "pointer-events-none opacity-40",
+  );
+
+  const content = (
+    <>
+      {item.icon && <span className="size-4 shrink-0">{item.icon}</span>}
+      {item.label}
+    </>
+  );
+
+  if (item.href) {
+    return (
+      <a
+        href={item.href}
+        className={classes}
+        onClick={onSelect}
+        aria-disabled={item.disabled}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={classes}
+      onClick={onSelect}
+      disabled={item.disabled}
+    >
+      {content}
+    </button>
+  );
+}
+
+function NavbarMegaFeatured({
+  item,
+}: {
+  item: MegaDropdownFeatured;
+}) {
+  const content = (
+    <div className="group/featured overflow-hidden">
+      <div className="aspect-[4/3] overflow-hidden bg-foreground/[0.03]">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="size-full object-cover transition-transform duration-500 group-hover/featured:scale-105"
+        />
+      </div>
+      <div className="mt-3">
+        <p className="font-display text-xs uppercase tracking-wider text-foreground">
+          {item.title}
+        </p>
+        {item.subtitle && (
+          <p className="mt-1 text-xs text-foreground/40">
+            {item.subtitle}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+
+  if (item.href) {
+    return (
+      <a href={item.href} aria-label={item.title}>
+        {content}
+      </a>
+    );
+  }
+
+  return content;
+}
+
+function NavbarMegaDropdown({
+  mega,
+  activeId,
+  onNavigate,
+  onClose,
+  onMouseEnter,
+  onMouseLeave,
+}: {
+  mega: MegaDropdownConfig;
+  activeId: string;
+  onNavigate: (id: string) => void;
+  onClose: () => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}) {
+  const hasFeatured = mega.featured && mega.featured.length > 0;
+  const hasLinks = mega.links && mega.links.length > 0;
+
+  return (
+    <div
+      className={cn(
+        "absolute left-0 top-full z-50 w-full",
+        "border-b border-border bg-background shadow-lg",
+      )}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <div
+        className={cn(
+          "flex",
+          hasFeatured ? "flex-row" : "flex-col",
+        )}
+      >
+        {/* Left column: heading + links or description */}
+        <div
+          className={cn(
+            "shrink-0 px-8 py-8",
+            hasFeatured
+              ? "w-64 border-r border-border bg-foreground/[0.02]"
+              : "w-full",
+          )}
+        >
+          {mega.heading && (
+            <p className="mb-4 font-display text-[10px] uppercase tracking-widest text-foreground/30">
+              {mega.heading}
+            </p>
+          )}
+          {mega.description && (
+            <p className="mb-4 text-sm leading-relaxed text-foreground/60">
+              {mega.description}
+            </p>
+          )}
+          {hasLinks && (
+            <div className="flex flex-col gap-0.5">
+              {mega.links!.map((link) => (
+                <NavbarMegaLink
+                  key={link.id}
+                  item={link}
+                  isActive={link.id === activeId}
+                  onSelect={() => {
+                    onNavigate(link.id);
+                    onClose();
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right area: featured items */}
+        {hasFeatured && (
+          <div className="flex-1 px-8 py-8">
+            <div
+              className={cn(
+                "grid gap-8",
+                mega.featured!.length === 1
+                  ? "grid-cols-1 max-w-sm"
+                  : "grid-cols-2",
+              )}
+            >
+              {mega.featured!.map((feat) => (
+                <NavbarMegaFeatured key={feat.id} item={feat} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -155,7 +338,8 @@ function NavbarItem({ item, activeId, onNavigate }: NavbarItemProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const enterTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
   const leaveTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
-  const hasChildren = item.children && item.children.length > 0;
+  const hasMega = !!item.mega;
+  const hasChildren = hasMega || (item.children && item.children.length > 0);
   const active = isItemActive(item, activeId);
 
   const clearTimeouts = useCallback(() => {
@@ -220,7 +404,7 @@ function NavbarItem({ item, activeId, onNavigate }: NavbarItemProps) {
   return (
     <div
       ref={containerRef}
-      className="relative"
+      className={hasMega ? "static" : "relative"}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -234,24 +418,35 @@ function NavbarItem({ item, activeId, onNavigate }: NavbarItemProps) {
       />
 
       {hasChildren && open && (
-        <div
-          className={cn(
-            "absolute left-0 top-full z-50 mt-0.5 min-w-48",
-            "border border-border bg-card shadow-lg",
-          )}
-        >
-          {item.children!.map((child) => (
-            <NavbarDropdownItem
-              key={child.id}
-              item={child}
-              isActive={child.id === activeId}
-              onSelect={() => {
-                onNavigate(child.id);
-                setOpen(false);
-              }}
-            />
-          ))}
-        </div>
+        hasMega ? (
+          <NavbarMegaDropdown
+            mega={item.mega!}
+            activeId={activeId}
+            onNavigate={onNavigate}
+            onClose={() => setOpen(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+        ) : (
+          <div
+            className={cn(
+              "absolute left-0 top-full z-50 mt-0.5 min-w-48",
+              "border border-border bg-card shadow-lg",
+            )}
+          >
+            {item.children!.map((child) => (
+              <NavbarDropdownItem
+                key={child.id}
+                item={child}
+                isActive={child.id === activeId}
+                onSelect={() => {
+                  onNavigate(child.id);
+                  setOpen(false);
+                }}
+              />
+            ))}
+          </div>
+        )
       )}
     </div>
   );
@@ -278,7 +473,7 @@ export function Navbar({
   return (
     <nav
       className={cn(
-        "sticky top-0 z-40 w-full",
+        "relative sticky top-0 z-40 w-full",
         "border-b border-border bg-background/80 backdrop-blur-md",
         className,
       )}

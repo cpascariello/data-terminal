@@ -155,10 +155,10 @@ src/
 **Notes:** Link variant strips padding for inline text use. Danger variant exists for destructive actions.
 
 ### Navigation
-**Context:** Horizontal and vertical navigation components with two-level hierarchy.
-**Approach:** Two independent molecules sharing a `NavItem` type from `src/types/nav.ts`. `Navbar` renders a sticky horizontal bar with hover/click dropdowns. `Sidebar` renders a vertical panel that collapses to an icon rail with tooltips and flyouts. Both use uncontrolled-default/controlled-override state for active item tracking. Dropdowns/flyouts use hover with delayed enter/leave timers plus click toggle and Escape/outside-click dismiss.
+**Context:** Horizontal and vertical navigation components with two-level hierarchy and mega dropdown support.
+**Approach:** Two independent molecules sharing a `NavItem` type from `src/types/nav.ts`. `Navbar` renders a sticky horizontal bar with two dropdown modes: compact (via `children`) and mega (via `mega`). Mega dropdowns span the full navbar width with a two-column layout (left: heading + links/description, right: optional featured items with images). Positioning uses `static` on the trigger container and `relative` on the `<nav>` so the mega panel anchors to the navbar. Hover handlers are passed to the mega panel to maintain the hover zone across the gap. `Sidebar` renders a vertical panel that collapses to an icon rail with tooltips and flyouts. Both use uncontrolled-default/controlled-override state for active item tracking. Dropdowns/flyouts use hover with delayed enter/leave timers plus click toggle and Escape/outside-click dismiss.
 **Key files:** `src/molecules/navbar.tsx`, `src/molecules/sidebar.tsx`, `src/types/nav.ts`
-**Notes:** `NavItem.icon` is required for Sidebar (collapsed rail), optional for Navbar. Sidebar collapse state is independently controllable via `collapsed`/`onCollapsedChange`.
+**Notes:** `NavItem.icon` is required for Sidebar (collapsed rail), optional for Navbar. Sidebar collapse state is independently controllable via `collapsed`/`onCollapsedChange`. Mega dropdowns require the parent container to not have `overflow-hidden` since the panel is absolutely positioned. `isItemActive` checks both `children` and `mega.links` for active state propagation.
 
 ---
 

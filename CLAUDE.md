@@ -214,7 +214,7 @@ src/
 - `DataTable` — monospaced sortable data table with HudLabel headers
 - `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label
 - `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items
-- `Navbar` — horizontal top bar with logo, nav items with dropdowns, actions slot; hover/click dropdowns, uncontrolled/controlled active state
+- `Navbar` — horizontal top bar with logo, nav items with compact dropdowns (via `children`) and full-width mega dropdowns (via `mega` with heading, description, links, optional featured items with images), actions slot; hover/click dropdowns, uncontrolled/controlled active state
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
 - `RadioGroup` — fieldset of native radio inputs with circular accent dot indicator, vertical layout
 - `SearchInput` — search icon prefix, BlinkingCursor, clear button, debounced onSearch callback
