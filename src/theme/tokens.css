@@ -46,7 +46,7 @@
 .theme-light {
   --background: oklch(0.974 0.015 306.42);
   --foreground: oklch(0.198 0.026 283.78);
-  --accent: oklch(0.55 0.2 145);
+  --accent: oklch(0.45 0.23 290);
   --accent-foreground: oklch(0.985 0 0);
   --primary: oklch(0.428 0.249 285.60);
   --primary-foreground: oklch(0.985 0 0);
@@ -55,26 +55,26 @@
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.198 0.026 283.78);
   --border: oklch(0 0 0 / 10%);
-  --border-hover: oklch(0.55 0.2 145 / 40%);
+  --border-hover: oklch(0.45 0.23 290 / 40%);
   --input: oklch(0 0 0 / 10%);
   --ring: oklch(0.428 0.249 285.60);
   --success: oklch(0.55 0.19 145);
   --warning: oklch(0.6 0.16 75);
   --error: oklch(0.5 0.22 15);
 
-  --accent-glow: oklch(0.55 0.2 145 / 10%);
-  --accent-glow-intense: oklch(0.55 0.2 145 / 20%);
-  --accent-glow-inset: oklch(0.55 0.2 145 / 3%);
-  --accent-glow-line: oklch(0.55 0.2 145 / 30%);
-  --accent-hover-shadow: oklch(0.55 0.2 145 / 10%);
-  --accent-scan: oklch(0.55 0.2 145 / 4%);
-  --accent-scan-subtle: oklch(0.55 0.2 145 / 3%);
+  --accent-glow: oklch(0.45 0.23 290 / 10%);
+  --accent-glow-intense: oklch(0.45 0.23 290 / 20%);
+  --accent-glow-inset: oklch(0.45 0.23 290 / 3%);
+  --accent-glow-line: oklch(0.45 0.23 290 / 30%);
+  --accent-hover-shadow: oklch(0.45 0.23 290 / 10%);
+  --accent-scan: oklch(0.45 0.23 290 / 4%);
+  --accent-scan-subtle: oklch(0.45 0.23 290 / 3%);
 
   --foreground-dot: oklch(0.198 0.026 283.78 / 10%);
   --foreground-scanline: oklch(0.198 0.026 283.78 / 4%);
 
   --gradient-main: linear-gradient(90deg, oklch(0.974 0.015 306.42), oklch(0.428 0.249 285.60));
-  --gradient-accent: linear-gradient(90deg, oklch(0.55 0.2 145), oklch(0.72 0.19 145));
+  --gradient-accent: linear-gradient(90deg, oklch(0.45 0.23 290), oklch(0.428 0.249 285.60));
 }
 
 /* --- Contrast (high visibility) --- */

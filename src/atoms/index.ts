@@ -1,11 +1,16 @@
+export { Badge } from "./badge";
 export { BlinkingCursor } from "./blinking-cursor";
 export { CornerNotch } from "./corner-notch";
+export { DataStream } from "./data-stream";
 export { DotGrid } from "./dot-grid";
+export { GlitchText } from "./glitch-text";
 export { GlowBorder } from "./glow-border";
 export { GlowLine } from "./glow-line";
 export { HudLabel } from "./hud-label";
+export { ProgressBar } from "./progress-bar";
 export { ScanlineOverlay } from "./scanline-overlay";
 export { ServiceTag } from "./service-tag";
 export { StatusDot } from "./status-dot";
 export { TerminalTopBar } from "./terminal-top-bar";
-export { TextGradient } from "./text-gradient";
+export { TextFlicker } from "./text-flicker";
+export { TypewriterText } from "./typewriter-text";
