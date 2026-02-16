@@ -173,25 +173,34 @@ src/
 > Update this list when adding, removing, or renaming components.
 
 #### Atoms (`src/atoms/`)
+- `Badge` — small pill with 5 variants (success/warning/error/info/neutral), monospace uppercase
 - `BlinkingCursor` — animated cursor with block, line, underscore variants
 - `CornerNotch` — container with clipped top-right corner
+- `DataStream` — columns of scrolling random hex characters, configurable speed and column count
 - `DotGrid` — decorative dot grid background overlay
+- `GlitchText` — text with random characters swapping to symbols at intervals
 - `GlowBorder` — container with glowing border (normal/intense)
 - `GlowLine` — horizontal divider with glow effect
 - `HudLabel` — small uppercase tracking label
+- `ProgressBar` — determinate (percentage) and indeterminate (sweeping) progress bar with glow
 - `ScanlineOverlay` — CRT scanline effect overlay
 - `ServiceTag` — bracketed service identifier `[TAG]`
 - `StatusDot` — pulsing status indicator dot
 - `TerminalTopBar` — window chrome bar with dots, optional tag/label, configurable dot position
-- `TextGradient` — gradient text with main/accent variants
+- `TextFlicker` — accent-colored text with random letter opacity flicker effect
+- `TypewriterText` — character-by-character text reveal with BlinkingCursor
 
 #### Molecules (`src/molecules/`)
+- `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss
+- `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
+- `DataTable` — monospaced sortable data table with HudLabel headers
 - `ProcessCard` — card styled like a terminal process entry with PID, icon, hover scanline
 - `Section` — layout section wrapper with spacing, dot grid, scanlines, glow border
 - `SectionHeading` — heading with optional blinking cursor, subtitle, and configurable heading level (h1-h4)
 - `StatCard` — animated count-up statistic with label (uses useInView + useCountUp)
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor
+- `TerminalTabs` — tabbed content with dot indicators, accent glow, glitch-in animation
 - `TerminalWindow` — terminal window with command and output lines
 
 #### Hooks (`src/hooks/`)

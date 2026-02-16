@@ -25,25 +25,34 @@ src/
 │   ├── layout.tsx     # Root layout with font loading + ThemeProvider
 │   └── page.tsx       # Showcase/demo page
 ├── atoms/        # Atomic UI primitives
+│   ├── badge.tsx
 │   ├── blinking-cursor.tsx
 │   ├── corner-notch.tsx
+│   ├── data-stream.tsx
 │   ├── dot-grid.tsx
+│   ├── glitch-text.tsx
 │   ├── glow-border.tsx
 │   ├── glow-line.tsx
 │   ├── hud-label.tsx
+│   ├── progress-bar.tsx
 │   ├── scanline-overlay.tsx
 │   ├── service-tag.tsx
 │   ├── status-dot.tsx
 │   ├── terminal-top-bar.tsx
-│   ├── text-gradient.tsx
+│   ├── text-flicker.tsx
+│   ├── typewriter-text.tsx
 │   └── index.ts       # Barrel export
 ├── molecules/    # Composed components
+│   ├── alert.tsx
+│   ├── command-input.tsx
+│   ├── data-table.tsx
 │   ├── process-card.tsx
 │   ├── section.tsx
 │   ├── section-heading.tsx
 │   ├── stat-card.tsx
 │   ├── terminal-card.tsx
 │   ├── terminal-prompt.tsx
+│   ├── terminal-tabs.tsx
 │   ├── terminal-window.tsx
 │   └── index.ts       # Barrel export
 ├── hooks/        # Custom hooks
@@ -86,9 +95,9 @@ src/
 
 ### Animation Strategy
 **Context:** Terminal aesthetic requires animations (blink, scan, glitch) without heavy animation libraries.
-**Approach:** Pure CSS `@keyframes` in `animations.css`. JavaScript-driven animations use `requestAnimationFrame` in hooks (`useCountUp`). All animations respect `prefers-reduced-motion`.
-**Key files:** `src/theme/animations.css`, `src/hooks/use-count-up.ts`
-**Notes:** Zero animation library dependencies — no Framer Motion, no GSAP.
+**Approach:** Pure CSS `@keyframes` in `animations.css`. JavaScript-driven animations use `requestAnimationFrame` in hooks (`useCountUp`) or `setTimeout` for character-level text effects (`TextFlicker`, `GlitchText`, `TypewriterText`). All animations respect `prefers-reduced-motion`.
+**Key files:** `src/theme/animations.css`, `src/theme/utilities.css`, `src/hooks/use-count-up.ts`
+**Notes:** Zero animation library dependencies — no Framer Motion, no GSAP. CSS keyframes include `reveal-up`, `glitch-in`, `pulse-ring`, `data-stream-scroll`, `progress-sweep`. Utility classes `.animate-reveal`, `.animate-glitch-in`, `.pulse-ring` are available in `utilities.css`.
 
 ---
 
