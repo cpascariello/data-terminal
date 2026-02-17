@@ -4,6 +4,18 @@ Decision log with rationale.
 
 ---
 
+## Decision #16 - 2026-02-17
+**Context:** Exploring whether the design system could support non-terminal aesthetics (e.g. a Valiente-style editorial site). Found that Card and Modal were tightly coupled to terminal chrome atoms.
+**Decision:** Decouple generic Card and Modal from terminal chrome using a composition-via-slots pattern. Generic components accept `header`, `overlay`, and `wrapper` slot props with zero terminal imports. Terminal variants (`TerminalCard`, `TerminalModal`) are thin wrappers that inject chrome through those slots.
+**Rationale:** This is the smallest change that enables non-terminal usage without restructuring the entire directory tree. Generic components work for any theme; terminal components remain convenient wrappers. No breaking changes.
+**Alternatives considered:** Boolean `chrome` flag on existing components (still imports terminal atoms when unused, misleading name), full `core/effects/themes/` directory restructure (architecturally correct but premature without a second theme), render prop pattern (verbose for common cases)
+
+## Decision #15 - 2026-02-17
+**Context:** External agents have no way to discover that `docs/DESIGN-SYSTEM.md` and `docs/ARCHITECTURE.md` are the key references for building with this design system. CLAUDE.md was structured around workflow habits, not agent onboarding.
+**Decision:** Add agent-facing discoverability: (1) "Building with this Design System" directive at top of CLAUDE.md, (2) README.md as universal entry point, (3) "When to Use What" task-oriented index in DESIGN-SYSTEM.md, (4) "See also" cross-references between related components, (5) merge checklist items to maintain these going forward.
+**Rationale:** Agents read CLAUDE.md first but need explicit instructions to find the API reference. A task-oriented index ("Building a form? Use these.") lets agents jump to the right component without reading the entire doc. Cross-references prevent agents from missing related components. The merge checklist ensures future sessions maintain all of this.
+**Alternatives considered:** Relying on agents to explore docs/ on their own (unreliable — they often start reading source files instead)
+
 ## Decision #14 - 2026-02-17
 **Context:** Code review found 53 issues across the codebase — ARIA gaps, duplicated code, performance issues, and inconsistent imports.
 **Decision:** Implement all 53 fixes systematically in 7 phases with automated verification (typecheck + lint + test + build) between each wave.

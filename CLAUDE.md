@@ -4,6 +4,16 @@ Persistent habits for maintaining project memory across sessions.
 
 ---
 
+## Building with this Design System
+
+Before creating or modifying UI, read these files:
+
+1. `docs/DESIGN-SYSTEM.md` — full API reference with props, usage examples, and composition patterns
+2. `docs/ARCHITECTURE.md` — technical patterns, theme system, component composition rules, and recipes
+3. Check the Component Inventory below for what already exists before building anything new
+
+---
+
 ## Quick Start
 
 **Sync up:** Say "sync up" or "catch me up" to restore context at session start.
@@ -66,6 +76,8 @@ When the conversation drifts from the stated task:
 **Before merging:** Update ALL docs before squash merging to main.
 - `docs/ARCHITECTURE.md` -- add/update patterns for any new architectural decisions, new files, or changed structure
 - `docs/DESIGN-SYSTEM.md` -- add/update API reference (props, usage examples) for any new or changed components
+  - Add new components to the "When to Use What" index under the appropriate category
+  - Add `**See also:**` cross-references linking to related components
 - `CLAUDE.md` -- update the Current Features list and Component Inventory if user-facing behavior changed
 - `docs/DECISIONS.md` -- log any key decisions made during the feature
 - `docs/BACKLOG.md` -- move completed items to Completed section, add any deferred ideas
@@ -73,9 +85,11 @@ When the conversation drifts from the stated task:
 **Checklist before merge:**
 1. ARCHITECTURE.md updated?
 2. DESIGN-SYSTEM.md has entries for new/changed components?
-3. CLAUDE.md features and inventory updated?
-4. DECISIONS.md has implementation decisions?
-5. BACKLOG.md item moved to Completed?
+3. DESIGN-SYSTEM.md "When to Use What" index updated?
+4. DESIGN-SYSTEM.md "See also" cross-references added for new components?
+5. CLAUDE.md features and inventory updated?
+6. DECISIONS.md has implementation decisions?
+7. BACKLOG.md item moved to Completed?
 
 **During development:** Track intent, not metrics.
 

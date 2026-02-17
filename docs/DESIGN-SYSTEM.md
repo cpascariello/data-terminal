@@ -61,6 +61,36 @@ Glow tokens (pre-resolved opacity variants of accent): `--accent-glow`, `--accen
 
 ---
 
+## When to Use What
+
+Quick guide for choosing the right component.
+
+**Building a form?**
+`Checkbox`, `RadioGroup`, `Toggle` for boolean/choice inputs. `Select` for single pick, `MultiSelect` for multiple. `SearchInput` for search with debounce. `CommandInput` for terminal-styled text input. `Textarea` for multi-line. `Button` for actions, `IconButton` for icon-only actions.
+
+**Displaying data?**
+`DataTable` for tabular data with sortable columns. `StatCard` for animated statistics. `Badge` for status labels. `ProgressBar` for determinate/indeterminate progress. `Card` for generic containers, `TerminalCard` for terminal-styled cards.
+
+**Building navigation?**
+`Navbar` for horizontal top bar with dropdowns and mega menus. `Sidebar` for vertical nav with collapsible icon rail. `TerminalTabs` for tabbed content.
+
+**Showing feedback?**
+`Alert` for inline messages. `Toast` (via `useToast`) for auto-dismissing notifications. `Modal` for generic dialogs, `TerminalModal` for terminal-styled dialogs. `Tooltip` for hover hints. `Accordion` for collapsible sections. `Skeleton` for loading placeholders.
+
+**Layout and sections?**
+`Section` for page sections with optional effects. `SectionHeading` for section titles. `StickySection` for scroll-driven sticky content. `FadeIn` for scroll-triggered animations. `ScrollProgressBar` for scroll progress.
+
+**Typography?**
+`Heading` for h1-h4. `Text` for body copy. `Caption` for small annotations. `Code` for inline code. `CodeBlock` for syntax-highlighted blocks.
+
+**Terminal effects?**
+`GlitchText`, `TextFlicker`, `TypewriterText` for text animations. `DataStream` for hex columns. `ScanlineOverlay`, `HoverScanline` for CRT effects. `DotGrid` for dot backgrounds. `GlowBorder`, `GlowLine` for glow effects. `BlinkingCursor` for cursor animation. `CornerNotch` for clipped corners. `TerminalTopBar` for window chrome.
+
+**Generic vs Terminal?**
+Use `Card` and `Modal` for theme-agnostic UI. Use `TerminalCard` and `TerminalModal` for terminal-styled UI. See the Generic/Terminal Composition pattern in `docs/ARCHITECTURE.md`.
+
+---
+
 ## Atoms
 
 Atomic UI primitives. Import from `@/atoms/<name>`.
@@ -75,6 +105,8 @@ Small monospace uppercase annotation text.
 
 Uses `font-display` (JetBrains Mono), `text-xs`, uppercase, `tracking-wide`.
 
+**See also:** HudLabel, Text
+
 ### Code
 
 Inline code span with accent color.
@@ -84,6 +116,8 @@ Inline code span with accent color.
 ```
 
 Uses `font-mono`. Renders a `<code>` element with subtle background and accent text.
+
+**See also:** CodeBlock
 
 ### Heading
 
@@ -99,6 +133,8 @@ Semantic heading with 4-level type scale.
 | `level` | `1 \| 2 \| 3 \| 4` | required |
 
 Uses `font-heading`. Each level maps to a responsive size (e.g., level 1 = `text-4xl md:text-5xl`).
+
+**See also:** SectionHeading, Text
 
 ### Text
 
@@ -118,6 +154,8 @@ Body text with variant support.
 
 Uses `font-sans`.
 
+**See also:** Heading, Caption
+
 ### Badge
 
 Small pill label with semantic coloring.
@@ -132,6 +170,8 @@ Small pill label with semantic coloring.
 | `variant` | `"success" \| "warning" \| "error" \| "info" \| "neutral"` | `"neutral"` |
 | `className` | `string` | — |
 
+**See also:** StatusDot, Alert
+
 ### BlinkingCursor
 
 Animated terminal cursor.
@@ -144,6 +184,8 @@ Animated terminal cursor.
 |------|------|---------|
 | `variant` | `"block" \| "line" \| "underscore"` | `"block"` |
 
+**See also:** TypewriterText, CommandInput
+
 ### CornerNotch
 
 Container with clipped top-right corner.
@@ -155,6 +197,8 @@ Container with clipped top-right corner.
 | Prop | Type | Default |
 |------|------|---------|
 | `size` | `number` (px) | `16` |
+
+**See also:** Card, TerminalCard
 
 ### DataStream
 
@@ -189,6 +233,8 @@ Text with random characters swapping to symbols at intervals.
 
 Client component. Children must be a string. Respects reduced motion.
 
+**See also:** TextFlicker, TypewriterText
+
 ### GlowBorder
 
 Container with glowing border effect.
@@ -201,6 +247,8 @@ Container with glowing border effect.
 |------|------|---------|
 | `intense` | `boolean` | `false` |
 
+**See also:** GlowLine, Section
+
 ### GlowLine
 
 Horizontal 1px divider with glow.
@@ -208,6 +256,8 @@ Horizontal 1px divider with glow.
 ```tsx
 <GlowLine />
 ```
+
+**See also:** GlowBorder
 
 ### HoverScanline
 
@@ -226,6 +276,8 @@ Reusable hover scanline effect for terminal-styled containers.
 | `speed` | `number` (seconds) | `2` |
 
 Server component. Parent must have `group` and `relative` classes. `aria-hidden`.
+
+**See also:** ScanlineOverlay, TerminalCard, TerminalModal
 
 ### HudLabel
 
@@ -249,6 +301,8 @@ Determinate or indeterminate progress bar.
 | `value` | `number` (0–100) | — (required when not indeterminate) |
 | `indeterminate` | `boolean` | `false` |
 | `label` | `string` | — |
+
+**See also:** Skeleton, StatCard
 
 ### ScanlineOverlay
 
@@ -279,6 +333,8 @@ Pulsing status indicator dot.
 | `variant` | `"success" \| "warning" \| "error" \| "info" \| "neutral"` | `"info"` |
 | `speed` | `number` (seconds) | `2` |
 
+**See also:** Badge
+
 ### TerminalTopBar
 
 Window chrome bar with three dots and optional tag/label.
@@ -293,6 +349,8 @@ Window chrome bar with three dots and optional tag/label.
 | `label` | `string` | — |
 | `dotsPosition` | `"left" \| "right"` | `"right"` |
 
+**See also:** TerminalCard, TerminalModal, CodeBlock
+
 ### TextFlicker
 
 Accent-colored text with random letter opacity flicker.
@@ -302,6 +360,8 @@ Accent-colored text with random letter opacity flicker.
 ```
 
 Client component. Children must be a string. Respects reduced motion.
+
+**See also:** GlitchText, TypewriterText
 
 ### TypewriterText
 
@@ -320,6 +380,8 @@ Character-by-character text reveal with cursor.
 | `onComplete` | `() => void` | — |
 
 Client component. Respects reduced motion (completes instantly).
+
+**See also:** BlinkingCursor, GlitchText, TextFlicker
 
 ### FadeIn
 
@@ -341,6 +403,8 @@ Scroll-triggered fade-in with directional slide.
 
 Client component. Uses IntersectionObserver.
 
+**See also:** StickySection, ScrollProgressBar
+
 ### ScrollProgressBar
 
 Horizontal scroll progress indicator.
@@ -358,6 +422,8 @@ Horizontal scroll progress indicator.
 | `glow` | `boolean` | `true` |
 
 Client component. Uses CSS `scroll-timeline` with JS fallback.
+
+**See also:** FadeIn, useScrollProgress
 
 ### Skeleton
 
@@ -378,6 +444,8 @@ Loading placeholder with scan animation.
 | `lines` | `number` | `1` |
 
 Server component. Multi-line text uses progressively shorter widths. Scan animation via `animations.css` keyframe. `role="status"` and `aria-label="Loading"`.
+
+**See also:** ProgressBar
 
 ---
 
@@ -432,6 +500,41 @@ Action button with 5 variants, 3 sizes, and optional icons.
 
 Uses `font-display` uppercase tracking. Link variant strips padding for inline use. Supports `ref` forwarding via `forwardRef`.
 
+**See also:** IconButton
+
+### Card
+
+Generic card container with flexible slots for header, overlay, and wrapper.
+
+```tsx
+{/* Plain card */}
+<Card className="p-6">Content here</Card>
+
+{/* Card with custom header */}
+<Card header={<div className="border-b border-border px-4 py-2">Title</div>}>
+  Content here
+</Card>
+
+{/* Card with all slots */}
+<Card
+  header={<MyHeader />}
+  overlay={<MyOverlay />}
+  wrapper={(card) => <MyWrapper>{card}</MyWrapper>}
+>
+  Content here
+</Card>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `header` | `ReactNode` | — |
+| `overlay` | `ReactNode` | — |
+| `wrapper` | `(card: ReactNode) => ReactNode` | — |
+
+No terminal imports. For terminal-styled cards, use `TerminalCard` which wraps this component.
+
+**See also:** TerminalCard
+
 ### CodeBlock
 
 Multi-line code block with Shiki syntax highlighting.
@@ -455,6 +558,8 @@ Client component. Highlights async via Shiki with CSS-variables theme — adapts
 
 Supported languages: `typescript`, `javascript`, `tsx`, `jsx`, `css`, `html`, `bash`, `json`.
 
+**See also:** Code
+
 ### IconButton
 
 Square icon-only button.
@@ -474,6 +579,8 @@ Square icon-only button.
 
 Sizes: sm = 32px, md = 40px, lg = 48px. Supports `ref` forwarding via `forwardRef`.
 
+**See also:** Button
+
 ### Alert
 
 Left-bordered alert with variant icon and optional dismiss.
@@ -489,6 +596,8 @@ Left-bordered alert with variant icon and optional dismiss.
 | `variant` | `"info" \| "success" \| "warning" \| "error"` | `"info"` |
 | `dismissible` | `boolean` | `false` |
 | `onDismiss` | `() => void` | — |
+
+**See also:** Toast
 
 ### Checkbox
 
@@ -509,6 +618,8 @@ Styled checkbox with optional label.
 | `disabled` | `boolean` | `false` |
 | `children` | `ReactNode` | — (inline label) |
 
+**See also:** Toggle, RadioGroup
+
 ### CommandInput
 
 Terminal command input with prefix and cursor.
@@ -522,6 +633,8 @@ Terminal command input with prefix and cursor.
 | `prefix` | `string` | `">"` |
 | `placeholder` | `string` | `"type a command..."` |
 | `onSubmit` | `(value: string) => void` | — |
+
+**See also:** SearchInput, Textarea
 
 ### DataTable
 
@@ -546,15 +659,27 @@ Sortable monospaced data table.
 
 Type parameter `K extends string` ties column keys to row keys for type safety. Sortable columns render accessible `<button>` elements with `aria-sort`.
 
+**See also:** StatCard
+
 ### Modal
 
-Dialog overlay with focus trap and terminal chrome.
+Dialog overlay with focus trap, backdrop blur, and flexible chrome slots.
 
 ```tsx
-const [open, setOpen] = useState(false);
+{/* Minimal modal — default title bar with close button */}
+<Modal open={open} onClose={() => setOpen(false)} title="Confirm">
+  <p>Are you sure?</p>
+</Modal>
 
-<Button onClick={() => setOpen(true)}>Open</Button>
-<Modal open={open} onClose={() => setOpen(false)} title="SYS:CONFIRM" size="sm">
+{/* Modal with custom header and effects */}
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Confirm"
+  header={<MyCustomHeader />}
+  overlay={<MyOverlayEffect />}
+  wrapper={(panel) => <MyWrapper>{panel}</MyWrapper>}
+>
   <p>Are you sure?</p>
 </Modal>
 ```
@@ -565,8 +690,13 @@ const [open, setOpen] = useState(false);
 | `onClose` | `() => void` | required |
 | `title` | `string` | — |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` |
+| `header` | `ReactNode` | — (default title bar) |
+| `overlay` | `ReactNode` | — |
+| `wrapper` | `(panel: ReactNode) => ReactNode` | — |
 
-Client component. Portal-rendered with backdrop blur. Composes `TerminalTopBar` + `CornerNotch`. Focus trap via Tab/Shift+Tab cycling with focus restore on close. Closes on backdrop click or Escape. Body scroll lock while open. Enter animation: scale 95%→100% + fade.
+Client component. Portal-rendered with backdrop blur. Focus trap via Tab/Shift+Tab cycling with focus restore on close. Closes on backdrop click or Escape. Body scroll lock while open. For terminal-styled modals, use `TerminalModal`.
+
+**See also:** TerminalModal
 
 ### MultiSelect
 
@@ -590,6 +720,8 @@ Dropdown with checkboxes for multiple selections.
 | `onChange` | `(value: string[]) => void` | — |
 | `placeholder` | `string` | `"select..."` |
 | `disabled` | `boolean` | `false` |
+
+**See also:** Select
 
 ### ProcessCard
 
@@ -628,6 +760,8 @@ Fieldset of radio inputs.
 | `onChange` | `(value: string) => void` | — |
 | `disabled` | `boolean` | `false` |
 
+**See also:** Checkbox, Toggle
+
 ### SearchInput
 
 Search input with icon, cursor, clear button, and debounced callback.
@@ -645,6 +779,8 @@ Search input with icon, cursor, clear button, and debounced callback.
 | `onSearch` | `(value: string) => void` | — (debounced) |
 | `onChange` | `(value: string) => void` | — (immediate) |
 | `debounceMs` | `number` | `300` |
+
+**See also:** CommandInput
 
 ### Select
 
@@ -669,6 +805,8 @@ Custom dropdown select.
 | `placeholder` | `string` | `"select..."` |
 | `disabled` | `boolean` | `false` |
 
+**See also:** MultiSelect
+
 ### Section
 
 Layout section wrapper with optional effects.
@@ -688,6 +826,8 @@ Layout section wrapper with optional effects.
 | `glowIntense` | `boolean` | `false` |
 | `id` | `string` | — |
 
+**See also:** SectionHeading, StickySection
+
 ### SectionHeading
 
 Heading with optional cursor and subtitle.
@@ -704,6 +844,8 @@ Heading with optional cursor and subtitle.
 | `subtitle` | `string` | — |
 | `cursor` | `boolean` | `true` |
 
+**See also:** Heading, Section
+
 ### StatCard
 
 Animated count-up statistic triggered on scroll.
@@ -719,6 +861,8 @@ Animated count-up statistic triggered on scroll.
 | `prefix` | `string` | `""` |
 | `suffix` | `string` | `""` |
 | `decimals` | `number` | `0` |
+
+**See also:** DataTable, ProgressBar
 
 ### StickySection
 
@@ -738,6 +882,8 @@ Sticky scroll-through section with progress render prop.
 | `stepHeight` | `string` | `"100vh"` |
 | `children` | `(state: { progress: number; activeStep: number }) => ReactNode` | required |
 
+**See also:** Section, FadeIn
+
 ### TerminalCard
 
 Card with terminal chrome, notch, and hover scanline.
@@ -754,6 +900,29 @@ Card with terminal chrome, notch, and hover scanline.
 | `label` | `string` | — |
 | `notch` | `boolean` | `true` |
 | `scanline` | `boolean` | `true` |
+
+**See also:** Card
+
+### TerminalModal
+
+Modal with terminal chrome (TerminalTopBar, CornerNotch, HoverScanline). Wraps generic `Modal`.
+
+```tsx
+<TerminalModal open={open} onClose={() => setOpen(false)} title="SYS:CONFIRM" size="sm">
+  <p>Are you sure?</p>
+</TerminalModal>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `title` | `string` | — |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` |
+
+For custom-styled modals without terminal chrome, use `Modal` directly with `header`/`overlay`/`wrapper` slots.
+
+**See also:** Modal
 
 ### TerminalPrompt
 
@@ -821,6 +990,8 @@ Multi-line terminal-styled input.
 | `autoResize` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
 
+**See also:** CommandInput, SearchInput
+
 ### Toggle
 
 Sliding switch with accent glow.
@@ -839,6 +1010,8 @@ Sliding switch with accent glow.
 | `onChange` | `(checked: boolean) => void` | — |
 | `disabled` | `boolean` | `false` |
 | `children` | `ReactNode` | — (inline label) |
+
+**See also:** Checkbox, RadioGroup
 
 ### Toast Notifications
 
@@ -867,6 +1040,8 @@ addToast({ message: "Memory at 92%.", variant: "warning", duration: 8000 });
 
 Client component. Portal-rendered, stacked bottom-right, max 5 toasts. Slide-in/out animation. Progress bar countdown. Variant icons match Alert. Scanline hover effect.
 
+**See also:** Alert
+
 ### Tooltip
 
 Hover/focus tooltip with directional positioning.
@@ -885,6 +1060,8 @@ Hover/focus tooltip with directional positioning.
 | `delay` | `number` (ms) | `200` |
 
 Client component. CSS border triangle arrows. Focus + hover accessible. Accent glow shadow. `font-display` uppercase styling.
+
+**See also:** Alert
 
 ### Navbar
 
@@ -1072,6 +1249,8 @@ const progress = useScrollProgress({ target: sectionRef, enabled: true });
 |--------|------|---------|
 | `target` | `RefObject<HTMLElement>` | — (page scroll) |
 | `enabled` | `boolean` | `true` |
+
+**See also:** ScrollProgressBar
 
 ---
 

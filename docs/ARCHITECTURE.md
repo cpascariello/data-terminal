@@ -62,6 +62,7 @@ src/
 │   ├── accordion.tsx
 │   ├── alert.tsx
 │   ├── button.tsx
+│   ├── card.tsx
 │   ├── checkbox.tsx
 │   ├── code-block.tsx
 │   ├── command-input.tsx
@@ -80,6 +81,7 @@ src/
 │   ├── stat-card.tsx
 │   ├── sticky-section.tsx
 │   ├── terminal-card.tsx
+│   ├── terminal-modal.tsx
 │   ├── terminal-prompt.tsx
 │   ├── terminal-tabs.tsx
 │   ├── terminal-window.tsx
@@ -187,6 +189,12 @@ src/
 **Approach:** Extract into `HoverScanline` atom with `intensity` ("normal" = `--accent-scan`, "subtle" = `--accent-scan-subtle`) and `speed` props. Server component. `aria-hidden="true"`.
 **Key files:** `src/atoms/hover-scanline.tsx`
 **Notes:** Parent must have `group` and `relative` classes. For named groups (e.g., Accordion's `group/item`), pass the appropriate `className` override for the hover trigger.
+
+### Generic/Terminal Composition
+**Context:** Card and Modal were tightly coupled to terminal-specific atoms (TerminalTopBar, CornerNotch, HoverScanline), making them unusable without the terminal aesthetic.
+**Approach:** Generic components (`Card`, `Modal`) accept `header`, `overlay`, and `wrapper` slot props with zero terminal imports. Terminal variants (`TerminalCard`, `TerminalModal`) are thin wrappers that inject terminal atoms through those slots. This pattern allows the same structural components to be themed differently.
+**Key files:** `src/molecules/card.tsx`, `src/molecules/terminal-card.tsx`, `src/molecules/modal.tsx`, `src/molecules/terminal-modal.tsx`
+**Notes:** When creating new chrome-bearing components, follow the same pattern: generic base with slots, terminal wrapper that fills them. The generic component should never import from `@/atoms/terminal-*`, `@/atoms/corner-notch`, or `@/atoms/hover-scanline`.
 
 ### ARIA Widget Patterns
 **Context:** Custom widgets (Select, MultiSelect, Navbar, TerminalTabs, Accordion, Tooltip, DataTable, Modal) needed proper ARIA roles and keyboard navigation for accessibility.

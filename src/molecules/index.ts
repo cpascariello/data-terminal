@@ -1,6 +1,7 @@
 export { Accordion } from "./accordion";
 export { Alert } from "./alert";
 export { Button } from "./button";
+export { Card } from "./card";
 export { Checkbox } from "./checkbox";
 export { CodeBlock } from "./code-block";
 export { CopyButton } from "./copy-button";
@@ -21,6 +22,7 @@ export { StatCard } from "./stat-card";
 export { StickySection } from "./sticky-section";
 export { Textarea } from "./textarea";
 export { TerminalCard } from "./terminal-card";
+export { TerminalModal } from "./terminal-modal";
 export { TerminalPrompt } from "./terminal-prompt";
 export { TerminalTabs } from "./terminal-tabs";
 export { ToastContainer } from "./toast";

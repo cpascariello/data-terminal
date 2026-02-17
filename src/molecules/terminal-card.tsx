@@ -1,7 +1,7 @@
-import { cn } from "@/lib/cn";
 import { CornerNotch } from "@/atoms/corner-notch";
 import { TerminalTopBar } from "@/atoms/terminal-top-bar";
 import { HoverScanline } from "@/atoms/hover-scanline";
+import { Card } from "@/molecules/card";
 import type { ReactNode } from "react";
 
 interface TerminalCardProps {
@@ -21,26 +21,14 @@ export function TerminalCard({
   notch = true,
   scanline = true,
 }: TerminalCardProps) {
-  const card = (
-    <div
-      className={cn(
-        "group relative flex h-full flex-col overflow-hidden",
-        "border border-border bg-foreground/[0.02]",
-        "transition-all hover:border-border-hover hover:shadow-[0_0_30px_-5px_var(--accent-hover-shadow)]",
-        className,
-      )}
+  return (
+    <Card
+      className={className}
+      header={<TerminalTopBar tag={tag} label={label} dotsPosition="right" />}
+      overlay={scanline ? <HoverScanline speed={1.5} /> : undefined}
+      wrapper={notch ? (card) => <CornerNotch>{card}</CornerNotch> : undefined}
     >
-      <TerminalTopBar tag={tag} label={label} dotsPosition="right" />
-
-      <div className="flex flex-1 flex-col">{children}</div>
-
-      {scanline && <HoverScanline speed={1.5} />}
-    </div>
+      {children}
+    </Card>
   );
-
-  if (notch) {
-    return <CornerNotch>{card}</CornerNotch>;
-  }
-
-  return card;
 }

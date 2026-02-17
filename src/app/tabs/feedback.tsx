@@ -12,7 +12,7 @@ import {
 import {
   Accordion,
   Alert,
-  Modal,
+  TerminalModal,
   Section,
   SectionHeading,
   Tooltip,
@@ -73,7 +73,7 @@ function ModalDemo() {
       <Button size="sm" onClick={() => setOpen(true)}>
         Open Modal
       </Button>
-      <Modal
+      <TerminalModal
         open={open}
         onClose={() => setOpen(false)}
         title="SYS:CONFIRM"
@@ -90,7 +90,7 @@ function ModalDemo() {
             Cancel
           </Button>
         </div>
-      </Modal>
+      </TerminalModal>
     </>
   );
 }

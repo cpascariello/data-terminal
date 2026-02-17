@@ -4,19 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { TerminalTopBar } from "@/atoms/terminal-top-bar";
-import { CornerNotch } from "@/atoms/corner-notch";
-import { HoverScanline } from "@/atoms/hover-scanline";
 import { useDismiss } from "@/hooks/use-dismiss";
 import type { ReactNode } from "react";
 
 export interface ModalProps {
   open: boolean;
   onClose: () => void;
-  title?: string;
+  title?: string | undefined;
   size?: "sm" | "md" | "lg";
+  /** Slot for custom header content. When provided, replaces the default title bar. */
+  header?: ReactNode | undefined;
+  /** Slot for overlay effects (e.g. scanline) */
+  overlay?: ReactNode | undefined;
+  /** Wraps the panel element (e.g. CornerNotch) */
+  wrapper?: ((panel: ReactNode) => ReactNode) | undefined;
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
 }
 
 const sizeClasses = {
@@ -82,6 +85,9 @@ export function Modal({
   onClose,
   title,
   size = "md",
+  header,
+  overlay,
+  wrapper,
   children,
   className,
 }: ModalProps) {
@@ -109,6 +115,64 @@ export function Modal({
 
   if (!open) return null;
 
+  const defaultHeader = (
+    <div className="flex items-center border-b border-border">
+      {title && (
+        <span className="flex-1 px-4 py-2 font-display text-xs tracking-widest text-foreground/50">
+          {title}
+        </span>
+      )}
+      <button
+        onClick={onClose}
+        className={cn(
+          "shrink-0 px-4 py-2",
+          "text-foreground/30 transition-colors",
+          "hover:text-foreground/60",
+          !title && "ml-auto",
+        )}
+        aria-label="Close dialog"
+      >
+        <X size={14} />
+      </button>
+    </div>
+  );
+
+  const panel = (
+    <div
+      className={cn(
+        "group relative flex flex-col overflow-hidden",
+        "border border-border bg-foreground/[0.02]",
+        "shadow-[0_0_30px_-5px_var(--accent-hover-shadow)]",
+        className,
+      )}
+    >
+      {header !== undefined ? (
+        <div className="flex items-center">
+          <div className="flex-1">{header}</div>
+          <button
+            onClick={onClose}
+            className={cn(
+              "shrink-0 border-b border-border px-4 py-2",
+              "text-foreground/30 transition-colors",
+              "hover:text-foreground/60",
+            )}
+            aria-label="Close dialog"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      ) : (
+        defaultHeader
+      )}
+
+      <div className="flex-1 p-6">{children}</div>
+
+      {overlay}
+    </div>
+  );
+
+  const wrappedPanel = wrapper ? wrapper(panel) : panel;
+
   return createPortal(
     <div
       className={cn(
@@ -131,37 +195,7 @@ export function Modal({
         aria-modal="true"
         aria-label={title ?? "Dialog"}
       >
-        <CornerNotch>
-          <div
-            className={cn(
-              "group relative flex flex-col overflow-hidden",
-              "border border-border bg-foreground/[0.02]",
-              "shadow-[0_0_30px_-5px_var(--accent-hover-shadow)]",
-              className,
-            )}
-          >
-            <div className="flex items-center">
-              <div className="flex-1">
-                <TerminalTopBar tag={title} dotsPosition="right" />
-              </div>
-              <button
-                onClick={onClose}
-                className={cn(
-                  "shrink-0 border-b border-border px-4 py-2",
-                  "text-foreground/30 transition-colors",
-                  "hover:text-foreground/60",
-                )}
-                aria-label="Close dialog"
-              >
-                <X size={14} />
-              </button>
-            </div>
-
-            <div className="flex-1 p-6">{children}</div>
-
-            <HoverScanline speed={1.5} />
-          </div>
-        </CornerNotch>
+        {wrappedPanel}
       </div>
     </div>,
     document.body,
