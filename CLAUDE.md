@@ -228,6 +228,7 @@ src/
 
 #### Molecules (`src/molecules/`)
 - `Accordion` — collapsible content sections with CSS grid height transition, chevron rotation, single/multi mode, left accent border, ARIA region/controls pattern, HoverScanline
+- `Breadcrumbs` — horizontal breadcrumb trail with configurable separator, optional back arrow link, accent-colored back affordance, semantic `<ol>` with aria-current="page" on last item
 - `Alert` — left-border alert with icon per variant (info/success/warning/error), optional dismiss, shared variant maps from feedback-variants, HoverScanline
 - `Button` — action button with 5 variants (primary/secondary/ghost/link/danger), 3 sizes, optional left/right icons, renders as button or anchor, forwardRef support
 - `Checkbox` — styled native checkbox with accent glow, Check icon, optional inline label via children

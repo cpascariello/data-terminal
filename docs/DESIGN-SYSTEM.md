@@ -72,7 +72,7 @@ Quick guide for choosing the right component.
 `DataTable` for tabular data with sortable columns. `StatCard` for animated statistics. `Badge` for status labels. `ProgressBar` for determinate/indeterminate progress. `Card` for generic containers, `TerminalCard` for terminal-styled cards.
 
 **Building navigation?**
-`Navbar` for horizontal top bar with dropdowns and mega menus. `Sidebar` for vertical nav with collapsible icon rail. `TerminalTabs` for tabbed content.
+`Navbar` for horizontal top bar with dropdowns and mega menus. `Sidebar` for vertical nav with collapsible icon rail. `Breadcrumbs` for path-based breadcrumb trails with optional back arrow. `TerminalTabs` for tabbed content.
 
 **Showing feedback?**
 `Alert` for inline messages. `Toast` (via `useToast`) for auto-dismissing notifications. `Modal` for generic dialogs, `TerminalModal` for terminal-styled dialogs. `Tooltip` for hover hints. `Accordion` for collapsible sections. `Skeleton` for loading placeholders.
@@ -1126,6 +1126,38 @@ Horizontal top bar navigation with compact and mega dropdown menus.
 When `mega` is set, it takes priority over `children`. The mega panel spans the full navbar width. When `featured` items are present, the layout splits into a left column (heading + description + links) and a right area (featured cards in a grid). Without featured items, the panel is single-column.
 
 Dropdowns open on hover (150ms delay) and click. Close on mouse leave, outside click, or Escape. Active item shows accent border glow. Parent containers must not have `overflow-hidden`.
+
+### Breadcrumbs
+
+Horizontal breadcrumb trail with optional back arrow.
+
+```tsx
+<Breadcrumbs
+  items={[
+    { label: "Compute", href: "/compute" },
+    { label: "abc123…" },
+  ]}
+  backHref="/dashboard"
+/>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `items` | `BreadcrumbItem[]` | required |
+| `backHref` | `string?` | — |
+| `separator` | `string` | `"/"` |
+| `className` | `string?` | — |
+
+**BreadcrumbItem**:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `label` | `string` | Display text |
+| `href` | `string?` | Link target (omit for current/non-navigable items) |
+
+Items without `href` render as plain text. The last item receives `aria-current="page"`. The back arrow renders in accent color when `backHref` is provided.
+
+**See also:** Navbar, Sidebar
 
 ### Sidebar
 

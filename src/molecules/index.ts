@@ -1,5 +1,6 @@
 export { Accordion } from "./accordion";
 export { Alert } from "./alert";
+export { Breadcrumbs } from "./breadcrumbs";
 export { Button } from "./button";
 export { Card } from "./card";
 export { Checkbox } from "./checkbox";
