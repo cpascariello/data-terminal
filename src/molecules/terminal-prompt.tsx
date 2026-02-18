@@ -1,6 +1,6 @@
-import { cn } from "@/lib/cn";
-import { BlinkingCursor } from "@/atoms/blinking-cursor";
-import { TerminalTopBar } from "@/atoms/terminal-top-bar";
+import { cn } from "@dt/lib/cn";
+import { BlinkingCursor } from "@dt/atoms/blinking-cursor";
+import { TerminalTopBar } from "@dt/atoms/terminal-top-bar";
 
 export interface TerminalPromptProps {
   command: string;

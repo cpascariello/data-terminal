@@ -1,6 +1,6 @@
 "use client";
 
-import { GlowLine } from "@/atoms";
+import { GlowLine } from "@dt/atoms";
 import {
   Checkbox,
   CommandInput,
@@ -12,7 +12,7 @@ import {
   Select,
   Textarea,
   Toggle,
-} from "@/molecules";
+} from "@dt/molecules";
 
 export function FormsTab() {
   return (

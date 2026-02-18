@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useId, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
-import { HudLabel } from "@/atoms/hud-label";
-import { Badge } from "@/atoms/badge";
-import { useDismiss } from "@/hooks/use-dismiss";
+import { cn } from "@dt/lib/cn";
+import { HudLabel } from "@dt/atoms/hud-label";
+import { Badge } from "@dt/atoms/badge";
+import { useDismiss } from "@dt/hooks/use-dismiss";
 import { ChevronDown, Check } from "lucide-react";
 
 interface MultiSelectOption {

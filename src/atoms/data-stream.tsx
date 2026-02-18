@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 
 const HEX_CHARS = "0123456789ABCDEF";
 const ROWS = 20;

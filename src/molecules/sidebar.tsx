@@ -8,8 +8,8 @@ import {
   type ReactNode,
 } from "react";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/cn";
-import { isItemActive, type NavItem } from "@/types/nav";
+import { cn } from "@dt/lib/cn";
+import { isItemActive, type NavItem } from "@dt/types/nav";
 
 export interface SidebarProps {
   items: NavItem[];

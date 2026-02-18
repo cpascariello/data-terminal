@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useId, useEffect, cloneElement } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import type { ReactNode, ReactElement } from "react";
 
 type TooltipPosition = "top" | "bottom" | "left" | "right";

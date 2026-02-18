@@ -3,7 +3,7 @@ import {
   sharedVariantStyles,
   sharedBaseClasses,
   type SharedButtonVariant,
-} from "@/lib/button-variants";
+} from "@dt/lib/button-variants";
 
 const allVariants: SharedButtonVariant[] = [
   "primary",

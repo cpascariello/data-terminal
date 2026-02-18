@@ -1,5 +1,5 @@
-import { cn } from "@/lib/cn";
-import { TerminalTopBar } from "@/atoms/terminal-top-bar";
+import { cn } from "@dt/lib/cn";
+import { TerminalTopBar } from "@dt/atoms/terminal-top-bar";
 import type { ReactNode } from "react";
 
 export interface TerminalWindowProps {

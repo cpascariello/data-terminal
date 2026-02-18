@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/cn";
-import { useInView } from "@/hooks/use-in-view";
+import { cn } from "@dt/lib/cn";
+import { useInView } from "@dt/hooks/use-in-view";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 

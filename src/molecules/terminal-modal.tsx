@@ -1,7 +1,7 @@
-import { TerminalTopBar } from "@/atoms/terminal-top-bar";
-import { CornerNotch } from "@/atoms/corner-notch";
-import { HoverScanline } from "@/atoms/hover-scanline";
-import { Modal } from "@/molecules/modal";
+import { TerminalTopBar } from "@dt/atoms/terminal-top-bar";
+import { CornerNotch } from "@dt/atoms/corner-notch";
+import { HoverScanline } from "@dt/atoms/hover-scanline";
+import { Modal } from "@dt/molecules/modal";
 import type { ReactNode } from "react";
 
 interface TerminalModalProps {

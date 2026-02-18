@@ -1,7 +1,7 @@
 "use client";
 
-import { GlowLine } from "@/atoms";
-import { Navbar, Section, SectionHeading, Sidebar } from "@/molecules";
+import { GlowLine } from "@dt/atoms";
+import { Navbar, Section, SectionHeading, Sidebar } from "@dt/molecules";
 import {
   LayoutDashboard,
   Monitor,
@@ -13,7 +13,7 @@ import {
   Shield,
   Terminal,
 } from "lucide-react";
-import type { NavItem } from "@/types/nav";
+import type { NavItem } from "@dt/types/nav";
 
 const NAVBAR_ITEMS: NavItem[] = [
   { id: "dashboard", label: "Dashboard" },

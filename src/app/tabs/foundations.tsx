@@ -22,15 +22,15 @@ import {
   Text,
   TextFlicker,
   TypewriterText,
-} from "@/atoms";
+} from "@dt/atoms";
 import {
   Button,
   CodeBlock,
   IconButton,
   Section,
   SectionHeading,
-} from "@/molecules";
-import { cn } from "@/lib/cn";
+} from "@dt/molecules";
+import { cn } from "@dt/lib/cn";
 import {
   Activity,
   AlertTriangle,
@@ -328,7 +328,7 @@ export function FoundationsTab() {
         <FadeIn>
           <CodeBlock
             language="typescript"
-            code={`import { TerminalCard } from "@/molecules";
+            code={`import { TerminalCard } from "@dt/molecules";
 
 export function Dashboard() {
   const status = "operational";

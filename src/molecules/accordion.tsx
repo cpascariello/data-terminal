@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useCallback, useId } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import { ChevronDown } from "lucide-react";
-import { HoverScanline } from "@/atoms/hover-scanline";
+import { HoverScanline } from "@dt/atoms/hover-scanline";
 import type { ReactNode } from "react";
 
 interface AccordionItem {

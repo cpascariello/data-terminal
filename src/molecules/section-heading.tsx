@@ -1,6 +1,6 @@
-import { cn } from "@/lib/cn";
-import { BlinkingCursor } from "@/atoms/blinking-cursor";
-import { Heading } from "@/atoms/heading";
+import { cn } from "@dt/lib/cn";
+import { BlinkingCursor } from "@dt/atoms/blinking-cursor";
+import { Heading } from "@dt/atoms/heading";
 import type { ReactNode } from "react";
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4";

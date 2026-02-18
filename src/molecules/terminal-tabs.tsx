@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useId } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import type { ReactNode } from "react";
 
 interface Tab {

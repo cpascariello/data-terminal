@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/cn";
-import { useInView } from "@/hooks/use-in-view";
-import { useCountUp } from "@/hooks/use-count-up";
+import { cn } from "@dt/lib/cn";
+import { useInView } from "@dt/hooks/use-in-view";
+import { useCountUp } from "@dt/hooks/use-count-up";
 
 export interface StatCardProps {
   to: number;

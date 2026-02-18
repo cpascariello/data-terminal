@@ -1,6 +1,6 @@
-import { cn } from "@/lib/cn";
-import { DotGrid } from "@/atoms/dot-grid";
-import { ScanlineOverlay } from "@/atoms/scanline-overlay";
+import { cn } from "@dt/lib/cn";
+import { DotGrid } from "@dt/atoms/dot-grid";
+import { ScanlineOverlay } from "@dt/atoms/scanline-overlay";
 import type { ReactNode } from "react";
 
 type SectionSpacing = "sm" | "md" | "lg" | "xl" | "none";

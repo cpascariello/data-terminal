@@ -6,7 +6,7 @@ import {
   Zap,
   Globe,
 } from "lucide-react";
-import { FadeIn, GlowLine } from "@/atoms";
+import { FadeIn, GlowLine } from "@dt/atoms";
 import {
   DataTable,
   ProcessCard,
@@ -17,7 +17,7 @@ import {
   TerminalPrompt,
   TerminalTabs,
   TerminalWindow,
-} from "@/molecules";
+} from "@dt/molecules";
 
 export function DataDisplayTab() {
   return (

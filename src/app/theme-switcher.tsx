@@ -1,8 +1,8 @@
 "use client";
 
-import { useTheme } from "@/hooks/use-theme";
-import { THEMES } from "@/providers/theme-provider";
-import { cn } from "@/lib/cn";
+import { useTheme } from "@dt/hooks/use-theme";
+import { THEMES } from "@dt/providers/theme-provider";
+import { cn } from "@dt/lib/cn";
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();

@@ -7,10 +7,10 @@ import {
   HudLabel,
   ScrollProgressBar,
   TypewriterText,
-} from "@/atoms";
-import { Section, SectionHeading } from "@/molecules";
-import { useParallax } from "@/hooks/use-parallax";
-import { StickySectionDemo } from "@/app/sticky-section-demo";
+} from "@dt/atoms";
+import { Section, SectionHeading } from "@dt/molecules";
+import { useParallax } from "@dt/hooks/use-parallax";
+import { StickySectionDemo } from "@dt/app/sticky-section-demo";
 
 function ParallaxDemo() {
   const slow = useParallax<HTMLDivElement>({ speed: 0.8 });

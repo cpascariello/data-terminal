@@ -1,5 +1,5 @@
-import { cn } from "@/lib/cn";
-import { ServiceTag } from "@/atoms/service-tag";
+import { cn } from "@dt/lib/cn";
+import { ServiceTag } from "@dt/atoms/service-tag";
 
 interface TerminalTopBarProps {
   /** Service tag shown on the left (e.g. "SVC:COMPUTE") */

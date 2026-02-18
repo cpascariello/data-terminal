@@ -3,14 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/cn";
-import { useDismiss } from "@/hooks/use-dismiss";
+import { cn } from "@dt/lib/cn";
+import { useDismiss } from "@dt/hooks/use-dismiss";
 import {
   isItemActive,
   type MegaDropdownConfig,
   type MegaDropdownFeatured,
   type NavItem,
-} from "@/types/nav";
+} from "@dt/types/nav";
 
 export interface NavbarProps {
   items: NavItem[];

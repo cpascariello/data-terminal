@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
-import { HudLabel } from "@/atoms/hud-label";
-import { BlinkingCursor } from "@/atoms/blinking-cursor";
+import { cn } from "@dt/lib/cn";
+import { HudLabel } from "@dt/atoms/hud-label";
+import { BlinkingCursor } from "@dt/atoms/blinking-cursor";
 import { Search, X } from "lucide-react";
 
 export interface SearchInputProps {

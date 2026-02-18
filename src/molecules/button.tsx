@@ -5,11 +5,11 @@ import type {
   AnchorHTMLAttributes,
   Ref,
 } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import {
   sharedVariantStyles,
   sharedBaseClasses,
-} from "@/lib/button-variants";
+} from "@dt/lib/button-variants";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "link" | "danger";
 type ButtonSize = "sm" | "md" | "lg";

@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 import { useId, useState } from "react";
-import { cn } from "@/lib/cn";
-import { HudLabel } from "@/atoms/hud-label";
+import { cn } from "@dt/lib/cn";
+import { HudLabel } from "@dt/atoms/hud-label";
 import { Check } from "lucide-react";
 
 export interface CheckboxProps {

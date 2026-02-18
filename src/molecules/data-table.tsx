@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import type { ReactNode } from "react";
 
 interface Column<K extends string> {

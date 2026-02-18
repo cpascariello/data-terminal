@@ -1,10 +1,10 @@
 import { forwardRef } from "react";
 import type { ReactNode, ButtonHTMLAttributes } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import {
   sharedVariantStyles,
   sharedBaseClasses,
-} from "@/lib/button-variants";
+} from "@dt/lib/button-variants";
 
 type IconButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type IconButtonSize = "sm" | "md" | "lg";

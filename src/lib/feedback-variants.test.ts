@@ -4,7 +4,7 @@ import {
   variantIcons,
   variantIconColor,
   type FeedbackVariant,
-} from "@/lib/feedback-variants";
+} from "@dt/lib/feedback-variants";
 import { CheckCircle, AlertTriangle, XCircle, Info } from "lucide-react";
 
 const allVariants: FeedbackVariant[] = [

@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { cn } from "@/lib/cn";
-import { useScrollProgress } from "@/hooks/use-scroll-progress";
+import { cn } from "@dt/lib/cn";
+import { useScrollProgress } from "@dt/hooks/use-scroll-progress";
 import type { ReactNode } from "react";
 
 export interface StickySectionProps {

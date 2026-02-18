@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/cn";
-import { useScrollProgress } from "@/hooks/use-scroll-progress";
-import { supportsScrollTimeline } from "@/lib/supports-scroll-timeline";
+import { cn } from "@dt/lib/cn";
+import { useScrollProgress } from "@dt/hooks/use-scroll-progress";
+import { supportsScrollTimeline } from "@dt/lib/supports-scroll-timeline";
 
 interface ScrollProgressBarProps {
   target?: React.RefObject<HTMLElement | null>;

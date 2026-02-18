@@ -8,7 +8,7 @@ import {
   HudLabel,
   ProgressBar,
   Skeleton,
-} from "@/atoms";
+} from "@dt/atoms";
 import {
   Accordion,
   Alert,
@@ -16,9 +16,9 @@ import {
   Section,
   SectionHeading,
   Tooltip,
-} from "@/molecules";
-import { useToast } from "@/providers/toast-provider";
-import { Button } from "@/molecules/button";
+} from "@dt/molecules";
+import { useToast } from "@dt/providers/toast-provider";
+import { Button } from "@dt/molecules/button";
 
 function ToastDemo() {
   const { addToast } = useToast();

@@ -5,9 +5,9 @@ import {
   Inter,
   JetBrains_Mono,
 } from "next/font/google";
-import { ThemeProvider } from "@/providers/theme-provider";
-import { ToastProvider } from "@/providers/toast-provider";
-import { ToastContainer } from "@/molecules/toast";
+import { ThemeProvider } from "@dt/providers/theme-provider";
+import { ToastProvider } from "@dt/providers/toast-provider";
+import { ToastContainer } from "@dt/molecules/toast";
 import "./globals.css";
 
 const titilliumWeb = Titillium_Web({

@@ -1,6 +1,6 @@
-import { cn } from "@/lib/cn";
-import { HudLabel } from "@/atoms/hud-label";
-import { HoverScanline } from "@/atoms/hover-scanline";
+import { cn } from "@dt/lib/cn";
+import { HudLabel } from "@dt/atoms/hud-label";
+import { HoverScanline } from "@dt/atoms/hover-scanline";
 import type { ReactNode } from "react";
 
 interface ProcessCardProps {

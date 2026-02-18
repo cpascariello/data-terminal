@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 
 type StatusDotVariant = "success" | "warning" | "error" | "info" | "neutral";
 

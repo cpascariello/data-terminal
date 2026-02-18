@@ -4,12 +4,12 @@ import {
   GlowLine,
   ProgressBar,
   StatusDot,
-} from "@/atoms";
+} from "@dt/atoms";
 import {
   SectionHeading,
   StickySection,
   TerminalCard,
-} from "@/molecules";
+} from "@dt/molecules";
 
 export function StickySectionDemo() {
   return (

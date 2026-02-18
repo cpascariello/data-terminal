@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useId, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
-import { HudLabel } from "@/atoms/hud-label";
-import { useDismiss } from "@/hooks/use-dismiss";
+import { cn } from "@dt/lib/cn";
+import { HudLabel } from "@dt/atoms/hud-label";
+import { useDismiss } from "@dt/hooks/use-dismiss";
 import { ChevronDown } from "lucide-react";
 
 interface SelectOption {

@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@dt/lib/cn";
 import { X } from "lucide-react";
 import {
   variantStyles,
   variantIcons,
   variantIconColor,
-} from "@/lib/feedback-variants";
-import type { FeedbackVariant } from "@/lib/feedback-variants";
-import { HoverScanline } from "@/atoms/hover-scanline";
+} from "@dt/lib/feedback-variants";
+import type { FeedbackVariant } from "@dt/lib/feedback-variants";
+import { HoverScanline } from "@dt/atoms/hover-scanline";
 import type { ReactNode } from "react";
 
 export interface AlertProps {

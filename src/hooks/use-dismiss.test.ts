@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { useDismiss } from "@/hooks/use-dismiss";
+import { useDismiss } from "@dt/hooks/use-dismiss";
 
 describe("useDismiss", () => {
   it("exports a function", () => {

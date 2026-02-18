@@ -2,16 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { cn } from "@/lib/cn";
-import { useToast } from "@/providers/toast-provider";
-import type { Toast } from "@/providers/toast-provider";
+import { cn } from "@dt/lib/cn";
+import { useToast } from "@dt/providers/toast-provider";
+import type { Toast } from "@dt/providers/toast-provider";
 import { X } from "lucide-react";
 import {
   variantStyles,
   variantIcons,
   variantIconColor,
-} from "@/lib/feedback-variants";
-import { HoverScanline } from "@/atoms/hover-scanline";
+} from "@dt/lib/feedback-variants";
+import { HoverScanline } from "@dt/atoms/hover-scanline";
 
 const variantProgressColor: Record<Toast["variant"], string> = {
   success: "bg-success",

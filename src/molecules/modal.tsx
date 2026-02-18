@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
-import { cn } from "@/lib/cn";
-import { useDismiss } from "@/hooks/use-dismiss";
+import { cn } from "@dt/lib/cn";
+import { useDismiss } from "@dt/hooks/use-dismiss";
 import type { ReactNode } from "react";
 
 export interface ModalProps {

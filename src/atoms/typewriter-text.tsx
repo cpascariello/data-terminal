@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
-import { BlinkingCursor } from "@/atoms/blinking-cursor";
+import { cn } from "@dt/lib/cn";
+import { BlinkingCursor } from "@dt/atoms/blinking-cursor";
 
 interface TypewriterTextProps {
   children: string;

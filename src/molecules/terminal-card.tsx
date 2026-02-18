@@ -1,7 +1,7 @@
-import { CornerNotch } from "@/atoms/corner-notch";
-import { TerminalTopBar } from "@/atoms/terminal-top-bar";
-import { HoverScanline } from "@/atoms/hover-scanline";
-import { Card } from "@/molecules/card";
+import { CornerNotch } from "@dt/atoms/corner-notch";
+import { TerminalTopBar } from "@dt/atoms/terminal-top-bar";
+import { HoverScanline } from "@dt/atoms/hover-scanline";
+import { Card } from "@dt/molecules/card";
 import type { ReactNode } from "react";
 
 interface TerminalCardProps {

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/cn";
-import { TerminalTopBar } from "@/atoms/terminal-top-bar";
-import { getHighlighter } from "@/lib/highlighter";
-import { CopyButton } from "@/molecules/copy-button";
+import { cn } from "@dt/lib/cn";
+import { TerminalTopBar } from "@dt/atoms/terminal-top-bar";
+import { getHighlighter } from "@dt/lib/highlighter";
+import { CopyButton } from "@dt/molecules/copy-button";
 
 export interface CodeBlockProps {
   code: string;
