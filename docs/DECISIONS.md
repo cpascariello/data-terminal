@@ -4,6 +4,12 @@ Decision log with rationale.
 
 ---
 
+## Decision #17 - 2026-02-18
+**Context:** data-terminal uses `@/*` internally, which collides with consumers that also use `@/*`. A custom webpack ContextualAliasPlugin resolved this but blocked Turbopack adoption.
+**Decision:** Rename all internal imports from `@/` to `@dt/` prefix. Update tsconfig paths to `"@dt/*": ["./src/*"]`.
+**Rationale:** `@dt/` is already the alias prefix consumers use to import data-terminal components. Reusing it internally means no new conventions, and consumers can drop their contextual resolver plugins. TypeScript catches any missed renames immediately since the `@/*` path mapping no longer exists.
+**Alternatives considered:** Relative imports (noisier paths like `../../lib/cn`), new prefix like `@dt-internal/` (introduces a new convention), pre-building data-terminal (adds build tooling, loses hot-reload)
+
 ## Decision #16 - 2026-02-17
 **Context:** Exploring whether the design system could support non-terminal aesthetics (e.g. a Valiente-style editorial site). Found that Card and Modal were tightly coupled to terminal chrome atoms.
 **Decision:** Decouple generic Card and Modal from terminal chrome using a composition-via-slots pattern. Generic components accept `header`, `overlay`, and `wrapper` slot props with zero terminal imports. Terminal variants (`TerminalCard`, `TerminalModal`) are thin wrappers that inject chrome through those slots.

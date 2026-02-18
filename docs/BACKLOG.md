@@ -4,9 +4,55 @@ Parking lot for scope creep and deferred ideas.
 
 ---
 
+## Open Items
+
+### 2026-02-17 - Add `linkComponent` prop to Sidebar and Navbar
+**Source:** Identified during aleph-cloud-console integration
+**Description:** Sidebar and Navbar render native `<a>` tags for items with `href`. In Next.js App Router, this causes full page reloads instead of client-side navigation. A `linkComponent` prop (accepting a component like Next's `<Link>`) would let consumers provide their own anchor implementation. Current workaround in consumers: intercept clicks on a parent `<div>` and call `router.push()`.
+**Priority:** High
+
+### 2026-02-17 - Avoid duplicate @types/react when consumed as source
+**Source:** Identified during aleph-cloud-console typecheck
+**Description:** When data-terminal is symlinked into a consumer and imported as source (via `transpilePackages`), tsc resolves `@types/react` from both locations, causing `Ref` type incompatibilities in `button.tsx`. Fix options: (1) publish data-terminal with pre-built declarations, (2) add TypeScript project references with `composite: true`, (3) document that consumers must deduplicate via pnpm overrides.
+**Priority:** Medium
+
+### 2026-02-17 - CodeBlock uses `code` prop instead of `children`
+**Source:** Identified during aleph-cloud-console Phase 5 integration
+**Description:** `CodeBlock` requires `<CodeBlock code={content} />` instead of the idiomatic React pattern `<CodeBlock>{content}</CodeBlock>`. Every other React component that renders string content uses `children`. This causes type errors during integration (`Property 'children' does not exist on type CodeBlockProps`). Consider accepting both `code` and `children` (with `code` taking precedence), or switching to `children` only.
+**Priority:** Low
+
+### 2026-02-17 - TerminalCard children have no padding
+**Source:** Identified during aleph-cloud-console Phase 3 integration
+**Description:** The card header row (`[TAG] Label`) is padded but the children slot is flush to the edges. Every consumer needs to add their own `p-4` wrapper. Should either provide content padding by default or document that children are unstyled.
+**Priority:** Medium
+
+### 2026-02-17 - CommandInput is uncontrolled-only
+**Source:** Identified during aleph-cloud-console Phase 3 integration
+**Description:** `CommandInput` has no `value`/`onChange` support, only `onSubmit`. Can't be used in forms, search-as-you-type, or any controlled context. Consumers fall back to `SearchInput` instead. Either add controlled mode or document the `SearchInput` alternative prominently.
+**Priority:** Medium
+
+### 2026-02-17 - TerminalModal uses `open` instead of `isOpen`
+**Source:** Identified during aleph-cloud-console Phase 3 integration
+**Description:** Matches native `<dialog>` API but breaks from React conventions (Radix, Chakra, Headless UI use `isOpen`). Caused type errors during integration. Consider aliasing both or documenting the convention.
+**Priority:** Low
+
+### 2026-02-17 - Textarea onChange deviates from React convention
+**Source:** Identified during aleph-cloud-console Phase 3 integration
+**Description:** `Textarea` onChange receives a `string` instead of a `ChangeEvent`. Consistent with `SearchInput` but surprising vs standard React inputs. Should be documented clearly.
+**Priority:** Low
+
+### 2026-02-17 - Button/IconButton relationship not discoverable
+**Source:** Identified during aleph-cloud-console Phase 3 integration
+**Description:** `Button` requires `children` — icon-only use needs the separate `IconButton` component. Good for accessibility but the relationship isn't discoverable. A JSDoc comment or TypeScript error message pointing to `IconButton` would help.
+**Priority:** Low
+
 ---
 
 ## Completed
+
+### 2026-02-18 - Use unique internal path prefix to avoid consumer conflicts
+**Completed:** 2026-02-18
+**Delivered:** Renamed all @/ imports to @dt/ prefix. Updated tsconfig paths and vitest alias.
 
 ### 2026-02-17 - Code Review Fixes (53 items across 7 phases)
 **Completed:** 2026-02-17

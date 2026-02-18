@@ -7,7 +7,7 @@ A cyberpunk terminal aesthetic design system built with React + Tailwind CSS 4 +
 Wrap the app in `ThemeProvider`. All components use CSS custom properties — no prop-based theming.
 
 ```tsx
-import { ThemeProvider } from "@/providers/theme-provider";
+import { ThemeProvider } from "@dt/providers/theme-provider";
 
 <ThemeProvider>{children}</ThemeProvider>
 ```
@@ -93,7 +93,7 @@ Use `Card` and `Modal` for theme-agnostic UI. Use `TerminalCard` and `TerminalMo
 
 ## Atoms
 
-Atomic UI primitives. Import from `@/atoms/<name>`.
+Atomic UI primitives. Import from `@dt/atoms/<name>`.
 
 ### Caption
 
@@ -451,7 +451,7 @@ Server component. Multi-line text uses progressively shorter widths. Scan animat
 
 ## Molecules
 
-Composed components. Import from `@/molecules/<name>`.
+Composed components. Import from `@dt/molecules/<name>`.
 
 ### Accordion
 
@@ -1162,7 +1162,7 @@ Expanded: 240px with icon + label. Collapsed: 56px icon rail with tooltips/flyou
 
 ## Hooks
 
-Import from `@/hooks/<name>`.
+Import from `@dt/hooks/<name>`.
 
 ### useTheme
 

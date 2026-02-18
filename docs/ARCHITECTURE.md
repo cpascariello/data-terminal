@@ -194,7 +194,7 @@ src/
 **Context:** Card and Modal were tightly coupled to terminal-specific atoms (TerminalTopBar, CornerNotch, HoverScanline), making them unusable without the terminal aesthetic.
 **Approach:** Generic components (`Card`, `Modal`) accept `header`, `overlay`, and `wrapper` slot props with zero terminal imports. Terminal variants (`TerminalCard`, `TerminalModal`) are thin wrappers that inject terminal atoms through those slots. This pattern allows the same structural components to be themed differently.
 **Key files:** `src/molecules/card.tsx`, `src/molecules/terminal-card.tsx`, `src/molecules/modal.tsx`, `src/molecules/terminal-modal.tsx`
-**Notes:** When creating new chrome-bearing components, follow the same pattern: generic base with slots, terminal wrapper that fills them. The generic component should never import from `@/atoms/terminal-*`, `@/atoms/corner-notch`, or `@/atoms/hover-scanline`.
+**Notes:** When creating new chrome-bearing components, follow the same pattern: generic base with slots, terminal wrapper that fills them. The generic component should never import from `@dt/atoms/terminal-*`, `@dt/atoms/corner-notch`, or `@dt/atoms/hover-scanline`.
 
 ### ARIA Widget Patterns
 **Context:** Custom widgets (Select, MultiSelect, Navbar, TerminalTabs, Accordion, Tooltip, DataTable, Modal) needed proper ARIA roles and keyboard navigation for accessibility.
@@ -240,7 +240,7 @@ src/
 
 ### Adding a New Molecule
 1. Create `src/molecules/{name}.tsx`
-2. Import atoms from `@/atoms` as needed
+2. Import atoms from `@dt/atoms` as needed
 3. Export from `src/molecules/index.ts`
 4. Add usage example and prop table to `docs/DESIGN-SYSTEM.md`
 5. Update `CLAUDE.md` component inventory
