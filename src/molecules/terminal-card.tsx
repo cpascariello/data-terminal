@@ -11,6 +11,8 @@ interface TerminalCardProps {
   label?: string;
   notch?: boolean;
   scanline?: boolean;
+  /** Enables hover glow and border animation. Also enables scanline by default. */
+  interactive?: boolean;
 }
 
 export function TerminalCard({
@@ -19,13 +21,17 @@ export function TerminalCard({
   tag,
   label,
   notch = true,
-  scanline = true,
+  scanline,
+  interactive = false,
 }: TerminalCardProps) {
+  const showScanline = scanline ?? interactive;
+
   return (
     <Card
       className={className}
+      interactive={interactive}
       header={<TerminalTopBar tag={tag} label={label} dotsPosition="right" />}
-      overlay={scanline ? <HoverScanline speed={1.5} /> : undefined}
+      overlay={showScanline ? <HoverScanline speed={1.5} /> : undefined}
       wrapper={notch ? (card) => <CornerNotch>{card}</CornerNotch> : undefined}
     >
       {children}

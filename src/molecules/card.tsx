@@ -9,6 +9,8 @@ export interface CardProps {
   overlay?: ReactNode | undefined;
   /** Wraps the entire card element (e.g. CornerNotch) */
   wrapper?: ((card: ReactNode) => ReactNode) | undefined;
+  /** Enables hover glow and border animation. Use for clickable/selectable cards only. */
+  interactive?: boolean | undefined;
   className?: string | undefined;
 }
 
@@ -17,6 +19,7 @@ export function Card({
   header,
   overlay,
   wrapper,
+  interactive = false,
   className,
 }: CardProps) {
   const card = (
@@ -24,7 +27,8 @@ export function Card({
       className={cn(
         "group relative flex h-full flex-col overflow-hidden",
         "border border-border bg-foreground/[0.02]",
-        "transition-all hover:border-border-hover hover:shadow-[0_0_30px_-5px_var(--accent-hover-shadow)]",
+        interactive &&
+          "transition-all hover:border-border-hover hover:shadow-[0_0_30px_-5px_var(--accent-hover-shadow)]",
         className,
       )}
     >
