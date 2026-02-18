@@ -235,6 +235,7 @@ src/
 - `CodeBlock` — multi-line code with Shiki syntax highlighting, TerminalTopBar, line numbers, copy button, CSS-variables theme
 - `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
 - `DataTable` — monospaced sortable data table with HudLabel headers, generic type parameter, accessible sortable headers with aria-sort
+- `Drawer` — side panel overlay sliding from right with focus trap, backdrop dismiss, Escape close, optional footer slot, 300ms slide animation, no body scroll lock
 - `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label, forwardRef support
 - `Modal` — portal-rendered dialog with focus trap, TerminalTopBar + CornerNotch chrome, backdrop blur, 3 sizes (sm/md/lg), useDismiss, dialog role on panel
 - `MultiSelect` — dropdown with checkboxes for multiple selections, Badge chips for selected items, ARIA listbox pattern, keyboard navigation, useDismiss
@@ -250,6 +251,7 @@ src/
 - `StickySection` — sticky scroll-through section with render prop providing progress and activeStep
 - `Textarea` — multi-line terminal-styled input with autoResize option
 - `TerminalCard` — card with terminal chrome, service tag, corner notch, hover scanline
+- `TerminalDrawer` — drawer with terminal chrome (TerminalTopBar, CornerNotch, HoverScanline), wraps Drawer
 - `TerminalPrompt` — CTA terminal prompt with blinking cursor
 - `TerminalTabs` — tabbed content with dot indicators, accent glow, glitch-in animation, ARIA tablist pattern with keyboard navigation
 - `ToastContainer` — portal-rendered toast stack (bottom-right), slide-in/out animation, progress bar countdown, max 5, shared variant maps, role=alert for error/warning, HoverScanline

@@ -75,7 +75,7 @@ Quick guide for choosing the right component.
 `Navbar` for horizontal top bar with dropdowns and mega menus. `Sidebar` for vertical nav with collapsible icon rail. `Breadcrumbs` for path-based breadcrumb trails with optional back arrow. `TerminalTabs` for tabbed content.
 
 **Showing feedback?**
-`Alert` for inline messages. `Toast` (via `useToast`) for auto-dismissing notifications. `Modal` for generic dialogs, `TerminalModal` for terminal-styled dialogs. `Tooltip` for hover hints. `Accordion` for collapsible sections. `Skeleton` for loading placeholders.
+`Alert` for inline messages. `Toast` (via `useToast`) for auto-dismissing notifications. `Modal` for generic dialogs, `TerminalModal` for terminal-styled dialogs. `Drawer` for side panel overlays, `TerminalDrawer` for terminal-styled side panels. `Tooltip` for hover hints. `Accordion` for collapsible sections. `Skeleton` for loading placeholders.
 
 **Layout and sections?**
 `Section` for page sections with optional effects. `SectionHeading` for section titles. `StickySection` for scroll-driven sticky content. `FadeIn` for scroll-triggered animations. `ScrollProgressBar` for scroll progress.
@@ -87,7 +87,7 @@ Quick guide for choosing the right component.
 `GlitchText`, `TextFlicker`, `TypewriterText` for text animations. `DataStream` for hex columns. `ScanlineOverlay`, `HoverScanline` for CRT effects. `DotGrid` for dot backgrounds. `GlowBorder`, `GlowLine` for glow effects. `BlinkingCursor` for cursor animation. `CornerNotch` for clipped corners. `TerminalTopBar` for window chrome.
 
 **Generic vs Terminal?**
-Use `Card` and `Modal` for theme-agnostic UI. Use `TerminalCard` and `TerminalModal` for terminal-styled UI. See the Generic/Terminal Composition pattern in `docs/ARCHITECTURE.md`.
+Use `Card`, `Modal`, and `Drawer` for theme-agnostic UI. Use `TerminalCard`, `TerminalModal`, and `TerminalDrawer` for terminal-styled UI. See the Generic/Terminal Composition pattern in `docs/ARCHITECTURE.md`.
 
 ---
 
@@ -696,7 +696,47 @@ Dialog overlay with focus trap, backdrop blur, and flexible chrome slots.
 
 Client component. Portal-rendered with backdrop blur. Focus trap via Tab/Shift+Tab cycling with focus restore on close. Closes on backdrop click or Escape. Body scroll lock while open. For terminal-styled modals, use `TerminalModal`.
 
-**See also:** TerminalModal
+**See also:** TerminalModal, Drawer
+
+### Drawer
+
+Side panel overlay that slides in from the right. Focus trap, backdrop dismiss, Escape close.
+
+```tsx
+{/* Minimal drawer — default title bar with close button */}
+<Drawer open={open} onClose={() => setOpen(false)} title="Details">
+  <p>Side panel content</p>
+</Drawer>
+
+{/* Drawer with custom header, footer, and effects */}
+<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Details"
+  width={500}
+  header={<MyCustomHeader />}
+  footer={<MyFooterActions />}
+  overlay={<MyOverlayEffect />}
+  wrapper={(panel) => <MyWrapper>{panel}</MyWrapper>}
+>
+  <p>Side panel content</p>
+</Drawer>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `title` | `string` | — |
+| `width` | `number` | `460` |
+| `header` | `ReactNode` | — (default title bar) |
+| `overlay` | `ReactNode` | — |
+| `wrapper` | `(panel: ReactNode) => ReactNode` | — |
+| `footer` | `ReactNode` | — |
+
+Client component. Fixed position with backdrop blur. Focus trap via Tab/Shift+Tab cycling with focus restore on close. Closes on backdrop click or Escape. No body scroll lock (unlike Modal). Slides in from right with `translate-x` animation (300ms). For terminal-styled drawers, use `TerminalDrawer`.
+
+**See also:** TerminalDrawer, Modal
 
 ### MultiSelect
 
@@ -922,7 +962,30 @@ Modal with terminal chrome (TerminalTopBar, CornerNotch, HoverScanline). Wraps g
 
 For custom-styled modals without terminal chrome, use `Modal` directly with `header`/`overlay`/`wrapper` slots.
 
-**See also:** Modal
+**See also:** Modal, TerminalDrawer
+
+### TerminalDrawer
+
+Drawer with terminal chrome (TerminalTopBar, CornerNotch, HoverScanline). Wraps generic `Drawer`.
+
+```tsx
+<TerminalDrawer open={open} onClose={() => setOpen(false)} title="SYS:CONFIG" tag="NEW">
+  <p>Side panel content</p>
+</TerminalDrawer>
+```
+
+| Prop | Type | Default |
+|------|------|---------|
+| `open` | `boolean` | required |
+| `onClose` | `() => void` | required |
+| `title` | `string` | — |
+| `tag` | `string` | — (falls back to title) |
+| `width` | `number` | `460` |
+| `footer` | `ReactNode` | — |
+
+For custom-styled drawers without terminal chrome, use `Drawer` directly with `header`/`overlay`/`wrapper` slots.
+
+**See also:** Drawer, TerminalModal
 
 ### TerminalPrompt
 
