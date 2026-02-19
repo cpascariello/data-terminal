@@ -1,9 +1,7 @@
-import { forwardRef } from "react";
 import type {
   ReactNode,
   ButtonHTMLAttributes,
   AnchorHTMLAttributes,
-  Ref,
 } from "react";
 import { cn } from "@dt/lib/cn";
 import {
@@ -49,21 +47,16 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: "px-6 py-3 text-base gap-2.5",
 };
 
-export const Button = forwardRef(function Button(
-  props: ButtonProps,
-  ref: Ref<HTMLButtonElement | HTMLAnchorElement>,
-) {
-  const {
-    variant = "primary",
-    size = "md",
-    iconLeft,
-    iconRight,
-    className,
-    children,
-    as: Tag = "button",
-    ...rest
-  } = props;
-
+export function Button({
+  variant = "primary",
+  size = "md",
+  iconLeft,
+  iconRight,
+  className,
+  children,
+  as: Tag = "button",
+  ...rest
+}: ButtonProps) {
   const isLink = variant === "link";
 
   const classes = cn(
@@ -83,26 +76,22 @@ export const Button = forwardRef(function Button(
   );
 
   if (Tag === "a") {
-    const anchorProps = rest as AnchorHTMLAttributes<HTMLAnchorElement>;
     return (
       <a
-        ref={ref as Ref<HTMLAnchorElement>}
         className={classes}
-        {...anchorProps}
+        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {content}
       </a>
     );
   }
 
-  const buttonProps = rest as ButtonHTMLAttributes<HTMLButtonElement>;
   return (
     <button
-      ref={ref as Ref<HTMLButtonElement>}
       className={classes}
-      {...buttonProps}
+      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {content}
     </button>
   );
-});
+}
