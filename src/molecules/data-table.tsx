@@ -10,43 +10,60 @@ interface Column<K extends string> {
   sortable?: boolean;
 }
 
+type SortDir = "asc" | "desc" | null;
+
 export interface DataTableProps<K extends string> {
   columns: Column<K>[];
   rows: Record<K, ReactNode>[];
   className?: string;
+  /** Controlled sort key — when provided, disables internal sort state. */
+  sortKey?: K | null;
+  /** Controlled sort direction — used with sortKey. */
+  sortDir?: SortDir;
+  /** Called when a sortable column header is clicked. */
+  onSortChange?: (key: K) => void;
 }
-
-type SortDir = "asc" | "desc" | null;
 
 export function DataTable<K extends string>({
   columns,
   rows,
   className,
+  sortKey: controlledSortKey,
+  sortDir: controlledSortDir,
+  onSortChange,
 }: DataTableProps<K>) {
-  const [sortKey, setSortKey] = useState<K | null>(null);
-  const [sortDir, setSortDir] = useState<SortDir>(null);
+  const [internalSortKey, setInternalSortKey] = useState<K | null>(null);
+  const [internalSortDir, setInternalSortDir] = useState<SortDir>(null);
+
+  const controlled = controlledSortKey !== undefined;
+  const sortKey = controlled ? controlledSortKey : internalSortKey;
+  const sortDir = controlled ? controlledSortDir ?? null : internalSortDir;
 
   function handleSort(key: K) {
-    if (sortKey !== key) {
-      setSortKey(key);
-      setSortDir("asc");
-    } else if (sortDir === "asc") {
-      setSortDir("desc");
+    if (onSortChange) {
+      onSortChange(key);
+      return;
+    }
+    if (internalSortKey !== key) {
+      setInternalSortKey(key);
+      setInternalSortDir("asc");
+    } else if (internalSortDir === "asc") {
+      setInternalSortDir("desc");
     } else {
-      setSortKey(null);
-      setSortDir(null);
+      setInternalSortKey(null);
+      setInternalSortDir(null);
     }
   }
 
-  const sortedRows = [...rows];
-  if (sortKey && sortDir) {
-    sortedRows.sort((a, b) => {
-      const aVal = String(a[sortKey] ?? "");
-      const bVal = String(b[sortKey] ?? "");
-      const cmp = aVal.localeCompare(bVal, undefined, { numeric: true });
-      return sortDir === "asc" ? cmp : -cmp;
-    });
-  }
+  const sortedRows =
+    !controlled && sortKey && sortDir
+      ? [...rows].sort((a, b) => {
+          const aVal = String(a[sortKey] ?? "");
+          const bVal = String(b[sortKey] ?? "");
+          const cmp = aVal.localeCompare(bVal, undefined, { numeric: true });
+          return sortDir === "asc" ? cmp : -cmp;
+        })
+      : rows;
 
   function sortIndicator(key: K) {
     if (sortKey !== key || !sortDir) return " --";
