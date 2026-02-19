@@ -234,7 +234,7 @@ src/
 - `Checkbox` — styled native checkbox with accent glow, Check icon, optional inline label via children
 - `CodeBlock` — multi-line code with Shiki syntax highlighting, TerminalTopBar, line numbers, copy button, CSS-variables theme
 - `CommandInput` — terminal-styled text input with prefix and BlinkingCursor
-- `DataTable` — monospaced sortable data table with HudLabel headers, generic type parameter, accessible sortable headers with aria-sort
+- `DataTable` — monospaced sortable data table with HudLabel headers, generic type parameter, accessible sortable headers with aria-sort, optional controlled sort (`sortKey`, `sortDir`, `onSortChange`) for parent-driven sorting
 - `Drawer` — side panel overlay sliding from right with focus trap, backdrop dismiss, Escape close, optional footer slot, 300ms slide animation, no body scroll lock
 - `IconButton` — square icon-only button with 4 variants (primary/secondary/ghost/danger), 3 sizes, required aria-label, forwardRef support
 - `Modal` — portal-rendered dialog with focus trap, TerminalTopBar + CornerNotch chrome, backdrop blur, 3 sizes (sm/md/lg), useDismiss, dialog role on panel

@@ -641,6 +641,7 @@ Terminal command input with prefix and cursor.
 Sortable monospaced data table.
 
 ```tsx
+{/* Uncontrolled — DataTable manages its own sort state */}
 <DataTable
   columns={[
     { key: "name", label: "Name", sortable: true },
@@ -650,14 +651,31 @@ Sortable monospaced data table.
     { name: "Node-1", status: <Badge variant="success">UP</Badge> },
   ]}
 />
+
+{/* Controlled — parent drives sort via props */}
+<DataTable
+  columns={[
+    { key: "name", label: "Name", sortable: true },
+    { key: "date", label: "Date", sortable: true },
+  ]}
+  rows={rows}
+  sortKey={sortKey}
+  sortDir={sortDirection}
+  onSortChange={handleSort}
+/>
 ```
 
 | Prop | Type | Default |
 |------|------|---------|
 | `columns` | `Column<K>[]` (`{ key: K; label: string; sortable?: boolean }`) | required |
 | `rows` | `Record<K, ReactNode>[]` | required |
+| `sortKey` | `K \| null` | — |
+| `sortDir` | `"asc" \| "desc" \| null` | — |
+| `onSortChange` | `(key: K) => void` | — |
 
 Type parameter `K extends string` ties column keys to row keys for type safety. Sortable columns render accessible `<button>` elements with `aria-sort`.
+
+**Controlled vs uncontrolled:** When `sortKey` is provided, DataTable renders sort indicators but delegates sorting to the parent (rows are rendered in the order given). When omitted, DataTable manages its own internal sort state using `localeCompare` with `numeric: true`. Use controlled mode when the parent has a type-aware sort function (e.g., sorting by date or numeric size).
 
 **See also:** StatCard
 
